@@ -8,7 +8,7 @@ const fetchUserTheme = async (userId: string): Promise<UserTheme | null> => {
             throw new Error(`HTTP Error during fetching user. Status: ${response.status}`); 
         return await response.json();
     } catch (error) {
-        console.log(`No personalision data of user with id: ${userId} found`);
+        // console.log(`No personalision data of user with id: ${userId} found`);
         return null;
     }
 }

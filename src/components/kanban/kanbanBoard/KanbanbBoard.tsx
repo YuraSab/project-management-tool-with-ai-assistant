@@ -14,7 +14,7 @@ interface KanbanBoardProps { projectId: string }
 const KanbanBoard: React.FC<KanbanBoardProps> = ({ projectId }) => {
     const { data: projectTasks, isPending } = useTasks(projectId || "");
     const taskUpdateMutation = useUpdateTask();
-
+    console.log('projectTasks', projectTasks)
     const filters = useProjectControlStore(useShallow(state => ({
         status: state.statusFilter,
         users: state.usersFilter,

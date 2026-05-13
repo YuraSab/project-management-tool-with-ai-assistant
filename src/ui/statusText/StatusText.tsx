@@ -2,6 +2,7 @@ import { ProjectStatus } from "../../types/project";
 import { TaskPriority, TaskStatus } from "../../types/task";
 import styles from "./StatusText.module.css";
 
+// todo - divide for status and priority
 interface StatusTextProps {
     status: TaskStatus | ProjectStatus | TaskPriority
 }

@@ -14,6 +14,6 @@ export const useTaskUsers = (usersIds: string[]) => {
     return useQuery({ 
         queryKey: ["projectTasks", usersIds], 
         queryFn: () => fetchTasksUsersByIds(usersIds),
-        enabled: usersIds.length > 0,
+        enabled: usersIds && usersIds.length > 0,
     });
 };

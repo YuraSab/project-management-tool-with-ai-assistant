@@ -1,6 +1,6 @@
 .iconsBlock{
     width: 100%;
     display: flex;
-    justify-content: end;
+    /*justify-content: end;*/
     gap: 0 2px;
 }

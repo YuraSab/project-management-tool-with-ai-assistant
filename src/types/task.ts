@@ -18,9 +18,10 @@ export interface Task {
     description: string,
     assignedMembers: string[],
     status: TaskStatus,
+    priority?: TaskPriority,
     startDate?: Timestamp | Date | null,
     endDate?: Timestamp | Date | null,
-    priority?: TaskPriority,
+    createdAt?: Timestamp | Date | null,
 }
 
 export const TASK_STATUSES: TaskStatus[] = ["todo", "in_progress", "done"];

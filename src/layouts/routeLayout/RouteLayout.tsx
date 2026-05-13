@@ -31,7 +31,6 @@ const RouteLayout = () => (
             <Route path="/projects/create" element={<CreateProject/>}/>
         </Route>
         <Route element={<ProtectedRoute allowedRoles={ALLOWED_ROLES.NON_MEMBERS}/>}>
-        {/* todo - resolve, doesn`t member able to create projects */}
         </Route>
         <Route element={<ProtectedRoute allowedRoles={ALLOWED_ROLES.ONLY_ADMINS}/>}>
             <Route path="/create/user" element={<CreateUser/>}/>

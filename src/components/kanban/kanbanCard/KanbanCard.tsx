@@ -1,11 +1,12 @@
 import { useTaskUsers } from "../../../hooks/task/useTaskUsers";
-import { useUsersThemes } from "../../../hooks/usersThemes/useUserThemes";
+// import { useUsersThemes } from "../../../hooks/usersThemes/useUserThemes";
 import { useProjectControlStore } from "../../../store/projectControlStore";
 import { Task } from "../../../types/task";
 import UserIconCollection from "../../usersIconsCollection/UsersIconsCollection";
 import styles from "./Kanban.module.css";
 import {useProfileStore} from "../../../store/profileStore.ts";
 import {Theme} from "../../../types/user.ts";
+import {useProjectUsers} from "../../../hooks/project/useProjectUsers.ts";
 
 interface KanbanCardProps {
     task: Task,
@@ -13,8 +14,9 @@ interface KanbanCardProps {
 } 
 
 const KanbanCard = ({ task, handleOnTaskClick }: KanbanCardProps) => {
-    const { data: users } = useTaskUsers(task.assignedMembers);
-    const { data: usersThemes } = useUsersThemes(task.assignedMembers);
+    // const { data: users } = useTaskUsers(task.assignedMembers);
+    const { data: assignedMembersProfiles } = useProjectUsers(task.assignedMembers); // todo - make some hook for UserIconCollection and pass there ids only
+    // const { data: usersThemes } = useUsersThemes(task.assignedMembers);
     const isLeftPanelActive = useProjectControlStore((state) => state.isLeftPanelActive);
     const isRightPanelActive = useProjectControlStore((state) => state.isRightPanelActive);
     const theme = useProfileStore((state) => state.profile.theme);
@@ -24,7 +26,7 @@ const KanbanCard = ({ task, handleOnTaskClick }: KanbanCardProps) => {
              <p className={`text-sm text-gray-600 ${styles.description}`}>
                 {task.description}
             </p>
-            { users && <UserIconCollection size={(isLeftPanelActive && isRightPanelActive) ? 20 : 24} users={users} usersThemes={usersThemes} fontSize={(isLeftPanelActive && isRightPanelActive) ? 14 : 18}/> }
+            { assignedMembersProfiles && <UserIconCollection size={(isLeftPanelActive && isRightPanelActive) ? 24 : 28} users={assignedMembersProfiles} fontSize={(isLeftPanelActive && isRightPanelActive) ? 16 : 18}/> }
         </div>
     )
 }

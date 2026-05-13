@@ -4,12 +4,14 @@ import {useProfileStore} from "../../store/profileStore.ts";
 
 interface FabProps extends HTMLAttributes<HTMLDivElement> {
     children: React.ReactNode,
+    type?: 'filled' | 'hollow',
 }
 
-const Fab = ({ children, onClick, className, style, ...rest }: FabProps) => {
-    const highlightColor = useProfileStore((state) => state.profile.highlightColor);
+const Fab = ({ children, type = 'filled', onClick, className, style, ...rest }: FabProps) => {
+    const { theme, highlightColor } = useProfileStore((state) => state.profile);
     const combinedStyles: React.CSSProperties = {
-        backgroundColor: highlightColor,
+        backgroundColor: type === 'filled' ? highlightColor : theme,
+        borderColor: type === 'filled' ? 'none' : highlightColor,
         ...style,
     };
     const combinedClasses = `${styles.fab} ${className || ''}`.trim();

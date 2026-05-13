@@ -6,7 +6,7 @@ import FormPasswordInput from "../../ui/input/FormPasswordInput";
 import FormButtonSubmit from "../../ui/button/FormButtonSubmit";
 import {register} from "../../services/authService.ts";
 import {handleAuthError} from "../../utils/handleAuthError.ts";
-import styles from './Register.modile.css';
+import styles from './Register.module.css';
 
 const INITIAL_FORM_DATA = {
     name: "",

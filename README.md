@@ -1,113 +1,48 @@
-# React + TypeScript + Vite
+# ProjectFlow — AI-Driven Project Management Tool
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+An intelligent project management system featuring an integrated AI assistant that allows you to manage workflows using natural language. This project was developed as part of a diploma thesis.
 
-Currently, two official plugins are available:
+## 🌟 Key Features
+- **AI Assistant:** Create, update, and decompose tasks through an interactive chat interface.
+- **Project Tracking:** Visualize tasks, statuses, and priorities with ease.
+- **Team Management:** Assign team members and monitor workload.
+- **Real-time Sync:** Instant data synchronization powered by Firebase Firestore.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Setup Instructions
 
-## Expanding the ESLint configuration
+To run this project locally, you will need to set up your own Firebase and Gemini API services.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### 1. Firebase Configuration
+1. Go to the [Firebase Console](https://console.firebase.google.com/) and create a new project.
+2. Enable **Firestore Database** and select **"Test Mode"** for the initial setup.
+3. Under the **Authentication** section, enable the **"Email/Password"** sign-in method.
+4. Register a new **"Web App"** in your project settings and copy the `firebaseConfig` object.
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+### 2. Gemini API Configuration
+1. Visit [Google AI Studio](https://aistudio.google.com/).
+2. Click on **"Get API key"** and create a new API Key.
+3. Copy the token to use in your environment variables.
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
-
-
-
-
-## 🚀 Project Launch Instructions
-
-1. Clone the Repository
-Open your terminal and run:
+### 3. Installation and Launch
 ```bash
-git clone https://github.com/YuraDev/project-management-tools.git
-```
+# Clone the repository
+git clone [https://github.com/YuraSab/project-management-tools-diploma.git](https://github.com/YuraSab/project-management-tools-diploma.git)
 
-2. Navigate to the Project Directory
-```bash
-cd project-management-tools
-```
+# Navigate to the project directory
+cd project-management-tools-diploma
 
-3. Install Dependencies
-```bash
+# Install dependencies
 npm install
-```
 
-💡 Note: If Node.js is not installed, check your version with:
-```bash
-node -v
-```
-💡...and install it from https://nodejs.org/
+# Environment Variables Setup
+# Create a .env file in the root directory and add the following:
+VITE_FIREBASE_API_KEY="your_api_key"
+VITE_FIREBASE_AUTH_DOMAIN="your-project.firebaseapp.com"
+VITE_FIREBASE_PROJECT_ID="your-project-id"
+VITE_FIREBASE_STORAGE_BUCKET="your-project.appspot.com"
+VITE_FIREBASE_MESSAGING_SENDER_ID="your-sender-id"
+VITE_FIREBASE_APP_ID="your-app-id"
+VITE_GEMINI_API_KEY="your_gemini_api_key"
 
-4. (Optional) Switch to the Tailwind Branch
-If you want to use the version with Tailwind CSS:
-```bash
-git checkout feature/tailwind-implementation
-```
-
-5. Start the Frontend
-In the root of the project, run:
-```bash
+# Run the project
 npm run dev
-```
-
-6. Start the Backend (Mock Server)
-In a new terminal window (also at the project root), run:
-```bash
-npx json-server --watch db.json --port 3001
-```
-
-7. Open the App in Your Browser
-http://localhost:5173/
-
-8. Login Credentials
-Use one of the following login options:
-
-| Role    | Username | Password |
-|---------|----------|----------|
-| Admin   | admin    | password |
-| Manager | yurii    | 1111     |
-| Member  | member   | password |
-
-You can also register with your own credentials, but your role will be set to **member**.

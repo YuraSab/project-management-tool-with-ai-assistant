@@ -13,7 +13,7 @@ const themeClassMap = {
     orange: styles.orangeBlock,
 };
 
-const HeaderModalAccout = () => {
+const HeaderModalAccount = () => {
     const navigate = useNavigate();
     const setLogout = useAuthStore((state) => state.setLogout);
     const profile = useProfileStore((state) => state.profile);
@@ -32,6 +32,7 @@ const HeaderModalAccout = () => {
         setLogout();
         setProfile(null);
         navigate("/login");
+        setIsHeaderModalToggle();
     };
 
     const item = `${styles.item} ${profile.highlightColor && themeClassMap[profile.highlightColor]}`;
@@ -67,4 +68,4 @@ const HeaderModalAccout = () => {
     )
 }
 
-export default HeaderModalAccout;
+export default HeaderModalAccount;

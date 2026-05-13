@@ -2,6 +2,9 @@ import {Task} from "../types/task.ts";
 import {collection, getDocs, query, where, doc, updateDoc, addDoc, deleteDoc} from "firebase/firestore";
 import {db} from "../firebase.ts";
 
+export type CreateTaskPayload = Omit<Task, 'id'>;
+export type UpdateTaskPayload = Partial<Task> & { id: string };
+
 export const getTasks = async (projectId: string): Promise<Task[]> => {
     if ( !projectId ) return [];
 
@@ -15,7 +18,7 @@ export const getTasks = async (projectId: string): Promise<Task[]> => {
     })) as Task[];
 };
 
-export const createTask = async (task: Omit<Task, 'id'>): Promise<Task> => {
+export const createTask = async (task: CreateTaskPayload): Promise<Task> => {
     const tasksCol = collection(db, 'tasks');
     const taskSnap = await addDoc(tasksCol, task);
     return {
@@ -24,7 +27,7 @@ export const createTask = async (task: Omit<Task, 'id'>): Promise<Task> => {
     };
 };
 
-export const updateTask = async (task: Partial<Task> & { id: string }): Promise<void> => {
+export const updateTask = async (task: UpdateTaskPayload): Promise<void> => {
     const { id, ...updateData } = task;
     const taskRef = doc(db, 'tasks', id);
     return await updateDoc(taskRef, updateData);

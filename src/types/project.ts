@@ -10,8 +10,8 @@ export interface Project {
     id: string,
     title: string,
     description: string,
-    startDate: Timestamp | Date | null,
-    endDate: Timestamp | Date | null,
     assignedMembers: string[],
     status: ProjectStatus,
+    startDate: Timestamp | Date | null,
+    endDate: Timestamp | Date | null,
 }
