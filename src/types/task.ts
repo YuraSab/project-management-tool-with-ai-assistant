@@ -9,7 +9,7 @@ export interface TaskFilters {
     end: string,
     priority: TaskPriority,
 }
-export type SortOption = "Start date dec" | "Start date inc" | "End date dec" | "End date inc" | "none";
+export type SortOption = "Start date dec" | "Start date inc" | "End date dec" | "End date inc" | "Create date dec"| "Create date inc" | "none";
 
 export interface Task {
     id: string,

@@ -19,6 +19,8 @@ export const getSortedTasks = (tasks: Task[], sortValue: SortOption): Task[] => 
         ["Start date inc"]: () => [...tasks].sort( (a, b) => getTime(a.startDate) - getTime(b.startDate) ),
         ["End date dec"]: () => [...tasks].sort( (a, b) => getTime(b.endDate) - getTime(a.endDate) ),
         ["End date inc"]: () => [...tasks].sort( (a, b) => getTime(a.endDate) - getTime(b.endDate) ),
+        ["Create date dec"]: () => [...tasks].sort((a, b) => getTime(b.createdAt) - getTime(a.createdAt)),
+        ["Create date inc"]: () => [...tasks].sort((a, b) => getTime(a.createdAt) - getTime(b.createdAt)),
     };
     return sortCollection[sortValue] ? sortCollection[sortValue]() : tasks;
 };
