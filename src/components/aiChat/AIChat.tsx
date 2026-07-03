@@ -13,14 +13,13 @@ import {useShallow} from "zustand/react/shallow";
 import {parseAIActions} from "../../utils/parseAIActions.ts";
 import {getGeminiResponse} from "../../services/aiService.ts";
 
-    const AIChat = () => {
+const AIChat = () => {
     const profile = useProfileStore((state) => state.profile);
     const selectedProject = useProjectControlStore((state) => state.selectedProject)
     const {messages, addMessage, clearChat, setIsAIChatOpened} = useAIChatStore(useShallow((state) => ({
         messages: state.messages, addMessage: state.addMessage, clearChat: state.clearChat, setIsAIChatOpened: state.setIsAIChatOpened
     })));
 
-    // Думаю на момент переходу на сторінку проекту - вартувало б додавати до zustand всі таски і юзерів заесайнених до проекту, щоб брати дані з zustand а не з нових запитів
     const {data: projectTasks} = useTasks(selectedProject?.id || "");
     const {data: projectUsers} = useProjectUsers(selectedProject?.assignedMembers || []);
 
@@ -77,7 +76,9 @@ import {getGeminiResponse} from "../../services/aiService.ts";
     };
 
     return (
-        <div className={styles.container} style={{backgroundColor: profile.theme === 'black' ? '#1e1e1e' : '#ffffff'}}>
+        <div
+            className={styles.container} style={{backgroundColor: profile.theme === 'black' ? '#1e1e1e' : '#ffffff'}}
+        >
             <div className={styles.header} style={{borderBottom: `1px solid ${profile.highlightColor}44`}}>
                 <div className={styles.title}>
                     <GeminiIcon size={24}/>
