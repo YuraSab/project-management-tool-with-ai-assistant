@@ -2,7 +2,7 @@
     width: 300px;
     min-width: 300px;
     box-sizing: border-box;
-    padding: 35px 15px;
+    padding: 35px 15px 5px;
     border-right: 2px #f3f4f6 solid;
     height: calc(100vh - 100px);
     display: flex;
