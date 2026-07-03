@@ -2,7 +2,7 @@ import {DragDropContext, DropResult} from "@hello-pangea/dnd";
 import styles from "./KanbanBoard.module.css";
 import {DroppableColumnBody} from "../drag/DroppableColumnBody";
 import KanbanDraggableCard from "../drag/KanbanDraggableCard";
-import {Task, TaskFilters, TaskStatus} from "../../../types/task";
+import {TaskFilters, TaskStatus} from "../../../types/task";
 import React, {memo, useCallback, useMemo} from "react";
 import KanbanCardSkeleton from "../kanbanCard/KanbanCardSkeleton.tsx";
 import {useTasks} from "../../../hooks/task/useTasks.ts";
@@ -10,6 +10,8 @@ import {useUpdateTask} from "../../../hooks/task/useUpdateTask.ts";
 import {useProjectControlStore} from "../../../store/projectControlStore.ts";
 import {useShallow} from "zustand/react/shallow";
 import {getFilteredTasks, getSortedTasks} from "../../../utils/controlPanel.ts";
+import {switchRightPanelView} from "../../../utils/panelManager.ts";
+
 interface KanbanBoardProps { projectId: string }
 const KanbanBoard: React.FC<KanbanBoardProps> = ({ projectId }) => {
     const { data: projectTasks, isPending } = useTasks(projectId || "");
@@ -27,19 +29,6 @@ const KanbanBoard: React.FC<KanbanBoardProps> = ({ projectId }) => {
         isLeftPanelActive: state.isLeftPanelActive,
         isRightPanelActive: state.isRightPanelActive,
     })));
-    const actions = useProjectControlStore(useShallow(state => ({
-        setSelectedTask: state.setSelectedTask,
-        setIsRightPanelActive: state.setIsRightPanelActive,
-        setIsAddTaskActive: state.setIsAddTaskActive,
-        setIsEditTaskActive: state.setIsEditTaskActive,
-    })));
-
-    const handleOnTaskClick = useCallback((task: Task): void => {
-        actions.setIsAddTaskActive(false);
-        actions.setIsEditTaskActive(false);
-        actions.setSelectedTask(task);
-        actions.setIsRightPanelActive(true);
-    }, [actions]);
 
     const handleDragEnd = useCallback(async (result: DropResult): Promise<void> => {
         const {destination, draggableId} = result;
@@ -73,7 +62,6 @@ const KanbanBoard: React.FC<KanbanBoardProps> = ({ projectId }) => {
             done: processTasks('done')
         }
     }, [projectTasks, filters.users, filters.start, filters.end, filters.priority, filters.sortValue]);
-
 
     const shouldShowColumn = useCallback((status: TaskStatus): boolean => {
         return filters.status.length === 0 || filters.status.includes(status);
@@ -115,7 +103,7 @@ const KanbanBoard: React.FC<KanbanBoardProps> = ({ projectId }) => {
                                             key={task.id}
                                             task={task}
                                             index={index}
-                                            handleOnTaskClick={handleOnTaskClick}
+                                            handleOnTaskClick={() => switchRightPanelView('editTask', task)}
                                         />
                                 )))
                         }

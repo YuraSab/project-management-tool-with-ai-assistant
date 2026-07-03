@@ -1,5 +1,7 @@
 .main{
-    width: 340px;
+    /*width: 340px;*/
+    max-width: 400px;
+    flex-shrink: 0;      /* КРИТИЧНО: забороняє флексу стискати цю панель */
     height: 100%;
     min-height: calc(100vh - 100px);
     z-index: 1001;

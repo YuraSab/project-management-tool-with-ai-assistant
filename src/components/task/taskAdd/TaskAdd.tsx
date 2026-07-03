@@ -5,7 +5,6 @@ import CustomForm from "../../../ui/form/CustomForm";
 import FormTextInput from "../../../ui/input/FormTextInput";
 import FormTextarea from "../../../ui/textArea/FormTextarea";
 import RightPanelHeader from "../../rightPanel/rightPanelHeader/RightPanelHeader";
-import {useProjectControlStore} from "../../../store/projectControlStore";
 import AssignMembers from "../../asignMembers/AssignMembers.tsx";
 import FormSelect from "../../../ui/select/FormSelect";
 import FormButtonSubmit from "../../../ui/button/FormButtonSubmit";
@@ -21,12 +20,9 @@ import {UserProfile} from "../../../types/user.ts";
 type FormData = Pick<Task, 'title'| 'description'| 'status' | 'priority'> & { startDate: string, endDate: string };
 
 const INITIAL_TASK: FormData = {
-    title: '',
-    description: '',
-    status: "todo",
-    startDate: '',
-    endDate: '',
-    priority: 'none',
+    title: '', description: '',
+    status: "todo", priority: 'none',
+    startDate: '', endDate: '',
 };
 
 const TaskAdd = React.memo(() => {
@@ -35,7 +31,6 @@ const TaskAdd = React.memo(() => {
     const [formData, setFormData] = useState<FormData>(INITIAL_TASK);
     const [assignedMembersMap, setAssignedMembersMap] = useState<Map<string, UserProfile>>(new Map());
     const [addMembersActive, setAddMembersActive] = useState<boolean>(false);
-    const setIsRightPanelActive = useProjectControlStore((state) => state.setIsRightPanelActive);
 
     const { data: project} = useProject(projectId || "");
     const { data: projectMembers} = useProjectUsers(project?.assignedMembers || []);
@@ -84,18 +79,14 @@ const TaskAdd = React.memo(() => {
 
     return (
         <CustomForm disabled={isPending} onSubmit={handleSubmit} style={{margin: 15, height: "calc(100vh - 130px)"}}>
-            <RightPanelHeader taskTitle={"Add task"} setIsRightPanelActive={setIsRightPanelActive}/>
+            <RightPanelHeader taskTitle={"Add task"}/>
             <div className={styles.rightPanelChild}>
                 <Title text={'Title:'}/>
                 <FormTextInput name="title" value={formData.title} onChange={handleChange} required/>
                 <Title text={'Description:'}/>
                 <FormTextarea name="description" value={formData.description} onChange={handleChange}/>
                 <Title text={'Members:'}/>
-                <AssignMembers
-                    assignedMembers={assignedMembers}
-                    setAddMembersActive={setAddMembersActive}
-                    maxIcons={2} iconSize={28}
-                />
+                <AssignMembers assignedMembers={assignedMembers} setAddMembersActive={setAddMembersActive} maxIcons={2} iconSize={28}/>
                 <Title text={'Status:'}/>
                 <FormSelect<TaskStatus> name="status" value={formData.status} onChange={handleChange} options={["todo", "in_progress", "done"]}/>
                 <Title text={'Priority:'}/>
