@@ -61,8 +61,8 @@ const Project = () => {
             { isRightPanelActive && (isRightPanelActive || !isLoadingProject && (isAddTaskActive || selectedTask !== null)) && (
                 <RightPanelProject/>
             )}
-            <FAB style={{ right: isRightPanelActive ? (isAIChatOpened ? 436 : 376) : 36, bottom: 100 }} type={'hollow'} onClick={() => switchRightPanelView('aiChat')}><GeminiIcon size={32}/></FAB>
-            <FAB style={{ right: isRightPanelActive ? (isAIChatOpened ? 436 : 376) : 36 }} onClick={() => switchRightPanelView('addTask')}><Plus size={36} color={theme}/></FAB>
+            <FAB style={{ right: isRightPanelActive ? (isAIChatOpened ? 436 : 376) : 36, bottom: 100 }} type={'hollow'} onClick={() => switchRightPanelView(isAIChatOpened ? 'closeAll' : 'aiChat')}><GeminiIcon size={32}/></FAB>
+            <FAB style={{ right: isRightPanelActive ? (isAIChatOpened ? 436 : 376) : 36 }} onClick={() => switchRightPanelView(isAddTaskActive ? 'closeAll' : 'addTask')}><Plus size={36} color={theme}/></FAB>
         </div>
     );
 };
