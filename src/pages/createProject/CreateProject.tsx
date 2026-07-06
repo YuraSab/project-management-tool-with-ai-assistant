@@ -13,9 +13,9 @@ import FormDateInput from "../../ui/input/FormDateInput.tsx";
 import FormSelect from "../../ui/select/FormSelect.tsx";
 import FormButtonSubmit from "../../ui/button/FormButtonSubmit.tsx";
 import AssignMembers from "../../components/asignMembers/AssignMembers.tsx";
-import AddMember from "../../modals/AddMember/AddMember.tsx";
 import {useProjectUsers} from "../../hooks/project/useProjectUsers.ts";
 import styles from './CreateProject.module.css';
+import MemberSelector from "../../ui/memberSelector/MemberSelector.tsx";
 
 type FormData = Pick<Project, 'title' | 'description' | 'status'> & { startDate: string, endDate: string };
 
@@ -90,24 +90,18 @@ const CreateProject = () => {
                 <Title text={'Members:'}/>
                 <AssignMembers
                     assignedMembers={assignedMembers}
-                    setAddMembersActive={setAddMembersActive}
-                    users={assignedMembers}
+                    onSelectMembersActive={() => setAddMembersActive(!addMembersActive)}
                     maxIcons={6} iconSize={28}
                 />
+                {addMembersActive && (
+                    <MemberSelector membersMap={reservedMembersMap} selectedMembersIds={assignedMembersIds} clickAction={handleFilterMember} />
+                )}
                 <Title text={'Status:'}/>
                 <FormSelect<ProjectStatus> name={"status"} value={formData.status} onChange={handleChange} options={[ProjectStatus.Planned, ProjectStatus.InProgress, ProjectStatus.Completed]}/>
                 <div className={styles.buttonBlock}>
                     <FormButtonSubmit text={"Create Project"} customStyles={{width: 240}}/>
                 </div>
             </CustomForm>
-            { addMembersActive && (
-                <AddMember
-                    membersMap={reservedMembersMap}
-                    selectedMembersIds={assignedMembersIds}
-                    filterMemberAction={handleFilterMember}
-                    exitAction={() => setAddMembersActive(false)}
-                />
-            )}
         </FormLayout>
     )
 }

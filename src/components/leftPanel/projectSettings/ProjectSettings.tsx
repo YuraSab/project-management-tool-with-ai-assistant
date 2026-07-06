@@ -2,7 +2,6 @@ import {useNavigate, useParams} from "react-router-dom";
 import styles from "./ProjectSettings.module.css";
 import {useProjectUsers} from "../../../hooks/project/useProjectUsers";
 import React, {useCallback, useEffect, useMemo, useState} from "react";
-import {useProjectControlStore} from "../../../store/projectControlStore";
 import FormTextInput from "../../../ui/input/FormTextInput";
 import FormTextarea from "../../../ui/textArea/FormTextarea";
 import FormDateInput from "../../../ui/input/FormDateInput";
@@ -10,16 +9,15 @@ import FormSelect from "../../../ui/select/FormSelect";
 import {Project, ProjectStatus} from "../../../types/project";
 import AssignMembers from "../../asignMembers/AssignMembers.tsx";
 import CustomButton from "../../../ui/button/CustomButton";
-import AddMember from "../../../modals/AddMember/AddMember";
 import {UserProfile} from "../../../types/user.ts";
 import {useProjectUpdate} from "../../../hooks/project/useProjectUpdate.ts";
 import {useProjectDelete} from "../../../hooks/project/useProjectDelete.ts";
 import Title from "../../../ui/title/Title.tsx";
 import {useProfileStore} from "../../../store/profileStore.ts";
 import {formatDateForInput} from "../../../utils/dateFormat.ts";
-import {isDefined} from "../../../utils/isDefined.ts";
 import {useProject} from "../../../hooks/project/useProject.ts";
 import CopyIcon from "../../../ui/copyIcon/CopyIcon.tsx";
+import MemberSelector from "../../../ui/memberSelector/MemberSelector.tsx";
 
 type FormData = Pick<Project, 'title' | 'description' | 'status'> & { startDate: string, endDate: string };
 
@@ -42,9 +40,8 @@ const ProjectSettings: React.FC = () => {
     const editProjectMutation = useProjectUpdate();
     const deleteProjectMutation = useProjectDelete();
 
-    const isAddMembersActive = useProjectControlStore((state) => state.isAddMembersActive);
-    const setIsAddMembersActive = useProjectControlStore((state) => state.setIsAddMembersActive);
     const [formData, setFormData] = useState<FormData>(INITIAL_PROJECT);
+    const [addMembersActive, setAddMembersActive] = useState<boolean>(false);
     const [localAssignedMembersMap, setLocalAssignedMembersMap] = useState<Map<string, UserProfile>>(new Map());
 
     const totalMembersMap: Map<string, UserProfile> = useMemo(() => (
@@ -119,24 +116,20 @@ const ProjectSettings: React.FC = () => {
             <Title text={'Members:'}/>
             <AssignMembers
                 assignedMembers={localAssignedMembers}
-                setAddMembersActive={setIsAddMembersActive}
+                onSelectMembersActive={() => setAddMembersActive(!addMembersActive) }
                 maxIcons={2} iconSize={28}
             />
+            {addMembersActive && (
+                <MemberSelector membersMap={totalMembersMap} selectedMembersIds={localAssignedMembersIds} clickAction={handleAssignMember} />
+            )}
             <div className={styles.buttonBlock}>
                 <CustomButton text={"Save changes"} onClick={() => handleUpdateProject()} disabled={editProjectMutation.isPending}/>
-                { profile?.role === "admin" && <CustomButton text={"Delete project"} onClick={() => handleDeleteProject()} customStyles={{backgroundColor: "#D10000"}}/> }
+                {profile?.role === "admin" && (
+                    <CustomButton text={"Delete project"} onClick={() => handleDeleteProject()} customStyles={{backgroundColor: "#D10000"}}/>
+                )}
             </div>
-            <Title text={''}/>
-            { isAddMembersActive &&
-                <AddMember
-                    membersMap={totalMembersMap}
-                    selectedMembersIds={localAssignedMembersIds}
-                    filterMemberAction={handleAssignMember}
-                    exitAction={() => setIsAddMembersActive(false)}
-                />
-            }
         </div>
-    )
-}
+    );
+};
 
 export default ProjectSettings;

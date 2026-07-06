@@ -33,13 +33,13 @@ const ProjectSidebar: React.FC = () => {
                     </button>
                 )}
             </nav>
-            <div className={styles.contentArea}>
+            <div className={`${styles.contentArea} hideScrollbar`}>
                 <Suspense fallback={null}>
                     {isProjectSettingsActive ? <LeftPanelSettings/> : <LeftPanelInfoBlock/>}
                 </Suspense>
             </div>
         </aside>
-);
-}
+    );
+};
 
 export default ProjectSidebar;

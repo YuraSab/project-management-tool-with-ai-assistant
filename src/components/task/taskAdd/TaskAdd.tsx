@@ -11,11 +11,11 @@ import FormButtonSubmit from "../../../ui/button/FormButtonSubmit";
 import styles from "./TaskAdd.module.css";
 import FormDateInput from "../../../ui/input/FormDateInput";
 import {useProject} from "../../../hooks/project/useProject";
-import AddMember from "../../../modals/AddMember/AddMember";
 import Title from "../../../ui/title/Title.tsx";
 import {useProjectUsers} from "../../../hooks/project/useProjectUsers.ts";
 import {useCreateTask} from "../../../hooks/task/useCreateTask.ts";
 import {UserProfile} from "../../../types/user.ts";
+import MemberSelector from "../../../ui/memberSelector/MemberSelector.tsx";
 
 type FormData = Pick<Task, 'title'| 'description'| 'status' | 'priority'> & { startDate: string, endDate: string };
 
@@ -43,7 +43,7 @@ const TaskAdd = React.memo(() => {
         )
     ), [projectMembers]);
 
-    const assignedMembersIds: string[] = useMemo(() => [...assignedMembersMap.keys()], [assignedMembersMap]);
+    const assignedMembersIds = useMemo(() => [...assignedMembersMap.keys()], [assignedMembersMap]);
     const assignedMembers: UserProfile[] = useMemo(() => [...assignedMembersMap.values()], [assignedMembersMap]);
 
     const handleAssignMember = useCallback((member: UserProfile) => {
@@ -86,7 +86,14 @@ const TaskAdd = React.memo(() => {
                 <Title text={'Description:'}/>
                 <FormTextarea name="description" value={formData.description} onChange={handleChange}/>
                 <Title text={'Members:'}/>
-                <AssignMembers assignedMembers={assignedMembers} setAddMembersActive={setAddMembersActive} maxIcons={2} iconSize={28}/>
+                <AssignMembers
+                    assignedMembers={assignedMembers}
+                    onSelectMembersActive={() => setAddMembersActive(!addMembersActive)}
+                    maxIcons={2} iconSize={28}
+                />
+                {addMembersActive && (
+                    <MemberSelector membersMap={projectMembersMap} selectedMembersIds={assignedMembersIds} clickAction={handleAssignMember} />
+                )}
                 <Title text={'Status:'}/>
                 <FormSelect<TaskStatus> name="status" value={formData.status} onChange={handleChange} options={["todo", "in_progress", "done"]}/>
                 <Title text={'Priority:'}/>
@@ -97,16 +104,8 @@ const TaskAdd = React.memo(() => {
                 <FormDateInput name={"endDate"} value={formData.endDate} onChange={handleChange}/>
                 <FormButtonSubmit text={"Save changes"} customStyles={{width: "100%", marginTop: 16}} disabled={isPending}/>
             </div>
-            {addMembersActive && (
-                <AddMember
-                    membersMap={projectMembersMap}
-                    selectedMembersIds={assignedMembersIds}
-                    filterMemberAction={handleAssignMember}
-                    exitAction={() => setAddMembersActive(false)}
-                />
-            )}
         </CustomForm>
-    )
+    );
 });
 
 export default TaskAdd;

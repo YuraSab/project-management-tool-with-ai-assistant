@@ -11,7 +11,6 @@ import FormSelect from "../../../ui/select/FormSelect";
 import FormDateInput from "../../../ui/input/FormDateInput";
 import FormButtonSubmit from "../../../ui/button/FormButtonSubmit";
 import CustomButton from "../../../ui/button/CustomButton";
-import AddMember from "../../../modals/AddMember/AddMember";
 import {UserProfile} from "../../../types/user";
 import {useParams} from "react-router-dom";
 import {useProject} from "../../../hooks/project/useProject";
@@ -20,6 +19,7 @@ import {useProjectUsers} from "../../../hooks/project/useProjectUsers.ts";
 import {useUpdateTask} from "../../../hooks/task/useUpdateTask.ts";
 import {useDeleteTask} from "../../../hooks/task/useDeleteTask.ts";
 import {formatDateForInput} from "../../../utils/dateFormat.ts";
+import MemberSelector from "../../../ui/memberSelector/MemberSelector.tsx";
 
 type FormData = Omit<Task, "id" | "projectId" | "assignedMembers" | 'startDate' | 'endDate'> & { startDate: string, endDate: string };
 const getInitialFormData = (task: Task | null): FormData => ({
@@ -92,7 +92,7 @@ const TaskEdit = () => {
                 new Map(taskAssignedMembers.map(m => [m.uid, m]))
             );
         } // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [selectedTask?.id, taskAssignedMembers]);
+    }, [selectedTask?.id]);
 
     return (
         <CustomForm onSubmit={handleUpdate} style={{margin: 15, height: "calc(100vh - 130px)"}} disabled={isPendingUpdate || isPendingDelete}>
@@ -105,9 +105,12 @@ const TaskEdit = () => {
                 <Title text={'Members:'}/>
                 <AssignMembers
                     assignedMembers={localAssignedMembers}
-                    setAddMembersActive={setAddMembersActive}
+                    onSelectMembersActive={() => setAddMembersActive(!addMembersActive)}
                     maxIcons={2} iconSize={28}
                 />
+                {addMembersActive && (
+                    <MemberSelector membersMap={projectMembersMap} selectedMembersIds={localAssignedMembersIds} clickAction={handleAssignMember} />
+                )}
                 <Title text={'Status:'}/>
                 <FormSelect<TaskStatus> name={"status"} value={formData.status} onChange={handleChange} options={["todo", "in_progress", "done"]}/>
                 <Title text={'From:'}/>
@@ -121,16 +124,8 @@ const TaskEdit = () => {
                     <CustomButton text={"Delete task"} onClick={() => handleDelete()} customStyles={{backgroundColor: "#D10000"}}/>
                 </div>
             </div>
-            { addMembersActive &&
-                <AddMember
-                    membersMap={projectMembersMap}
-                    selectedMembersIds={localAssignedMembersIds}
-                    filterMemberAction={handleAssignMember}
-                    exitAction={() => setAddMembersActive(false)}
-                />
-            }
         </CustomForm>
-    )
+    );
 };
 
 export default React.memo(TaskEdit);
