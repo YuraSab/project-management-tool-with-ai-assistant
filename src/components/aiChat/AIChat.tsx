@@ -12,6 +12,7 @@ import {Sender} from "../../types/aiChat.ts";
 import {useShallow} from "zustand/react/shallow";
 import {parseAIActions} from "../../utils/parseAIActions.ts";
 import {getGeminiResponse} from "../../services/aiService.ts";
+import {switchRightPanelView} from "../../utils/panelManager.ts";
 
 const AIChat = () => {
     const profile = useProfileStore((state) => state.profile);
@@ -86,7 +87,7 @@ const AIChat = () => {
                 </div>
                 <div className={styles.actions}>
                     <Trash2 size={18} className={styles.icon} onClick={clearChat}/>
-                    <X size={24} className={styles.icon} onClick={() => setIsAIChatOpened(false)}/>
+                    <X size={24} className={styles.icon} onClick={() => switchRightPanelView('closeAll')}/>
                 </div>
             </div>
             <div className={styles.scrollArea}>
