@@ -6,7 +6,7 @@ import {useProfileStore} from "../../store/profileStore.ts";
 
 interface AssignMembersProps {
     assignedMembers: UserProfile[],
-    setAddMembersActive: (value: boolean) => void,
+    onSelectMembersActive: () => void,
     uniqueText?: string,
     maxIcons?: number,
     iconSize?: number,
@@ -19,14 +19,14 @@ const themeClassMap: Record<HighlightColor, string> = {
     orange: styles._assignedMembers_button__orange,
 };
 
-const AssignMembers = ({assignedMembers, setAddMembersActive, maxIcons, iconSize, uniqueText}: AssignMembersProps) => {
+const AssignMembers = ({assignedMembers, onSelectMembersActive, maxIcons, iconSize, uniqueText}: AssignMembersProps) => {
     const highlightColor = useProfileStore((state) => state.profile.highlightColor);
     return (
         <div className={styles.asignBlock}>
             <div className={styles.assignedMembers}>
                 <button
                     className={highlightColor && themeClassMap[highlightColor]}
-                    onClick={() => setAddMembersActive(true)}
+                    onClick={onSelectMembersActive}
                     type="button"
                 >
                     {uniqueText ?? "＋ Add Member"}

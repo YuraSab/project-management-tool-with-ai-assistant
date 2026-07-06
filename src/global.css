@@ -6,3 +6,11 @@
 .click-effect:active {
     transform: scale(0.7);
 }
+
+.hideScrollbar {
+    &::-webkit-scrollbar {  /* For Chrome, Safari, Edge, Opera */
+        display: none;
+    }
+    scrollbar-width: none;  /* For Firefox */
+    -ms-overflow-style: none;   /* For old Internet Explorer & Edge */
+}
