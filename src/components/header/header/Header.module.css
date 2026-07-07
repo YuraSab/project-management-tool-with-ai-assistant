@@ -9,16 +9,7 @@
     box-sizing: border-box;
 }
 
-.main nav{
+.navigation {
     display: flex;
     gap: 40px;
-}
-.main nav a{
-    color: black;
-    font-size: 22px;
-    font-weight: bold;
-}
-
-.active{
-    color: purple;
 }

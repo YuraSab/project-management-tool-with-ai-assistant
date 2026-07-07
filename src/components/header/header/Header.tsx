@@ -14,7 +14,7 @@ const Header = () => {
             className={styles.main}
             style={{ borderColor: profile.highlightColor, backgroundColor: profile.theme }}
         >
-            <nav>
+            <nav className={styles.navigation}>
                 <CustomNavLink to="/projects">Projects</CustomNavLink>
                 <CustomNavLink to="/people">People</CustomNavLink>
             </nav>
