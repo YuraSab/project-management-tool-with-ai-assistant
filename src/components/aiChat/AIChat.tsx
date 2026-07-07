@@ -17,8 +17,8 @@ import {switchRightPanelView} from "../../utils/panelManager.ts";
 const AIChat = () => {
     const profile = useProfileStore((state) => state.profile);
     const selectedProject = useProjectControlStore((state) => state.selectedProject)
-    const {messages, addMessage, clearChat, setIsAIChatOpened} = useAIChatStore(useShallow((state) => ({
-        messages: state.messages, addMessage: state.addMessage, clearChat: state.clearChat, setIsAIChatOpened: state.setIsAIChatOpened
+    const {messages, addMessage, clearChat} = useAIChatStore(useShallow((state) => ({
+        messages: state.messages, addMessage: state.addMessage, clearChat: state.clearChat
     })));
 
     const {data: projectTasks} = useTasks(selectedProject?.id || "");
@@ -57,7 +57,6 @@ const AIChat = () => {
                 members: projectUsers
             };
 
-            // const aiRawResponse = `Ось зміни. ACTION: {"type": "UPDATE_TASK", "title": "Rofler", "payload": {"id": "7gy1WlyQWucUee6CMkoE", "description": "tiktok audience"}}`;
             const aiRawResponse = await getGeminiResponse(userText, context, historyForGemini);
             const { cleanText, actions } = parseAIActions(aiRawResponse);
             addMessage({
@@ -77,9 +76,7 @@ const AIChat = () => {
     };
 
     return (
-        <div
-            className={styles.container} style={{backgroundColor: profile.theme === 'black' ? '#1e1e1e' : '#ffffff'}}
-        >
+        <div className={styles.container} style={{backgroundColor: profile.theme === 'black' ? '#1e1e1e' : '#ffffff'}}>
             <div className={styles.header} style={{borderBottom: `1px solid ${profile.highlightColor}44`}}>
                 <div className={styles.title}>
                     <GeminiIcon size={24}/>
@@ -94,6 +91,16 @@ const AIChat = () => {
                 <Messages/>
                 <div ref={messagesEndRef}/>
             </div>
+            {isLoading && (
+                <div className={styles.aiTypingBlock}>
+                    <GeminiIcon size={28}/>
+                    <div className={styles.aiTyping}>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </div>
+                </div>
+            )}
             <div className={styles.inputArea}>
                 <input
                     type="text"
