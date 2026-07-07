@@ -1,5 +1,5 @@
 import {useParams} from "react-router-dom"
-import {TASK_PRIORITIES, TASK_STATUSES, TaskPriority, TaskStatus} from "../../../types/task"
+import {SortOption, TASK_PRIORITIES, TASK_STATUSES, TaskPriority, TaskStatus} from "../../../types/task"
 import CheckBoxStatus from "../../../ui/checkbox/CheckBoxStatus"
 import DateInput from "../../../ui/input/DateInput"
 import CustomSelect, {sortOptions} from "../../../ui/select/CustomSelect"
@@ -14,6 +14,8 @@ import {useShallow} from "zustand/react/shallow";
 import Title from "../../../ui/title/Title.tsx";
 import MemberSelector from "../../../ui/memberSelector/MemberSelector.tsx";
 import TextInput from "../../../ui/input/TextInput.tsx";
+import FormSelect from "../../../ui/select/FormSelect.tsx";
+import {ProjectStatus} from "../../../types/project.ts";
 
 const ProjectFilters: React.FC = () => {
     const { projectId } = useParams();

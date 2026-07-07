@@ -1,9 +1,33 @@
 .customSelect {
     margin-top: 4px;
-    padding: 8px;
+    padding: 8px 32px 8px 8px;
     border-radius: 8px;
     border: 1px solid #cbd5e1;
     font-size: 14px;
     background-color: white;
     color: black;
-  }
+    cursor: pointer;
+    /*off browser behavior*/
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    box-shadow: none;
+    /* custom SVG-arrow */
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'></polyline></svg>");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 14px;
+}
+
+/*rid of browser frames on hover */
+.customSelect:hover {
+    outline: transparent none !important;
+    box-shadow: none !important;
+}
+
+/*rid of browser frames on focus*/
+.customSelect:focus,
+.customSelect:focus-visible {
+    outline: none !important;
+    box-shadow: none !important;
+}

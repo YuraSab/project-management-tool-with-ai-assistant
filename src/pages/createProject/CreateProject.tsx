@@ -99,7 +99,7 @@ const CreateProject = () => {
                 <Title text={'Status:'}/>
                 <FormSelect<ProjectStatus> name={"status"} value={formData.status} onChange={handleChange} options={[ProjectStatus.Planned, ProjectStatus.InProgress, ProjectStatus.Completed]}/>
                 <div className={styles.buttonBlock}>
-                    <FormButtonSubmit text={"Create Project"} customStyles={{width: 240}}/>
+                    <FormButtonSubmit children={"Create Project"} customStyles={{ width: 240 }} disabled={isPending}/>
                 </div>
             </CustomForm>
         </FormLayout>

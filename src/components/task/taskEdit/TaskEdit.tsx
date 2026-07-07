@@ -120,8 +120,8 @@ const TaskEdit = () => {
                 <Title text={'Priority:'}/>
                 <FormSelect<TaskPriority> name={"priority"} value={formData.priority} onChange={handleChange} options={["low", "medium", "high", "none"]}/>
                 <div className={styles.buttonBlock}>
-                    <FormButtonSubmit text={"Save changes"}/>
-                    <CustomButton text={"Delete task"} onClick={() => handleDelete()} customStyles={{backgroundColor: "#D10000"}}/>
+                    <FormButtonSubmit children={"Save changes"} disabled={isPendingUpdate || isPendingDelete}/>
+                    <CustomButton children={"Delete task"} onClick={() => handleDelete()} customStyles={{backgroundColor: "#D10000"}} disabled={isPendingUpdate || isPendingDelete}/>
                 </div>
             </div>
         </CustomForm>

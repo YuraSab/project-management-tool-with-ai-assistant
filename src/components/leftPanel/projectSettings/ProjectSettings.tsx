@@ -123,9 +123,9 @@ const ProjectSettings: React.FC = () => {
                 <MemberSelector membersMap={totalMembersMap} selectedMembersIds={localAssignedMembersIds} clickAction={handleAssignMember} />
             )}
             <div className={styles.buttonBlock}>
-                <CustomButton text={"Save changes"} onClick={() => handleUpdateProject()} disabled={editProjectMutation.isPending}/>
+                <CustomButton children={"Save changes"} onClick={() => handleUpdateProject()} disabled={editProjectMutation.isPending}/>
                 {profile?.role === "admin" && (
-                    <CustomButton text={"Delete project"} onClick={() => handleDeleteProject()} customStyles={{backgroundColor: "#D10000"}}/>
+                    <CustomButton children={"Delete project"} onClick={() => handleDeleteProject()} customStyles={{backgroundColor: "#D10000"}}/>
                 )}
             </div>
         </div>

@@ -21,6 +21,7 @@ const Register = () => {
     const [formData, setFormData] = useState(INITIAL_FORM_DATA);
     const [showPassword, setShowPassword] = useState(false);
     const [error, setError] = useState<string | null>(null);
+    const [isLoading, setIsLoading] = useState(false);
 
     const handleChange = useCallback((event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const { name, value } = event.target;
@@ -33,11 +34,14 @@ const Register = () => {
         if ( formData.password !== formData.repeatedPassword )
             return setError("Passwords do not match!");
         try {
+            setIsLoading(true);
             await register(formData.email, formData.password, formData.name);
             navigate('/');
         } catch(error) {
             const message = handleAuthError(error);
             setError(message);
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -48,7 +52,7 @@ const Register = () => {
             <FormTextInput name={"email"} value={formData.email} onChange={handleChange} placeholder="email" />
             <FormPasswordInput  name={"password"} value={formData.password} onChange={handleChange} required showPassword={showPassword} setShowPassword={setShowPassword} placeholder={"password"} />
             <FormPasswordInput  name={"repeatedPassword"} value={formData.repeatedPassword} onChange={handleChange} required showPassword={showPassword} setShowPassword={setShowPassword} placeholder={"password"} />
-            <FormButtonSubmit text={"Register"}/>
+            <FormButtonSubmit children={"Register"} disabled={isLoading}/>
             <p className={styles.link} onClick={() => navigate("/login")}>or, you already have account</p>
             <h2 style={{color: 'red'}}>{error}</h2>
         </AuthFormLayout>
