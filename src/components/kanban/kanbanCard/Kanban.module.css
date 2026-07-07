@@ -15,13 +15,15 @@
     display: -webkit-box;
     -webkit-line-clamp: 1; /* максимум 1 рядок */
     -webkit-box-orient: vertical;
-  }
-  
-  .description {
+    margin-bottom: 6px;
+}
+
+.description {
     word-break: break-word;
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
-    -webkit-line-clamp: 2; /* максимум 2 рядки */
+    -webkit-line-clamp: 3; /* максимум 2 рядки */
     -webkit-box-orient: vertical;
-  }
+    white-space: pre-line;
+}
