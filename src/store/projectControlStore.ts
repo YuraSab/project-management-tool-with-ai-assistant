@@ -37,6 +37,8 @@ interface ProjectControlState {
     clearFiltersAndSorts: () => void;
     isProjectSettingsActive: boolean;
     setIsProjectSettingsActive: () => void;
+    searchTermFilter: string;
+    setSearchTermFilter: (value: string) => void;
 }
 
 export const useProjectControlStore = create<ProjectControlState>((set, get) => ({
@@ -114,4 +116,6 @@ export const useProjectControlStore = create<ProjectControlState>((set, get) => 
     },
     isProjectSettingsActive: false,
     setIsProjectSettingsActive: () => set({ isProjectSettingsActive: !get().isProjectSettingsActive }),
+    searchTermFilter: '',
+    setSearchTermFilter: (value) => set({ searchTermFilter: value }),
 }));

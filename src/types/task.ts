@@ -8,6 +8,7 @@ export interface TaskFilters {
     start: string,
     end: string,
     priority: TaskPriority,
+    searchTerm: string,
 }
 export type SortOption = "Start date dec" | "Start date inc" | "End date dec" | "End date inc" | "Create date dec"| "Create date inc" | "none";
 

@@ -13,6 +13,7 @@ import {UserProfile} from "../../../types/user.ts";
 import {useShallow} from "zustand/react/shallow";
 import Title from "../../../ui/title/Title.tsx";
 import MemberSelector from "../../../ui/memberSelector/MemberSelector.tsx";
+import TextInput from "../../../ui/input/TextInput.tsx";
 
 const ProjectFilters: React.FC = () => {
     const { projectId } = useParams();
@@ -24,14 +25,16 @@ const ProjectFilters: React.FC = () => {
         endDateFilter, setEndDateFilter,
         priorityFilter, setPriorityFilter,
         sortValue, setSortValue,
-        setUserFilter, setUsersFilter
+        setUserFilter, setUsersFilter,
+        searchTermFilter, setSearchTermFilter
     } = useProjectControlStore(useShallow((state) => ({
         statusFilter: state.statusFilter, setStatusFilter: state.setStatusFilter,
         startDateFilter: state.startDateFilter, setStartDateFilter: state.setStartDateFilter,
         endDateFilter: state.endDateFilter, setEndDateFilter: state.setEndDateFilter,
         priorityFilter: state.priorityFilter, setPriorityFilter: state.setPriorityFilter,
         sortValue: state.sortValue, setSortValue: state.setSortValue,
-        setUserFilter: state.setUserFilter, setUsersFilter: state.setUsersFilter
+        setUserFilter: state.setUserFilter, setUsersFilter: state.setUsersFilter,
+        searchTermFilter: state.searchTermFilter, setSearchTermFilter: state.setSearchTermFilter
     })));
     const [addMembersActive, setAddMembersActive] = useState<boolean>(false);
     const [localAssignedMembersIds, setLocalAssignedMembersIds] = useState<string[]>([]);
@@ -97,6 +100,8 @@ const ProjectFilters: React.FC = () => {
             <DateInput value={endDateFilter} onChange={setEndDateFilter}/>
             <Title text={'Sort by'}/>
             <CustomSelect value={sortValue} onChange={setSortValue} options={sortOptions}/>
+            <Title text={'Search'}/>
+            <TextInput name={'search'} value={searchTermFilter} onChange={setSearchTermFilter}/>
         </div>
     );
 };

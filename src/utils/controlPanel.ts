@@ -8,7 +8,8 @@ export const getFilteredTasks = (tasks: Task[], status: TaskStatus, filters: Tas
         (filters.users.length === 0 || filters.users.some(u => task.assignedMembers?.includes(u.uid))) &&
         (!task.startDate || getTime(filters.start) === 0 || getTime(task.startDate) >= getTime(filters.start)) &&
         (!task.endDate || getTime(filters.end) === 0 || getTime(task.endDate) <= getTime(filters.end)) &&
-        (!filters.priority || filters.priority.length === 0 || (task.priority && filters.priority.includes(task.priority)))
+        (!filters.priority || filters.priority.length === 0 || (task.priority && filters.priority.includes(task.priority))) &&
+        (!filters.searchTerm || filters.searchTerm.trim().length === 0 || (task.title.includes(filters.searchTerm) || task.description.includes(filters.searchTerm)))
     ) || [];
 };
 
