@@ -12,6 +12,7 @@ const Login = () => {
     const navigate = useNavigate();
     const [formData, setFormData] = useState({ email: "", password: "" });
     const [showPassword, setShowPassword] = useState<boolean>(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     const handleChange = useCallback((event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const { name, value } = event.target;
@@ -20,23 +21,23 @@ const Login = () => {
 
     const handleSubmit = async () => {
         try {
+            setIsLoading(true);
             await login(formData.email, formData.password);
             navigate('/');
         } catch (error) {
             const message = handleAuthError(error);
             alert(message);
+        } finally {
+            setIsLoading(false);
         }
     };
-
-    // if (isLoading)
-    //     return <div>Loading</div>; // todo - real loader
 
     return (
         <AuthFormLayout onSubmit={handleSubmit}>
             <h1 className={styles.caption}>Login</h1>
             <FormTextInput name={"email"} value={formData.email} onChange={handleChange} required placeholder={"email"}/>
             <FormPasswordInput name={"password"} value={formData.password} onChange={handleChange} required showPassword={showPassword} setShowPassword={setShowPassword} placeholder={"password"}/>
-            <FormButtonSubmit text={"Login"}/>
+            <FormButtonSubmit children={"Login"} disabled={isLoading}/>
             <p className={styles.link} onClick={() => navigate("/register")}>or, sign up</p>
         </AuthFormLayout>
     );

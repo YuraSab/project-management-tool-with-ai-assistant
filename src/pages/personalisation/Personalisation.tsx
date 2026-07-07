@@ -37,7 +37,7 @@ const Personalisation = () => {
             <div className={styles.palleteBlock}>
                 { ThemeSet.map((color) => <CustomColorIcon key={color} backgroundColor={theme} field={'theme'} onClick={handleChangeColor} currentColor={theme}/> ) }
             </div>
-            <CustomButton text={"Save changes"} onClick={handleUpdateTheme} customStyles={{width: 200}}/>
+            <CustomButton children={"Save changes"} onClick={handleUpdateTheme} customStyles={{width: 200}}/>
         </div>
     );
 };

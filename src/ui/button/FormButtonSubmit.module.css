@@ -11,8 +11,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  /*background-color: #640564;*/
+
 }
 .customSubmitButton:hover {
   background-color: rgba(128, 0, 128, 0.832);
 }
-  

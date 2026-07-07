@@ -28,7 +28,7 @@ const CreateUser = () => {
     const [showPassword, setShowPassword] = useState<boolean>(false);
 
     const queryClient = useQueryClient();
-    const mutation = useMutation({
+    const { mutation, isPending } = useMutation({
         mutationFn: createUser,
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ["users"] });
@@ -82,7 +82,7 @@ const CreateUser = () => {
                 <label>Status:
                     <FormSelect name={"role"} value={formData.role} onChange={handleChange} options={["member", "manager", "admin"]}/>
                 </label>
-                <FormButtonSubmit text={"Create user"}/>
+                <FormButtonSubmit children={"Create user"} disabled={isPending}/>
             </CustomForm>
         </FormLayout>
     )

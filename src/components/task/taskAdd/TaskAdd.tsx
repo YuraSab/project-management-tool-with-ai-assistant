@@ -102,7 +102,7 @@ const TaskAdd = React.memo(() => {
                 <FormDateInput name={"startDate"} value={formData.startDate} onChange={handleChange}/>
                 <Title text={'End date:'}/>
                 <FormDateInput name={"endDate"} value={formData.endDate} onChange={handleChange}/>
-                <FormButtonSubmit text={"Save changes"} customStyles={{width: "100%", marginTop: 16}} disabled={isPending}/>
+                <FormButtonSubmit children={"Save changes"} customStyles={{ width: "100%", marginTop: 16 }} disabled={isPending}/>
             </div>
         </CustomForm>
     );

@@ -1,24 +1,24 @@
 import React from "react";
 import styles from "./FormButtonSubmit.module.css";
 import {useProfileStore} from "../../store/profileStore.ts";
+import {HighlightColor} from "../../types/user.ts";
 
-interface CustomButtonProps {
-    text: string,
-    onClick: (value: any) => void,
+interface CustomButtonProps extends React.ComponentPropsWithoutRef<'button'> {
     customStyles?: React.CSSProperties
 }
 
-const CustomButton = ({ text, onClick, customStyles }: CustomButtonProps) => {
+const CustomButton = ({ children, customStyles, disabled, ...rest }: CustomButtonProps) => {
     const highlightColor = useProfileStore((state) => state.profile.highlightColor);
     return <button
-        onClick={onClick}
-        className={styles.customSubmitButton} 
+        className={styles.customSubmitButton}
         style={{
-            backgroundColor: highlightColor,
-            ...customStyles
+            backgroundColor: disabled ? ('#640564') : (highlightColor ?? HighlightColor.Purple),
+            ...customStyles,
         }}
+        disabled={disabled}
+        {...rest}
     >
-            {text}
+            {children}
     </button>
 }
 
