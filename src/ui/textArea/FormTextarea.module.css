@@ -3,9 +3,12 @@
   padding: 8px;
   border-radius: 8px;
   border: 1px solid #cbd5e1;
-  font-size: 14px;
-  resize: vertical;
-  min-height: 80px;
   background-color: white;
+  font-size: 14px;
+  font-family: inherit;
   color: black;
+  width: 100%;
+  box-sizing: border-box;
+  resize: none;
+  min-height: 150px;
 }
