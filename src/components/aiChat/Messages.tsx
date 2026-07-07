@@ -15,10 +15,9 @@ const Messages = () => {
     const { handleApply, handleCancel } = useAIChatActions();
 
     return (
-        <div className={styles.messagesList}>
+        <div className={`${styles.messagesList} hideScrollbar`}>
             {messages.map((m, index) => (
-                <div key={index}
-                     className={`${styles.messageWrapper} ${m.role === Sender.user ? styles.userWrapper : styles.aiWrapper}`}>
+                <div key={index} className={`${styles.messageWrapper} ${m.role === Sender.user ? styles.userWrapper : styles.aiWrapper}`}>
                     <div className={styles.avatar}>
                         {m.role === Sender.user
                             ? <CustomUserIcon title={profile.displayName?.[0]} size={32}/>
