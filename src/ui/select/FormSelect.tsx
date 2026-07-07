@@ -1,9 +1,9 @@
 import { ProjectStatus } from "../../types/project";
-import { TaskPriority, TaskStatus } from "../../types/task";
+import {SortOption, TaskPriority, TaskStatus} from "../../types/task";
 import { Role } from "../../types/user";
 import styles from "./FormSelect.module.css";
 
-type SelectOption = Role | ProjectStatus | TaskStatus | TaskPriority;
+type SelectOption = Role | ProjectStatus | TaskStatus | TaskPriority | SortOption;
 
 interface FormSelectProps<T extends SelectOption> {
     name: string, 
