@@ -20,6 +20,7 @@ import {useUpdateTask} from "../../../hooks/task/useUpdateTask.ts";
 import {useDeleteTask} from "../../../hooks/task/useDeleteTask.ts";
 import {formatDateForInput} from "../../../utils/dateFormat.ts";
 import MemberSelector from "../../../ui/memberSelector/MemberSelector.tsx";
+import {switchRightPanelView} from "../../../utils/panelManager.ts";
 
 type FormData = Omit<Task, "id" | "projectId" | "assignedMembers" | 'startDate' | 'endDate'> & { startDate: string, endDate: string };
 const getInitialFormData = (task: Task | null): FormData => ({
@@ -37,7 +38,6 @@ const TaskEdit = () => {
     const selectedTask = useProjectControlStore((state) => state.selectedTask);
     const setIsRightPanelActive = useProjectControlStore((state) => state.setIsRightPanelActive);
     const setIsEditTaskActive = useProjectControlStore((state) => state.setIsEditTaskActive);
-    const clearSelectedTask = useProjectControlStore((state) => state.clearSelectedTask);
 
     const { data: project } = useProject(projectId || "");
     const { data: projectMembers } = useProjectUsers(project?.assignedMembers || []);
@@ -81,9 +81,9 @@ const TaskEdit = () => {
     const handleDelete = useCallback(() => {
         if (window.confirm("Are you sure you wanna delete this task?")) {
             deleteTask(selectedTask?.id || "");
-            clearSelectedTask();
+            switchRightPanelView('closeAll');
         }
-    }, [selectedTask, deleteTask, clearSelectedTask]);
+    }, [selectedTask, deleteTask]);
 
     useEffect(() => {
         if(selectedTask && taskAssignedMembers) {
@@ -121,7 +121,7 @@ const TaskEdit = () => {
                 <FormSelect<TaskPriority> name={"priority"} value={formData.priority} onChange={handleChange} options={["low", "medium", "high", "none"]}/>
                 <div className={styles.buttonBlock}>
                     <FormButtonSubmit children={"Save changes"} disabled={isPendingUpdate || isPendingDelete}/>
-                    <CustomButton children={"Delete task"} onClick={() => handleDelete()} customStyles={{backgroundColor: "#D10000"}} disabled={isPendingUpdate || isPendingDelete}/>
+                    <CustomButton children={"Delete task"} onClick={handleDelete} customStyles={{backgroundColor: "#D10000"}} disabled={isPendingUpdate || isPendingDelete}/>
                 </div>
             </div>
         </CustomForm>
