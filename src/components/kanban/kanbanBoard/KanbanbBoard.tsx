@@ -23,7 +23,9 @@ const KanbanBoard: React.FC<KanbanBoardProps> = ({ projectId }) => {
         end: state.endDateFilter,
         priority: state.priorityFilter,
         sortValue: state.sortValue,
-        searchTermFilter: state.searchTermFilter
+        searchTermFilter: state.searchTermFilter,
+        isInitialLoad: state.isInitialLoad,
+        unassignedTasks: state.showUnassignedTasks
     })));
     const status = useProjectControlStore(useShallow(state => ({
         isLeftPanelActive: state.isLeftPanelActive,
@@ -49,7 +51,9 @@ const KanbanBoard: React.FC<KanbanBoardProps> = ({ projectId }) => {
             start: filters.start,
             end: filters.end,
             priority: filters.priority,
-            searchTerm: filters.searchTermFilter
+            searchTerm: filters.searchTermFilter,
+            isInitialLoad: filters.isInitialLoad,
+            unassignedTasks: filters.unassignedTasks
         } as TaskFilters;
 
         const processTasks = (status: TaskStatus) => {
@@ -62,7 +66,7 @@ const KanbanBoard: React.FC<KanbanBoardProps> = ({ projectId }) => {
             in_progress: processTasks('in_progress'),
             done: processTasks('done')
         };
-    }, [projectTasks, filters.users, filters.start, filters.end, filters.priority, filters.sortValue, filters.searchTermFilter]);
+    }, [projectTasks, filters.users, filters.start, filters.end, filters.priority, filters.sortValue, filters.searchTermFilter, filters.isInitialLoad, filters.unassignedTasks]);
 
     const shouldShowColumn = useCallback((status: TaskStatus): boolean => {
         return filters.status.length === 0 || filters.status.includes(status);

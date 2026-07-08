@@ -1,5 +1,5 @@
 import {useParams} from "react-router-dom"
-import {SortOption, TASK_PRIORITIES, TASK_STATUSES, TaskPriority, TaskStatus} from "../../../types/task"
+import {TASK_PRIORITIES, TASK_STATUSES, TaskPriority, TaskStatus} from "../../../types/task"
 import CheckBoxStatus from "../../../ui/checkbox/CheckBoxStatus"
 import DateInput from "../../../ui/input/DateInput"
 import CustomSelect, {sortOptions} from "../../../ui/select/CustomSelect"
@@ -14,8 +14,7 @@ import {useShallow} from "zustand/react/shallow";
 import Title from "../../../ui/title/Title.tsx";
 import MemberSelector from "../../../ui/memberSelector/MemberSelector.tsx";
 import TextInput from "../../../ui/input/TextInput.tsx";
-import FormSelect from "../../../ui/select/FormSelect.tsx";
-import {ProjectStatus} from "../../../types/project.ts";
+import CustomCheckBox from "../../../ui/checkbox/CustomCheckbox.tsx";
 
 const ProjectFilters: React.FC = () => {
     const { projectId } = useParams();
@@ -28,7 +27,9 @@ const ProjectFilters: React.FC = () => {
         priorityFilter, setPriorityFilter,
         sortValue, setSortValue,
         setUserFilter, setUsersFilter,
-        searchTermFilter, setSearchTermFilter
+        searchTermFilter, setSearchTermFilter,
+        isInitialLoad, setIsInitialLoad,
+        showUnassignedTasks, setShowUnassignedTasks,
     } = useProjectControlStore(useShallow((state) => ({
         statusFilter: state.statusFilter, setStatusFilter: state.setStatusFilter,
         startDateFilter: state.startDateFilter, setStartDateFilter: state.setStartDateFilter,
@@ -36,7 +37,9 @@ const ProjectFilters: React.FC = () => {
         priorityFilter: state.priorityFilter, setPriorityFilter: state.setPriorityFilter,
         sortValue: state.sortValue, setSortValue: state.setSortValue,
         setUserFilter: state.setUserFilter, setUsersFilter: state.setUsersFilter,
-        searchTermFilter: state.searchTermFilter, setSearchTermFilter: state.setSearchTermFilter
+        searchTermFilter: state.searchTermFilter, setSearchTermFilter: state.setSearchTermFilter,
+        isInitialLoad: state.isInitialLoad, setIsInitialLoad: state.setIsInitialLoad,
+        showUnassignedTasks: state.showUnassignedTasks, setShowUnassignedTasks: state.setShowUnassignedTasks,
     })));
     const [addMembersActive, setAddMembersActive] = useState<boolean>(false);
     const [localAssignedMembersIds, setLocalAssignedMembersIds] = useState<string[]>([]);
@@ -45,8 +48,9 @@ const ProjectFilters: React.FC = () => {
         if (projectMembers && projectMembers.length > 0) {
             setLocalAssignedMembersIds(projectMembers.map(m => m.uid));
             setUsersFilter(projectMembers);
+            setIsInitialLoad(false);
         }
-    }, [projectMembers, setUsersFilter]);
+    }, [projectMembers, setUsersFilter, setIsInitialLoad]);
 
     const handleMemberClick = useCallback((member: UserProfile) => {
         setUserFilter(member);
@@ -63,7 +67,7 @@ const ProjectFilters: React.FC = () => {
         )
     ), [projectMembers]);
 
-    return(
+    return (
         <div className={styles.filterSortPanel}>
             <Title text={'Status'}/>
             <div className={styles.checkboxBlock}>
@@ -96,6 +100,7 @@ const ProjectFilters: React.FC = () => {
             {addMembersActive && (
                 <MemberSelector membersMap={projectMembersMap} selectedMembersIds={localAssignedMembersIds || []} clickAction={handleMemberClick}/>
             )}
+            <CustomCheckBox checked={showUnassignedTasks} onChange={setShowUnassignedTasks}/>
             <Title text={'From'}/>
             <DateInput value={startDateFilter} onChange={setStartDateFilter}/>
             <Title text={'To'}/>

@@ -5,7 +5,11 @@ export const getFilteredTasks = (tasks: Task[], status: TaskStatus, filters: Tas
     if (!tasks || tasks.length === 0) return [];
     return tasks?.filter(task =>
         task.status === status &&
-        (filters.users.length === 0 || filters.users.some(u => task.assignedMembers?.includes(u.uid))) &&
+        (filters.isInitialLoad || (
+                (task.assignedMembers.length === 0 && filters.unassignedTasks)
+                ||
+                (filters.users.some(u => task.assignedMembers?.includes(u.uid)))
+        )) &&
         (!task.startDate || getTime(filters.start) === 0 || getTime(task.startDate) >= getTime(filters.start)) &&
         (!task.endDate || getTime(filters.end) === 0 || getTime(task.endDate) <= getTime(filters.end)) &&
         (!filters.priority || filters.priority.length === 0 || (task.priority && filters.priority.includes(task.priority))) &&

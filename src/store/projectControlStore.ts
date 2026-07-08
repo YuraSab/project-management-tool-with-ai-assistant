@@ -39,6 +39,10 @@ interface ProjectControlState {
     setIsProjectSettingsActive: () => void;
     searchTermFilter: string;
     setSearchTermFilter: (value: string) => void;
+    isInitialLoad: boolean;
+    setIsInitialLoad: (value: boolean) => void;
+    showUnassignedTasks: boolean;
+    setShowUnassignedTasks: (value: boolean) => void;
 }
 
 export const useProjectControlStore = create<ProjectControlState>((set, get) => ({
@@ -118,4 +122,8 @@ export const useProjectControlStore = create<ProjectControlState>((set, get) => 
     setIsProjectSettingsActive: () => set({ isProjectSettingsActive: !get().isProjectSettingsActive }),
     searchTermFilter: '',
     setSearchTermFilter: (value) => set({ searchTermFilter: value }),
+    isInitialLoad: true,
+    setIsInitialLoad: (value) => set({ isInitialLoad: value }),
+    showUnassignedTasks: true,
+    setShowUnassignedTasks: (value) => set({ showUnassignedTasks: value }),
 }));
