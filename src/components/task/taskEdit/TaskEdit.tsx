@@ -75,6 +75,7 @@ const TaskEdit = () => {
             startDate: formData.startDate ? new Date(formData.startDate) : null,
             endDate: formData.endDate ? new Date(formData.endDate) : null,
         });
+        setAddMembersActive(false);
     }, [formData, localAssignedMembersMap, selectedTask, updateTask]);
 
     const handleDelete = useCallback(() => {

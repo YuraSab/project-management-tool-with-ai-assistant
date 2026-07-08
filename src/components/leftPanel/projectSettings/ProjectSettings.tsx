@@ -90,6 +90,7 @@ const ProjectSettings: React.FC = () => {
             startDate: formData.startDate ? new Date(formData.startDate) : null,
             endDate: formData.startDate ? new Date(formData.endDate) : null,
         });
+        setAddMembersActive(false);
     };
 
     const handleDeleteProject  = async () => {

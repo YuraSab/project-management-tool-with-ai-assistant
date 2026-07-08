@@ -73,12 +73,13 @@ const TaskAdd = React.memo(() => {
             onSuccess: () => {
                 setFormData(INITIAL_TASK);
                 setAssignedMembersMap(new Map);
+                setAddMembersActive(false);
             }
         });
     };
 
     return (
-        <CustomForm disabled={isPending} onSubmit={handleSubmit} style={{margin: 15, height: "calc(100vh - 130px)"}}>
+        <CustomForm onSubmit={handleSubmit} disabled={isPending} style={{margin: 15, height: "calc(100vh - 130px)"}}>
             <RightPanelHeader taskTitle={"Add task"}/>
             <div className={styles.rightPanelChild}>
                 <Title text={'Title:'}/>
