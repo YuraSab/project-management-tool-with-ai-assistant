@@ -9,7 +9,6 @@ import FormTextarea from "../../../ui/textArea/FormTextarea";
 import AssignMembers from "../../asignMembers/AssignMembers";
 import FormSelect from "../../../ui/select/FormSelect";
 import FormDateInput from "../../../ui/input/FormDateInput";
-import FormButtonSubmit from "../../../ui/button/FormButtonSubmit";
 import CustomButton from "../../../ui/button/CustomButton";
 import {UserProfile} from "../../../types/user";
 import {useParams} from "react-router-dom";
@@ -120,7 +119,7 @@ const TaskEdit = () => {
                 <Title text={'Priority:'}/>
                 <FormSelect<TaskPriority> name={"priority"} value={formData.priority} onChange={handleChange} options={["low", "medium", "high", "none"]}/>
                 <div className={styles.buttonBlock}>
-                    <FormButtonSubmit children={"Save changes"} disabled={isPendingUpdate || isPendingDelete}/>
+                    <CustomButton children={"Save changes"} disabled={isPendingUpdate || isPendingDelete} type={'submit'}/>
                     <CustomButton children={"Delete task"} onClick={handleDelete} customStyles={{backgroundColor: "#D10000"}} disabled={isPendingUpdate || isPendingDelete}/>
                 </div>
             </div>

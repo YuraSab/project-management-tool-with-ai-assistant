@@ -7,7 +7,6 @@ import FormTextarea from "../../../ui/textArea/FormTextarea";
 import RightPanelHeader from "../../rightPanel/rightPanelHeader/RightPanelHeader";
 import AssignMembers from "../../asignMembers/AssignMembers.tsx";
 import FormSelect from "../../../ui/select/FormSelect";
-import FormButtonSubmit from "../../../ui/button/FormButtonSubmit";
 import styles from "./TaskAdd.module.css";
 import FormDateInput from "../../../ui/input/FormDateInput";
 import {useProject} from "../../../hooks/project/useProject";
@@ -16,6 +15,7 @@ import {useProjectUsers} from "../../../hooks/project/useProjectUsers.ts";
 import {useCreateTask} from "../../../hooks/task/useCreateTask.ts";
 import {UserProfile} from "../../../types/user.ts";
 import MemberSelector from "../../../ui/memberSelector/MemberSelector.tsx";
+import CustomButton from "../../../ui/button/CustomButton.tsx";
 
 type FormData = Pick<Task, 'title'| 'description'| 'status' | 'priority'> & { startDate: string, endDate: string };
 
@@ -102,7 +102,7 @@ const TaskAdd = React.memo(() => {
                 <FormDateInput name={"startDate"} value={formData.startDate} onChange={handleChange}/>
                 <Title text={'End date:'}/>
                 <FormDateInput name={"endDate"} value={formData.endDate} onChange={handleChange}/>
-                <FormButtonSubmit children={"Save changes"} customStyles={{ width: "100%", marginTop: 16 }} disabled={isPending}/>
+                <CustomButton children={"Save changes"} customStyles={{ width: "100%", marginTop: 16 }} disabled={isPending} type={'submit'}/>
             </div>
         </CustomForm>
     );
