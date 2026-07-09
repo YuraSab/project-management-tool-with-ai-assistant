@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import {SortOption, Task, TaskPriority, TaskStatus} from "../types/task";
+import {SortOption, Task, TASK_PRIORITIES, TASK_STATUSES, TaskPriority, TaskStatus} from "../types/task";
 import { Project, ProjectStatus } from "../types/project";
 import {UserProfile} from "../types/user.ts";
 
@@ -61,12 +61,9 @@ export const useProjectControlStore = create<ProjectControlState>((set, get) => 
     setIsEditTaskActive: (value) => set({ isEditTaskActive: value }),
     isAddTaskActive: false,
     setIsAddTaskActive: (value) => set({ isAddTaskActive: value }),
-    statusFilter: [],
+    statusFilter: [...TASK_STATUSES],
     setStatusFilter: (value) => {
         const currentStatuses = get().statusFilter;
-        // currentStatuses.includes(value)
-        // ? set({ statusFilter: currentStatuses.filter((el) => el != value) })
-        // : set({ statusFilter: [...currentStatuses, value] })
         set({
             statusFilter: currentStatuses.includes(value)
                 ? currentStatuses.filter((el) => el != value)
@@ -76,9 +73,6 @@ export const useProjectControlStore = create<ProjectControlState>((set, get) => 
     usersFilter: [],
     setUserFilter: (chosenUser) => {
         const currentUsers = get().usersFilter;
-        // currentUsers.some((u) => u.id === chosenUser.uid)
-        // ? set({ usersFilter: currentUsers.filter((el) => el.id != chosenUser.uid) })
-        // : set({ usersFilter: [...currentUsers, chosenUser] });
         set({
             usersFilter: currentUsers.some((u) => u.uid === chosenUser.uid)
                 ? currentUsers.filter((el) => el.uid != chosenUser.uid)
@@ -90,12 +84,9 @@ export const useProjectControlStore = create<ProjectControlState>((set, get) => 
     setStartDateFilter: (value) => set({ startDateFilter: value }),
     endDateFilter: "",
     setEndDateFilter: (value) => set({ endDateFilter: value }),
-    priorityFilter: [],
+    priorityFilter: [...TASK_PRIORITIES],
     setPriorityFilter: (value) => {
         const currentPriorities = get().priorityFilter;
-        // currentPriorities.includes(value)
-        // ? set({ priorityFilter: currentPriorities.filter((el) => el != value) })
-        // : set({ priorityFilter: [...currentPriorities, value] })
         set({
             priorityFilter: currentPriorities.includes(value)
             ? currentPriorities.filter((el) => el != value)

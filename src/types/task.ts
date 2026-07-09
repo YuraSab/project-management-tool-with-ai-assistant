@@ -27,5 +27,5 @@ export interface Task {
     createdAt?: Timestamp | Date | null,
 }
 
-export const TASK_STATUSES: TaskStatus[] = ["todo", "in_progress", "done"];
-export const TASK_PRIORITIES: TaskPriority[] = ["low", "medium", "high"];
+export const TASK_STATUSES: TaskStatus[] = ["todo", "in_progress", "done"] as const;
+export const TASK_PRIORITIES: TaskPriority[] = ["low", "medium", "high"] as const;

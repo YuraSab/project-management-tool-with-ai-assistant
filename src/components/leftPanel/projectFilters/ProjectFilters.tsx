@@ -28,7 +28,7 @@ const ProjectFilters: React.FC = () => {
         sortValue, setSortValue,
         setUserFilter, setUsersFilter,
         searchTermFilter, setSearchTermFilter,
-        isInitialLoad, setIsInitialLoad,
+        setIsInitialLoad,
         showUnassignedTasks, setShowUnassignedTasks,
     } = useProjectControlStore(useShallow((state) => ({
         statusFilter: state.statusFilter, setStatusFilter: state.setStatusFilter,
@@ -38,7 +38,7 @@ const ProjectFilters: React.FC = () => {
         sortValue: state.sortValue, setSortValue: state.setSortValue,
         setUserFilter: state.setUserFilter, setUsersFilter: state.setUsersFilter,
         searchTermFilter: state.searchTermFilter, setSearchTermFilter: state.setSearchTermFilter,
-        isInitialLoad: state.isInitialLoad, setIsInitialLoad: state.setIsInitialLoad,
+        setIsInitialLoad: state.setIsInitialLoad,
         showUnassignedTasks: state.showUnassignedTasks, setShowUnassignedTasks: state.setShowUnassignedTasks,
     })));
     const [addMembersActive, setAddMembersActive] = useState<boolean>(false);
