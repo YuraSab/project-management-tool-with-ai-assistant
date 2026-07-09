@@ -32,6 +32,7 @@ const ProjectFilters: React.FC = () => {
         setIsInitialLoad,
         showUnassignedTasks, setShowUnassignedTasks,
         showNoPriorityTasks, setShowNoPriorityTasks,
+        showTaskCounter, setShowTaskCounter,
     } = useProjectControlStore(useShallow((state) => ({
         statusFilter: state.statusFilter, setStatusFilter: state.setStatusFilter,
         startDateFilter: state.startDateFilter, setStartDateFilter: state.setStartDateFilter,
@@ -43,6 +44,7 @@ const ProjectFilters: React.FC = () => {
         setIsInitialLoad: state.setIsInitialLoad,
         showUnassignedTasks: state.showUnassignedTasks, setShowUnassignedTasks: state.setShowUnassignedTasks,
         showNoPriorityTasks: state.showNoPriorityTasks, setShowNoPriorityTasks: state.setShowNoPriorityTasks,
+        showTaskCounter: state.showTaskCounter, setShowTaskCounter: state.setShowTaskCounter,
     })));
     const [addMembersActive, setAddMembersActive] = useState<boolean>(false);
     const [localAssignedMembersIds, setLocalAssignedMembersIds] = useState<string[]>([]);
@@ -114,6 +116,8 @@ const ProjectFilters: React.FC = () => {
             <CustomSelect value={sortValue} onChange={setSortValue} options={sortOptions}/>
             <Title text={'Search'}/>
             <TextInput name={'search'} value={searchTermFilter} onChange={setSearchTermFilter}/>
+            <Title text={'Utilities'}/>
+            <NoStatusCheckBox text={'Task counter'} checked={showTaskCounter} onChange={setShowTaskCounter} customStyles={{ marginTop: 8 }}/>
         </div>
     );
 };

@@ -45,6 +45,8 @@ interface ProjectControlState {
     setShowUnassignedTasks: (value: boolean) => void;
     showNoPriorityTasks: boolean;
     setShowNoPriorityTasks: (value: boolean) => void;
+    showTaskCounter: boolean;
+    setShowTaskCounter: (value: boolean) => void;
 }
 
 export const useProjectControlStore = create<ProjectControlState>((set, get) => ({
@@ -121,4 +123,6 @@ export const useProjectControlStore = create<ProjectControlState>((set, get) => 
     setShowUnassignedTasks: (value) => set({ showUnassignedTasks: value }),
     showNoPriorityTasks: true,
     setShowNoPriorityTasks: (value) => set({ showNoPriorityTasks: value }),
+    showTaskCounter: true,
+    setShowTaskCounter: (value) => set({ showTaskCounter: value }),
 }));
