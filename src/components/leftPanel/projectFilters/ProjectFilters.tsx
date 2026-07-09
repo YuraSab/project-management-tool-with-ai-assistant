@@ -3,7 +3,6 @@ import {TASK_PRIORITIES, TASK_STATUSES, TaskPriority, TaskStatus} from "../../..
 import CheckBoxStatus from "../../../ui/checkbox/CheckBoxStatus"
 import DateInput from "../../../ui/input/DateInput"
 import CustomSelect, {sortOptions} from "../../../ui/select/CustomSelect"
-import AssignMembers from "../../asignMembers/AssignMembers"
 import {useProjectControlStore} from "../../../store/projectControlStore"
 import styles from "./ProjectFilters.module.css";
 import React, {useCallback, useEffect, useMemo, useState} from "react"
@@ -15,11 +14,13 @@ import Title from "../../../ui/title/Title.tsx";
 import MemberSelector from "../../../ui/memberSelector/MemberSelector.tsx";
 import TextInput from "../../../ui/input/TextInput.tsx";
 import NoStatusCheckBox from "../../../ui/checkbox/NoStatusCheckBox.tsx";
+import AssignMembersFilter from "../../asignMembers/AssignMembersFilter.tsx";
 
 const ProjectFilters: React.FC = () => {
     const { projectId } = useParams();
     const { data: project } = useProject(projectId || '');
     const { data: projectMembers} = useProjectUsers(project?.assignedMembers || []);
+
     const {
         statusFilter, setStatusFilter,
         startDateFilter, setStartDateFilter,
@@ -95,8 +96,9 @@ const ProjectFilters: React.FC = () => {
             </div>
             <NoStatusCheckBox text={'No priority'} checked={showNoPriorityTasks} onChange={setShowNoPriorityTasks} customStyles={{ marginTop: 14 }}/>
             <Title text={'Assigned members'}/>
-            <AssignMembers
-                assignedMembers={projectMembers || []}
+            <AssignMembersFilter
+                projectAssignedMembers={projectMembers || []}
+                localAssignedMembersIds={localAssignedMembersIds}
                 onSelectMembersActive={() => setAddMembersActive(!addMembersActive)}
                 uniqueText={"Select members"} maxIcons={3} iconSize={28}
             />
