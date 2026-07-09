@@ -17,11 +17,12 @@ const KanbanBoard: React.FC<KanbanBoardProps> = ({ projectId }) => {
     const { data: projectTasks, isPending } = useTasks(projectId || "");
     const taskUpdateMutation = useUpdateTask();
     const filters = useProjectControlStore(useShallow(state => ({
-        status: state.statusFilter,
         users: state.usersFilter,
+        status: state.statusFilter,
+        priority: state.priorityFilter,
+        noPriority: state.showNoPriorityTasks,
         start: state.startDateFilter,
         end: state.endDateFilter,
-        priority: state.priorityFilter,
         sortValue: state.sortValue,
         searchTermFilter: state.searchTermFilter,
         isInitialLoad: state.isInitialLoad,
@@ -51,6 +52,7 @@ const KanbanBoard: React.FC<KanbanBoardProps> = ({ projectId }) => {
             start: filters.start,
             end: filters.end,
             priority: filters.priority,
+            noPriority: filters.noPriority,
             searchTerm: filters.searchTermFilter,
             isInitialLoad: filters.isInitialLoad,
             unassignedTasks: filters.unassignedTasks
@@ -66,7 +68,7 @@ const KanbanBoard: React.FC<KanbanBoardProps> = ({ projectId }) => {
             in_progress: processTasks('in_progress'),
             done: processTasks('done')
         };
-    }, [projectTasks, filters.users, filters.start, filters.end, filters.priority, filters.sortValue, filters.searchTermFilter, filters.isInitialLoad, filters.unassignedTasks]);
+    }, [projectTasks, filters.users, filters.start, filters.end, filters.priority, filters.sortValue, filters.searchTermFilter, filters.isInitialLoad, filters.unassignedTasks, filters.noPriority]);
 
     const shouldShowColumn = useCallback((status: TaskStatus): boolean => {
         return filters.status.length === 0 || filters.status.includes(status);

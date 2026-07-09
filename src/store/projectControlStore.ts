@@ -43,6 +43,8 @@ interface ProjectControlState {
     setIsInitialLoad: (value: boolean) => void;
     showUnassignedTasks: boolean;
     setShowUnassignedTasks: (value: boolean) => void;
+    showNoPriorityTasks: boolean;
+    setShowNoPriorityTasks: (value: boolean) => void;
 }
 
 export const useProjectControlStore = create<ProjectControlState>((set, get) => ({
@@ -117,4 +119,6 @@ export const useProjectControlStore = create<ProjectControlState>((set, get) => 
     setIsInitialLoad: (value) => set({ isInitialLoad: value }),
     showUnassignedTasks: true,
     setShowUnassignedTasks: (value) => set({ showUnassignedTasks: value }),
+    showNoPriorityTasks: true,
+    setShowNoPriorityTasks: (value) => set({ showNoPriorityTasks: value }),
 }));

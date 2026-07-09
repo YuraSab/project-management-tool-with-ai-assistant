@@ -14,7 +14,7 @@ import {useShallow} from "zustand/react/shallow";
 import Title from "../../../ui/title/Title.tsx";
 import MemberSelector from "../../../ui/memberSelector/MemberSelector.tsx";
 import TextInput from "../../../ui/input/TextInput.tsx";
-import CustomCheckBox from "../../../ui/checkbox/CustomCheckbox.tsx";
+import NoStatusCheckBox from "../../../ui/checkbox/NoStatusCheckBox.tsx";
 
 const ProjectFilters: React.FC = () => {
     const { projectId } = useParams();
@@ -30,6 +30,7 @@ const ProjectFilters: React.FC = () => {
         searchTermFilter, setSearchTermFilter,
         setIsInitialLoad,
         showUnassignedTasks, setShowUnassignedTasks,
+        showNoPriorityTasks, setShowNoPriorityTasks,
     } = useProjectControlStore(useShallow((state) => ({
         statusFilter: state.statusFilter, setStatusFilter: state.setStatusFilter,
         startDateFilter: state.startDateFilter, setStartDateFilter: state.setStartDateFilter,
@@ -40,6 +41,7 @@ const ProjectFilters: React.FC = () => {
         searchTermFilter: state.searchTermFilter, setSearchTermFilter: state.setSearchTermFilter,
         setIsInitialLoad: state.setIsInitialLoad,
         showUnassignedTasks: state.showUnassignedTasks, setShowUnassignedTasks: state.setShowUnassignedTasks,
+        showNoPriorityTasks: state.showNoPriorityTasks, setShowNoPriorityTasks: state.setShowNoPriorityTasks,
     })));
     const [addMembersActive, setAddMembersActive] = useState<boolean>(false);
     const [localAssignedMembersIds, setLocalAssignedMembersIds] = useState<string[]>([]);
@@ -91,6 +93,7 @@ const ProjectFilters: React.FC = () => {
                     />
                 ))}
             </div>
+            <NoStatusCheckBox text={'No priority'} checked={showNoPriorityTasks} onChange={setShowNoPriorityTasks} customStyles={{ marginTop: 14 }}/>
             <Title text={'Assigned members'}/>
             <AssignMembers
                 assignedMembers={projectMembers || []}
@@ -100,7 +103,7 @@ const ProjectFilters: React.FC = () => {
             {addMembersActive && (
                 <MemberSelector membersMap={projectMembersMap} selectedMembersIds={localAssignedMembersIds || []} clickAction={handleMemberClick}/>
             )}
-            <CustomCheckBox checked={showUnassignedTasks} onChange={setShowUnassignedTasks}/>
+            <NoStatusCheckBox text={'Unassigned'} checked={showUnassignedTasks} onChange={setShowUnassignedTasks} customStyles={{ marginTop: 14 }}/>
             <Title text={'From'}/>
             <DateInput value={startDateFilter} onChange={setStartDateFilter}/>
             <Title text={'To'}/>

@@ -33,7 +33,6 @@ const AIChat = () => {
             messagesEndRef.current?.scrollIntoView({behavior: "smooth"} as ScrollIntoViewOptions);
     }, [messages]);
 
-    console.log('projectTasks', projectTasks)
     const handleSend = async () => {
         if (!inputValue.trim() || !selectedProject || isLoading) return;
 

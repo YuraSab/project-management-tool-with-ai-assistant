@@ -8,6 +8,8 @@ export interface TaskFilters {
     start: string,
     end: string,
     priority: TaskPriority,
+    noStatus: boolean,
+    noPriority: boolean,
     searchTerm: string,
     isInitialLoad: boolean,
     unassignedTasks: boolean,

@@ -17,7 +17,7 @@ const CustomCheckBox = ({ checked, onChange, name = 'non-assigned-members', cust
             checked={checked}
             onChange={(e) => onChange(e.target.checked)}
             name={name}
-            style={{marginRight: 4, ...customStyles}}
+            style={{ marginRight: 4, ...customStyles }}
             {...props}
         />
     </div>

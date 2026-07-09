@@ -113,12 +113,12 @@ const TaskEdit = () => {
                 )}
                 <Title text={'Status:'}/>
                 <FormSelect<TaskStatus> name={"status"} value={formData.status} onChange={handleChange} options={["todo", "in_progress", "done"]}/>
+                <Title text={'Priority:'}/>
+                <FormSelect<TaskPriority> name={"priority"} value={formData.priority} onChange={handleChange} options={["low", "medium", "high", "none"]}/>
                 <Title text={'From:'}/>
                 <FormDateInput name={"startDate"} value={formData.startDate} onChange={handleChange} />
                 <Title text={'To:'}/>
                 <FormDateInput name={"endDate"} value={formData.endDate} onChange={handleChange} />
-                <Title text={'Priority:'}/>
-                <FormSelect<TaskPriority> name={"priority"} value={formData.priority} onChange={handleChange} options={["low", "medium", "high", "none"]}/>
                 <div className={styles.buttonBlock}>
                     <CustomButton children={"Save changes"} disabled={isPendingUpdate || isPendingDelete} type={'submit'}/>
                     <CustomButton children={"Delete task"} onClick={handleDelete} customStyles={{backgroundColor: "#D10000"}} disabled={isPendingUpdate || isPendingDelete}/>
