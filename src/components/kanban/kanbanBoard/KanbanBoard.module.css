@@ -4,6 +4,12 @@
   grid-template-rows: 70px 1fr;
   gap: 0 0.7rem;
   padding: 15px;
+
+  /* 🔥 Жорстко обмежуємо дошку розміром екрану */
+  height: calc(100vh - 130px); /* або скільки там у тебе займає хедер сайту */
+  max-height: calc(100vh - 130px);
+  overflow: hidden; /* 🌟 ЖОДНИХ скролів на рівні всієї дошки! */
+  box-sizing: border-box;
 }
   
 .columnHeader {
