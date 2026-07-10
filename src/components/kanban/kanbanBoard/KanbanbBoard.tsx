@@ -17,7 +17,7 @@ interface KanbanBoardProps { projectId: string }
 const KanbanBoard: React.FC<KanbanBoardProps> = ({ projectId }) => {
     const ownId = useProfileStore((state) => state.profile.uid)
     const { data: projectTasks, isPending } = useTasks(projectId || "");
-    const taskUpdateMutation = useUpdateTask();
+    const taskUpdateMutation = useUpdateTask(projectId);
     const filters = useProjectControlStore(useShallow(state => ({
         users: state.usersFilter,
         status: state.statusFilter, priority: state.priorityFilter, noPriority: state.showNoPriorityTasks,
@@ -38,7 +38,9 @@ const KanbanBoard: React.FC<KanbanBoardProps> = ({ projectId }) => {
         if (!destination || !projectTasks) return; // if drop happened outer columns
         const selectedTask = projectTasks?.find(t => t.id === draggableId);
         if (!selectedTask) return;
-        await taskUpdateMutation.mutate({
+        // If the status hasn't changed, don't hit the database unnecessarily
+        if (destination.droppableId === selectedTask.status) return;
+        taskUpdateMutation.mutate({
             id: selectedTask.id,
             status: destination.droppableId as TaskStatus
         });
