@@ -37,3 +37,34 @@ export const deleteTask = async (taskId: string): Promise<void> => {
     const taskRef = doc(db, 'tasks', taskId);
     return await deleteDoc(taskRef);
 };
+
+export const updateTasks__TEST = async (): Promise<void> => {
+    try {
+        console.log("🚀 Start Migration...");
+        const tasksRef = collection(db, 'tasks');
+        const tasksSnap = await getDocs(tasksRef);
+        let updatedCount = 0;
+        for (const taskDoc of tasksSnap.docs) {
+            const data = taskDoc.data();
+            const taskRef = doc(db, 'tasks', taskDoc.id);
+            if (data.type === undefined || data.category === undefined) {
+                await updateDoc(taskRef, {
+                    type: data.type ?? 'none',
+                    category: data.category ?? 'none'
+                });
+                updatedCount++;
+            }
+            const targetCreatorId = 'nmt7XA4CQUQtSQlItj0B35Qitkx2';
+            if (data.creatorId === undefined) {
+                await updateDoc(taskRef, 'creatorId', targetCreatorId);
+                updatedCount++
+            }
+        }
+        console.log(`⚙️ Updated tasks: ${updatedCount}`);
+    } catch (error) {
+        console.error("❌ Migration error:", error);
+    }
+    finally {
+        console.log('✅ End Migration!');
+    }
+};

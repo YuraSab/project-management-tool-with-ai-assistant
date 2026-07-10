@@ -27,6 +27,7 @@ const KanbanBoard: React.FC<KanbanBoardProps> = ({ projectId }) => {
         isInitialLoad: state.isInitialLoad,
         unassignedTasks: state.showUnassignedTasks,
         showTaskCounter: state.showTaskCounter,
+        typesFilter: state.typesFilter, categoriesFilter: state.categoriesFilter
     })));
     const statuses = useProjectControlStore(useShallow(state => ({
         isLeftPanelActive: state.isLeftPanelActive, isRightPanelActive: state.isRightPanelActive,
@@ -54,7 +55,9 @@ const KanbanBoard: React.FC<KanbanBoardProps> = ({ projectId }) => {
             noPriority: filters.noPriority,
             searchTerm: filters.searchTermFilter,
             isInitialLoad: filters.isInitialLoad,
-            unassignedTasks: filters.unassignedTasks
+            unassignedTasks: filters.unassignedTasks,
+            types: filters.typesFilter,
+            categories: filters.categoriesFilter,
         } as TaskFilters;
 
         const processTasks = (status: TaskStatus) => {
@@ -67,7 +70,7 @@ const KanbanBoard: React.FC<KanbanBoardProps> = ({ projectId }) => {
             in_progress: processTasks('in_progress'),
             done: processTasks('done')
         };
-    }, [projectTasks, filters.users, filters.start, filters.end, filters.priority, filters.sortValue, filters.searchTermFilter, filters.isInitialLoad, filters.unassignedTasks, filters.noPriority]);
+    }, [projectTasks, filters.users, filters.start, filters.end, filters.priority, filters.sortValue, filters.searchTermFilter, filters.isInitialLoad, filters.unassignedTasks, filters.noPriority, filters.typesFilter, filters.categoriesFilter]);
 
     const taskCounter = useMemo(() => {
         return TASK_STATUSES.reduce((acc, status) => {

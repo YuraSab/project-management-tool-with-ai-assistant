@@ -1,7 +1,7 @@
 import React, {useCallback, useEffect, useMemo, useState} from "react";
 import styles from "./TaskEdit.module.css";
 import {useProjectControlStore} from "../../../store/projectControlStore";
-import {Task, TaskPriority, TaskStatus} from "../../../types/task";
+import {Task, TASK_CATEGORIES, TASK_TYPES, TaskCategory, TaskPriority, TaskStatus, TaskType} from "../../../types/task";
 import CustomForm from "../../../ui/form/CustomForm";
 import RightPanelHeader from "../../rightPanel/rightPanelHeader/RightPanelHeader";
 import FormTextInput from "../../../ui/input/FormTextInput";
@@ -23,15 +23,14 @@ import {switchRightPanelView} from "../../../utils/panelManager.ts";
 import {useUser} from "../../../hooks/users/useUser.ts";
 import CustomUserIcon from "../../../ui/icons/CustomUserIcon.tsx";
 
-type FormData = Omit<Task, "id" | "projectId" | "assignedMembers" | 'startDate' | 'endDate'> & { startDate: string, endDate: string };
+type FormData = Omit<Task, "id" | "projectId" | "creatorId" | "assignedMembers" | 'startDate' | 'endDate'> & {
+    startDate: string, endDate: string, type: TaskType | '', category: TaskCategory | ''
+};
 const getInitialFormData = (task: Task | null): FormData => ({
-    title: task?.title ?? '',
-    description: task?.description ?? '',
-    status: task?.status ?? 'todo',
-    startDate: formatDateForInput(task?.startDate) ?? '',
-    endDate: formatDateForInput(task?.endDate) ?? '',
-    priority: task?.priority ?? 'none',
-    creatorId: task?.creatorId ?? '',
+    title: task?.title ?? '', description: task?.description ?? '',
+    type: task?.type ?? 'none', category: task?.category ?? 'none',
+    status: task?.status ?? 'todo', priority: task?.priority ?? 'none',
+    startDate: formatDateForInput(task?.startDate) ?? '', endDate: formatDateForInput(task?.endDate) ?? '',
 });
 
 const TaskEdit = () => {
@@ -71,14 +70,16 @@ const TaskEdit = () => {
     const handleUpdate = useCallback(() => {
         if (!selectedTask?.id) return;
         if (!formData.title.trim() || !formData.description.trim()) return alert("Please fill all the required fields!");
-        updateTask({
-            ...formData,
+        const taskData: Partial<Task> & { id: string } = {
             id: selectedTask.id,
-            projectId: selectedTask.projectId,
+            title: formData.title, description: formData.description,
             assignedMembers: [...localAssignedMembersMap.keys()],
+            type: formData.type, category: formData.category,
+            status: formData.status, priority: formData.priority,
             startDate: formData.startDate ? new Date(formData.startDate) : null,
             endDate: formData.endDate ? new Date(formData.endDate) : null,
-        });
+        };
+        updateTask(taskData);
         setAddMembersActive(false);
     }, [formData, localAssignedMembersMap, selectedTask, updateTask]);
 
@@ -90,13 +91,12 @@ const TaskEdit = () => {
     }, [selectedTask, deleteTask]);
 
     useEffect(() => {
-        if(selectedTask && taskAssignedMembers) {
-            setFormData(getInitialFormData(selectedTask));
-            setLocalAssignedMembersMap(
-                new Map(taskAssignedMembers.map(m => [m.uid, m]))
-            );
-        } // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [selectedTask?.id]);
+        if (!selectedTask) return;
+        setFormData(getInitialFormData(selectedTask));
+        if (taskAssignedMembers)
+            setLocalAssignedMembersMap(new Map(taskAssignedMembers.map(m => [m.uid, m])));
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [selectedTask?.id, taskAssignedMembers]);
 
     return (
         <CustomForm onSubmit={handleUpdate} style={{margin: 15, height: "calc(100vh - 130px)"}} disabled={isPendingUpdate || isPendingDelete}>
@@ -119,6 +119,10 @@ const TaskEdit = () => {
                     <Title text={'Creator'}/>
                     <CustomUserIcon title={taskCreator ? taskCreator.displayName : "User"} backgroundColor={taskCreator?.iconColor}/>
                 </>)}
+                <Title text={'Type'}/>
+                <FormSelect<TaskType | ''> name="type" value={formData.type || ''} onChange={handleChange} options={['', ...TASK_TYPES]}/>
+                <Title text={'Category'}/>
+                <FormSelect<TaskCategory | ''> name="category" value={formData.category || ''} onChange={handleChange} options={['', ...TASK_CATEGORIES]}/>
                 <Title text={'Status:'}/>
                 <FormSelect<TaskStatus> name={"status"} value={formData.status} onChange={handleChange} options={["todo", "in_progress", "done"]}/>
                 <Title text={'Priority:'}/>

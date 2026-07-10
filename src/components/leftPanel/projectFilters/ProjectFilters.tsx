@@ -1,5 +1,12 @@
 import {useParams} from "react-router-dom"
-import {TASK_PRIORITIES, TASK_STATUSES, TaskPriority, TaskStatus} from "../../../types/task"
+import {
+    TASK_CATEGORIES,
+    TASK_PRIORITIES,
+    TASK_STATUSES,
+    TASK_TYPES,
+    TaskPriority,
+    TaskStatus
+} from "../../../types/task"
 import CheckBoxStatus from "../../../ui/checkbox/CheckBoxStatus"
 import DateInput from "../../../ui/input/DateInput"
 import CustomSelect, {sortOptions} from "../../../ui/select/CustomSelect"
@@ -15,6 +22,8 @@ import MemberSelector from "../../../ui/memberSelector/MemberSelector.tsx";
 import TextInput from "../../../ui/input/TextInput.tsx";
 import NoStatusCheckBox from "../../../ui/checkbox/NoStatusCheckBox.tsx";
 import AssignMembersFilter from "../../asignMembers/AssignMembersFilter.tsx";
+import CustomMultiSelector from "../../../ui/customMultiSelector/CustomMultiSelector.tsx";
+import SelectorBlock from "../../../ui/selectorBlock/SelectorBlock.tsx";
 
 const ProjectFilters: React.FC = () => {
     const { projectId } = useParams();
@@ -33,6 +42,8 @@ const ProjectFilters: React.FC = () => {
         showUnassignedTasks, setShowUnassignedTasks,
         showNoPriorityTasks, setShowNoPriorityTasks,
         showTaskCounter, setShowTaskCounter,
+        typesFilter, setTypesFilter,
+        categoriesFilter, setCategoriesFilter,
     } = useProjectControlStore(useShallow((state) => ({
         statusFilter: state.statusFilter, setStatusFilter: state.setStatusFilter,
         startDateFilter: state.startDateFilter, setStartDateFilter: state.setStartDateFilter,
@@ -45,9 +56,13 @@ const ProjectFilters: React.FC = () => {
         showUnassignedTasks: state.showUnassignedTasks, setShowUnassignedTasks: state.setShowUnassignedTasks,
         showNoPriorityTasks: state.showNoPriorityTasks, setShowNoPriorityTasks: state.setShowNoPriorityTasks,
         showTaskCounter: state.showTaskCounter, setShowTaskCounter: state.setShowTaskCounter,
+        typesFilter: state.typesFilter, setTypesFilter: state.setTypesFilter,
+        categoriesFilter: state.categoriesFilter, setCategoriesFilter: state.setCategoriesFilter,
     })));
     const [addMembersActive, setAddMembersActive] = useState<boolean>(false);
     const [localAssignedMembersIds, setLocalAssignedMembersIds] = useState<string[]>([]);
+    const [taskTypesActive, setTaskTypesActive] = useState<boolean>(false);
+    const [taskCategoriesActive, setTaskCategoriesActive] = useState<boolean>(false);
 
     useEffect(() => {
         if (projectMembers && projectMembers.length > 0) {
@@ -71,6 +86,9 @@ const ProjectFilters: React.FC = () => {
             : []
         )
     ), [projectMembers]);
+
+    console.log('TASK_TYPES', TASK_TYPES);
+    console.log('typesFilter', typesFilter);
 
     return (
         <div className={styles.filterSortPanel}>
@@ -108,6 +126,16 @@ const ProjectFilters: React.FC = () => {
                 <MemberSelector membersMap={projectMembersMap} selectedMembersIds={localAssignedMembersIds || []} clickAction={handleMemberClick}/>
             )}
             <NoStatusCheckBox text={'Unassigned'} checked={showUnassignedTasks} onChange={setShowUnassignedTasks} customStyles={{ marginTop: 14 }}/>
+            <Title text={'Types'}/>
+            <SelectorBlock children={'Types'} onSelectorActive={() => setTaskTypesActive((prev) => !prev)}/>
+            {taskTypesActive && (
+                <CustomMultiSelector options={TASK_TYPES} selectedOptions={typesFilter} onChange={setTypesFilter}/>
+            )}
+            <Title text={'Categories'}/>
+            <SelectorBlock children={'Categories'} onSelectorActive={() => setTaskCategoriesActive((prev) => !prev)}/>
+            {taskCategoriesActive && (
+                <CustomMultiSelector options={TASK_CATEGORIES} selectedOptions={categoriesFilter} onChange={setCategoriesFilter}/>
+            )}
             <Title text={'From'}/>
             <DateInput value={startDateFilter} onChange={setStartDateFilter}/>
             <Title text={'To'}/>

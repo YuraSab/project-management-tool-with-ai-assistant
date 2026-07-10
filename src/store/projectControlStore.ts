@@ -1,5 +1,14 @@
 import { create } from "zustand";
-import {SortOption, Task, TASK_PRIORITIES, TASK_STATUSES, TaskPriority, TaskStatus} from "../types/task";
+import {
+    SortOption,
+    Task, TASK_CATEGORIES,
+    TASK_PRIORITIES,
+    TASK_STATUSES,
+    TASK_TYPES,
+    TaskCategory,
+    TaskPriority,
+    TaskStatus
+} from "../types/task";
 import { Project, ProjectStatus } from "../types/project";
 import {UserProfile} from "../types/user.ts";
 
@@ -47,6 +56,10 @@ interface ProjectControlState {
     setShowNoPriorityTasks: (value: boolean) => void;
     showTaskCounter: boolean;
     setShowTaskCounter: (value: boolean) => void;
+    typesFilter: TaskCategory[];
+    setTypesFilter: (TaskCategory) => void;
+    categoriesFilter: TaskCategory[];
+    setCategoriesFilter: (TaskCategory) => void;
 }
 
 export const useProjectControlStore = create<ProjectControlState>((set, get) => ({
@@ -125,4 +138,22 @@ export const useProjectControlStore = create<ProjectControlState>((set, get) => 
     setShowNoPriorityTasks: (value) => set({ showNoPriorityTasks: value }),
     showTaskCounter: true,
     setShowTaskCounter: (value) => set({ showTaskCounter: value }),
+    typesFilter: TASK_TYPES,
+    setTypesFilter: (value) => {
+        const cur = get().typesFilter;
+        set({
+            typesFilter: cur.includes(value)
+            ? cur.filter((t) => t !== value)
+            : [...cur, value]
+        });
+    },
+    categoriesFilter: TASK_CATEGORIES,
+    setCategoriesFilter: (value) => {
+        const cur = get().categoriesFilter;
+        set({
+            categoriesFilter: cur.includes(value)
+                ? cur.filter((t) => t !== value)
+                : [...cur, value]
+        });
+    },
 }));
