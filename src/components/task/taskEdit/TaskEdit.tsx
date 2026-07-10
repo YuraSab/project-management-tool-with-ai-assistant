@@ -22,6 +22,7 @@ import MemberSelector from "../../../ui/memberSelector/MemberSelector.tsx";
 import {switchRightPanelView} from "../../../utils/panelManager.ts";
 import {useUser} from "../../../hooks/users/useUser.ts";
 import CustomUserIcon from "../../../ui/icons/CustomUserIcon.tsx";
+import {toast} from "../../../utils/toaster.ts";
 
 type FormData = Omit<Task, "id" | "projectId" | "creatorId" | "assignedMembers" | 'startDate' | 'endDate'> & {
     startDate: string, endDate: string, type: TaskType | '', category: TaskCategory | ''

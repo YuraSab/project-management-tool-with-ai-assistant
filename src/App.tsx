@@ -4,6 +4,7 @@ import styles from './App.module.css';
 import './global.css';
 import {useAuthStore} from "./store/authStore.ts";
 import {useProfileStore} from "./store/profileStore.ts";
+import {ToastContainer} from "./ui/toast/ToastContainer.tsx";
 
 function App() {
     const user = useAuthStore((state) => state.user);
@@ -15,6 +16,7 @@ function App() {
             )}
             <main>
                 <RouteLayout/>
+                <ToastContainer/> {/* 🌟 The toaster lives here permanently now */}
             </main>
         </div>
     );

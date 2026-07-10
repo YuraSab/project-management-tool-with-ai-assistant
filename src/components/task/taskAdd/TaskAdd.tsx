@@ -1,5 +1,15 @@
 import React, {useCallback, useMemo, useState} from "react";
-import { Task, TASK_CATEGORIES, TASK_PRIORITIES, TASK_STATUSES, TASK_TYPES, TaskCategory, TaskPriority, TaskStatus, TaskType} from "../../../types/task";
+import {
+    Task,
+    TASK_CATEGORIES,
+    TASK_PRIORITIES,
+    TASK_STATUSES,
+    TASK_TYPES,
+    TaskCategory,
+    TaskPriority,
+    TaskStatus,
+    TaskType
+} from "../../../types/task";
 import {useParams} from "react-router-dom";
 import CustomForm from "../../../ui/form/CustomForm";
 import FormTextInput from "../../../ui/input/FormTextInput";
@@ -26,7 +36,7 @@ const INITIAL_TASK: FormData = {
     title: '', description: '',
     status: "todo", priority: 'none',
     startDate: '', endDate: '',
-    type: '', category: '',
+    type: 'none', category: 'none',
 };
 
 const TaskAdd = React.memo(() => {
@@ -74,15 +84,14 @@ const TaskAdd = React.memo(() => {
             startDate: formData.startDate ? new Date(formData.startDate) : null,
             endDate: formData.endDate ? new Date(formData.endDate) : null,
             createdAt: new Date(),
+            type: formData.type ? formData.type : 'none', category: formData.category ? formData.category : 'none',
         };
-        if (formData.type) taskData.type = formData.type;
-        if (formData.category) taskData.category = formData.category;
         createTask(taskData as Task, {
             onSuccess: () => {
                 setFormData(INITIAL_TASK);
                 setAssignedMembersMap(new Map());
                 setAddMembersActive(false);
-            }
+            },
         });
     };
 
