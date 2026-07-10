@@ -19,6 +19,7 @@ export type SortOption = "Start date dec" | "Start date inc" | "End date dec" | 
 export interface Task {
     id: string,
     projectId: string,
+    creatorId: string,
     title: string,
     description: string,
     assignedMembers: string[],

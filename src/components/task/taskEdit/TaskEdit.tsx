@@ -20,6 +20,8 @@ import {useDeleteTask} from "../../../hooks/task/useDeleteTask.ts";
 import {formatDateForInput} from "../../../utils/dateFormat.ts";
 import MemberSelector from "../../../ui/memberSelector/MemberSelector.tsx";
 import {switchRightPanelView} from "../../../utils/panelManager.ts";
+import {useUser} from "../../../hooks/users/useUser.ts";
+import CustomUserIcon from "../../../ui/icons/CustomUserIcon.tsx";
 
 type FormData = Omit<Task, "id" | "projectId" | "assignedMembers" | 'startDate' | 'endDate'> & { startDate: string, endDate: string };
 const getInitialFormData = (task: Task | null): FormData => ({
@@ -29,6 +31,7 @@ const getInitialFormData = (task: Task | null): FormData => ({
     startDate: formatDateForInput(task?.startDate) ?? '',
     endDate: formatDateForInput(task?.endDate) ?? '',
     priority: task?.priority ?? 'none',
+    creatorId: task?.creatorId ?? '',
 });
 
 const TaskEdit = () => {
@@ -41,6 +44,7 @@ const TaskEdit = () => {
     const { data: project } = useProject(projectId || "");
     const { data: projectMembers } = useProjectUsers(project?.assignedMembers || []);
     const { data: taskAssignedMembers } = useProjectUsers(selectedTask?.assignedMembers || []);
+    const { data: taskCreator } = useUser(selectedTask?.creatorId || "");
     const { mutate: updateTask, isPending: isPendingUpdate } = useUpdateTask();
     const { mutate: deleteTask, isPending: isPendingDelete } = useDeleteTask();
 
@@ -111,6 +115,10 @@ const TaskEdit = () => {
                 {addMembersActive && (
                     <MemberSelector membersMap={projectMembersMap} selectedMembersIds={localAssignedMembersIds} clickAction={handleAssignMember} />
                 )}
+                {taskCreator && (<>
+                    <Title text={'Creator'}/>
+                    <CustomUserIcon title={taskCreator ? taskCreator.displayName : "User"} backgroundColor={taskCreator?.iconColor}/>
+                </>)}
                 <Title text={'Status:'}/>
                 <FormSelect<TaskStatus> name={"status"} value={formData.status} onChange={handleChange} options={["todo", "in_progress", "done"]}/>
                 <Title text={'Priority:'}/>

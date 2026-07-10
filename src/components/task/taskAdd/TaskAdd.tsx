@@ -16,6 +16,7 @@ import {useCreateTask} from "../../../hooks/task/useCreateTask.ts";
 import {UserProfile} from "../../../types/user.ts";
 import MemberSelector from "../../../ui/memberSelector/MemberSelector.tsx";
 import CustomButton from "../../../ui/button/CustomButton.tsx";
+import {useProfileStore} from "../../../store/profileStore.ts";
 
 type FormData = Pick<Task, 'title'| 'description'| 'status' | 'priority'> & { startDate: string, endDate: string };
 
@@ -32,6 +33,7 @@ const TaskAdd = React.memo(() => {
     const [assignedMembersMap, setAssignedMembersMap] = useState<Map<string, UserProfile>>(new Map());
     const [addMembersActive, setAddMembersActive] = useState<boolean>(false);
 
+    const profileId = useProfileStore((state) => state.profile.uid);
     const { data: project} = useProject(projectId || "");
     const { data: projectMembers} = useProjectUsers(project?.assignedMembers || []);
     const { mutate: createTask, isPending } = useCreateTask();
@@ -69,6 +71,7 @@ const TaskAdd = React.memo(() => {
             createdAt: new Date(),
             startDate: formData.startDate ? new Date(formData.startDate) : null,
             endDate: formData.endDate ? new Date(formData.endDate) : null,
+            creatorId: profileId
         }, {
             onSuccess: () => {
                 setFormData(INITIAL_TASK);
