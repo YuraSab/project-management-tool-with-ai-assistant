@@ -43,7 +43,6 @@ interface ProjectControlState {
     setPriorityFilter: (value: TaskPriority) => void;
     sortValue: SortOption;
     setSortValue: (value: SortOption) => void;
-    clearFiltersAndSorts: () => void;
     isProjectSettingsActive: boolean;
     setIsProjectSettingsActive: () => void;
     searchTermFilter: string;
@@ -60,6 +59,7 @@ interface ProjectControlState {
     setTypesFilter: (TaskCategory) => void;
     categoriesFilter: TaskCategory[];
     setCategoriesFilter: (TaskCategory) => void;
+    clearFiltersAndSorts: () => void;
 }
 
 export const useProjectControlStore = create<ProjectControlState>((set, get) => ({
@@ -112,20 +112,6 @@ export const useProjectControlStore = create<ProjectControlState>((set, get) => 
     },
     sortValue: "none",
     setSortValue: (value) => set({ sortValue: value }),
-    clearFiltersAndSorts: () => {
-        set({ 
-            selectedTask: null,
-            isAddMembersActive: false,
-            isRightPanelActive: false,
-            isLeftPanelActive: false,
-            statusFilter: [] ,
-            usersFilter: [],
-            startDateFilter: "",
-            endDateFilter: "",
-            priorityFilter: [],
-            sortValue: "none",
-        });
-    },
     isProjectSettingsActive: false,
     setIsProjectSettingsActive: () => set({ isProjectSettingsActive: !get().isProjectSettingsActive }),
     searchTermFilter: '',
@@ -154,6 +140,22 @@ export const useProjectControlStore = create<ProjectControlState>((set, get) => 
             categoriesFilter: cur.includes(value)
                 ? cur.filter((t) => t !== value)
                 : [...cur, value]
+        });
+    },
+    clearFiltersAndSorts: () => {
+        set({
+            selectedTask: null,
+            statusFilter: [...TASK_STATUSES],
+            startDateFilter: "",
+            endDateFilter: "",
+            priorityFilter: [...TASK_PRIORITIES],
+            sortValue: "none",
+            searchTermFilter: '',
+            showUnassignedTasks: true,
+            showNoPriorityTasks: true,
+            showTaskCounter: true,
+            typesFilter: TASK_TYPES,
+            categoriesFilter: TASK_CATEGORIES,
         });
     },
 }));

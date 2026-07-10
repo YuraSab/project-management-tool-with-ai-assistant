@@ -57,7 +57,7 @@ export const ToastContainer = () => {
                     <div
                         key={toast.id}
                         className={cardClassName}
-                        style={{ backgroundColor: config.backgroundColor }}
+                        style={{backgroundColor: config.backgroundColor}}
                         onClick={() => dismissToast(toast.id)} // also smooth on click
                     >
                         <span>{config.icon}</span>

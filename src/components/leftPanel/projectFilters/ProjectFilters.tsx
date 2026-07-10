@@ -24,6 +24,8 @@ import NoStatusCheckBox from "../../../ui/checkbox/NoStatusCheckBox.tsx";
 import AssignMembersFilter from "../../asignMembers/AssignMembersFilter.tsx";
 import CustomMultiSelector from "../../../ui/customMultiSelector/CustomMultiSelector.tsx";
 import SelectorBlock from "../../../ui/selectorBlock/SelectorBlock.tsx";
+import CustomButton from "../../../ui/button/CustomButton.tsx";
+import {toast} from "../../../utils/toaster.ts";
 
 const ProjectFilters: React.FC = () => {
     const { projectId } = useParams();
@@ -44,6 +46,7 @@ const ProjectFilters: React.FC = () => {
         showTaskCounter, setShowTaskCounter,
         typesFilter, setTypesFilter,
         categoriesFilter, setCategoriesFilter,
+        clearFiltersAndSorts
     } = useProjectControlStore(useShallow((state) => ({
         statusFilter: state.statusFilter, setStatusFilter: state.setStatusFilter,
         startDateFilter: state.startDateFilter, setStartDateFilter: state.setStartDateFilter,
@@ -58,6 +61,7 @@ const ProjectFilters: React.FC = () => {
         showTaskCounter: state.showTaskCounter, setShowTaskCounter: state.setShowTaskCounter,
         typesFilter: state.typesFilter, setTypesFilter: state.setTypesFilter,
         categoriesFilter: state.categoriesFilter, setCategoriesFilter: state.setCategoriesFilter,
+        clearFiltersAndSorts: state.clearFiltersAndSorts
     })));
     const [addMembersActive, setAddMembersActive] = useState<boolean>(false);
     const [localAssignedMembersIds, setLocalAssignedMembersIds] = useState<string[]>([]);
@@ -80,15 +84,20 @@ const ProjectFilters: React.FC = () => {
         );
     }, [setUserFilter, setLocalAssignedMembersIds]);
 
+    const handleClearFilters = useCallback(() => {
+        if (!projectMembers) return ;
+        clearFiltersAndSorts();
+        setLocalAssignedMembersIds(projectMembers.map(m => m.uid));
+        setUsersFilter(projectMembers);
+        toast.info('Filters cleared')
+    }, [clearFiltersAndSorts, setUsersFilter, projectMembers]);
+
     const projectMembersMap = useMemo<Map<string, UserProfile>>(() => (
         new Map(projectMembers
             ? projectMembers.map(m => [m.uid, m])
             : []
         )
     ), [projectMembers]);
-
-    console.log('TASK_TYPES', TASK_TYPES);
-    console.log('typesFilter', typesFilter);
 
     return (
         <div className={styles.filterSortPanel}>
@@ -146,6 +155,7 @@ const ProjectFilters: React.FC = () => {
             <TextInput name={'search'} value={searchTermFilter} onChange={setSearchTermFilter}/>
             <Title text={'Utilities'}/>
             <NoStatusCheckBox text={'Task counter'} checked={showTaskCounter} onChange={setShowTaskCounter} customStyles={{ marginTop: 8 }}/>
+            <CustomButton children={"Clear filters"} onClick={handleClearFilters} customStyles={{ margin: '12px 0' }}/>
         </div>
     );
 };
