@@ -18,8 +18,8 @@ const MODES = {
 const Projects = () => {
     const navigate = useNavigate();
     const user = useAuthStore((state) => state.user)
-    const { data: projects, isPending, isError } = useUserProjects(user?.uid ?? "");
     const theme = useProfileStore((state) => state.profile.theme);
+    const { data: projects, isPending, isError } = useUserProjects(user?.uid ?? "");
 
     if (isPending) return <ProjectsSkeleton/>;
 

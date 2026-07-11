@@ -60,6 +60,7 @@ interface ProjectControlState {
     categoriesFilter: TaskCategory[];
     setCategoriesFilter: (TaskCategory) => void;
     clearFiltersAndSorts: () => void;
+    closePanels: () => void;
 }
 
 export const useProjectControlStore = create<ProjectControlState>((set, get) => ({
@@ -69,6 +70,7 @@ export const useProjectControlStore = create<ProjectControlState>((set, get) => 
     setSelectedTask: (task) => set({ selectedTask: task }),
     clearSelectedTask: () => set({ selectedTask: null }),
     isAddMembersActive: false,
+    // todo - remove field
     setIsAddMembersActive: (value) => set({ isAddMembersActive: value }),
     isRightPanelActive: false,
     setIsRightPanelActive: (value) => set({ isRightPanelActive: value }),
@@ -142,20 +144,26 @@ export const useProjectControlStore = create<ProjectControlState>((set, get) => 
                 : [...cur, value]
         });
     },
-    clearFiltersAndSorts: () => {
-        set({
-            selectedTask: null,
-            statusFilter: [...TASK_STATUSES],
-            startDateFilter: "",
-            endDateFilter: "",
-            priorityFilter: [...TASK_PRIORITIES],
-            sortValue: "none",
-            searchTermFilter: '',
-            showUnassignedTasks: true,
-            showNoPriorityTasks: true,
-            showTaskCounter: true,
-            typesFilter: TASK_TYPES,
-            categoriesFilter: TASK_CATEGORIES,
-        });
-    },
+    clearFiltersAndSorts: () => set({
+        statusFilter: [...TASK_STATUSES],
+        priorityFilter: [...TASK_PRIORITIES],
+        startDateFilter: "",
+        endDateFilter: "",
+        sortValue: "none",
+        searchTermFilter: '',
+        showUnassignedTasks: true,
+        showNoPriorityTasks: true,
+        showTaskCounter: true,
+        typesFilter: TASK_TYPES,
+        categoriesFilter: TASK_CATEGORIES,
+    }),
+    closePanels: () => set({
+        selectedTask: null,
+        isLeftPanelActive: false,
+        isRightPanelActive: false,
+        setIsAddTaskActive: false,
+        setIsEditTaskActive: false,
+        setIsProjectSettingsActive: false,
+    })
+
 }));

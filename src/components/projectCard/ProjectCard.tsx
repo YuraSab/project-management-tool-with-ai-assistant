@@ -19,21 +19,22 @@ const THEME_CLASS_MAP = {
 } as const;
 
 const ProjectCard = React.memo(({project}: ProjectCardProps) => {
-    const {currentSelectedProjectId, setSelectedProject, clearFiltersAndSorts} = useProjectControlStore(
-        useShallow((state) => ({
-            currentSelectedProjectId: state.selectedProject?.id,
-            setSelectedProject: state.setSelectedProject,
-            clearFiltersAndSorts: state.clearFiltersAndSorts,
-        }))
-    );
-
+    const {
+        currentSelectedProjectId,  setSelectedProject,
+        closePanels, clearFiltersAndSorts,
+    } = useProjectControlStore(useShallow((state) => ({
+        currentSelectedProjectId: state.selectedProject?.id, setSelectedProject: state.setSelectedProject,
+        closePanels: state.closePanels, clearFiltersAndSorts: state.clearFiltersAndSorts,
+    })));
     const highlightColor = useProfileStore((state) => state.profile.highlightColor)
 
     const handleSelect = useCallback(() => {
-        if (project.id !== currentSelectedProjectId)
+        if (project.id !== currentSelectedProjectId) {
             clearFiltersAndSorts();
+            closePanels();
+        }
         setSelectedProject(project);
-    }, [project, currentSelectedProjectId, setSelectedProject, clearFiltersAndSorts])
+    }, [project, currentSelectedProjectId, clearFiltersAndSorts, closePanels, setSelectedProject]);
 
     return (
         <NavLink to={`/projects/${project.id}`} onClick={() => handleSelect()}>
