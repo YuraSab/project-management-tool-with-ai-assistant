@@ -11,10 +11,10 @@ interface ToastItem {
 }
 
 const TOAST_CONFIG: Record<ToastType, { backgroundColor: string; icon: string }> = {
-    success: { backgroundColor: '#10B981', icon: '✅' },
-    error: { backgroundColor: '#EF4444', icon: '❌' },
-    info: { backgroundColor: '#3B82F6', icon: 'ℹ️' },
-    warning: { backgroundColor: '#F59E0B', icon: '⚠️' }
+    success: { backgroundColor: '#10B981', icon: '✓' },
+    error: { backgroundColor: '#EF4444', icon: '✕' },
+    info: { backgroundColor: '#3B82F6', icon: '🛈' },
+    warning: { backgroundColor: '#F59E0B', icon: '⚠' }
 };
 
 export const ToastContainer = () => {

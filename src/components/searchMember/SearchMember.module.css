@@ -1,42 +1,72 @@
-.searchInput {
-    padding: 8px 12px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    margin-bottom: 16px;
-    width: 100%;
-    font-size: 16px;
-}
-
-.searchElement{
-    padding: 8px 4px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid;
-    margin-bottom: 45px;
-}
-
-ul{
+.searchSection {
     display: flex;
     flex-direction: column;
+    gap: 8px;
+    width: 100%;
 }
 
-.userIconContainer {
-    width: 80px;
+.searchInput {
+    padding: 12px 16px;
+    border: 1px solid #d1d5db;
+    border-radius: 12px;
+    width: 100%;
+    font-size: 16px;
+    box-sizing: border-box;
+    transition: all 0.2s;
+    background-color: #fff;
 }
 
-.element{
-    margin: 4px 0;
-    padding: 8px 4px;
+.searchInput:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.resultsList {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 16px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+/* 🌟 Картка результату пошуку — копіює стиль контактів, але має інший фон */
+.searchResultCard {
+    background: #f8fafc; /* Легкий блакитно-сірий відтінок для відмінності */
+    padding: 12px 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px gray solid;
+    border-radius: 12px;
+    border: 1px dashed #cbd5e1; /* Пунктир підкреслює, що це динамічний результат */
 }
 
-.buttonsContainer {
+.userInfo {
     display: flex;
-    gap: 20px;
-    width: 80px;
-    justify-content: end;
+    align-items: center;
+    gap: 16px;
+}
+
+.userEmail {
+    margin: 0;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #334155;
+}
+
+/* 🌟 Стилізація кнопки додавання */
+.plusBtn {
+    cursor: pointer;
+    color: #64748b;
+    /*padding: 6px;*/
+    /*border-radius: 50%;*/
+    padding: 2px;
+    border-radius: 50%;
+    transition: all 0.2s;
+}
+
+.plusBtn:hover {
+    color: #10b981;
+    background-color: #ecfdf5;
 }

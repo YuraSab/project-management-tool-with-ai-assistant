@@ -103,7 +103,7 @@ const ProjectSettings: React.FC = () => {
     return(
         <div className={`${styles.settingsPanel} ${profile.theme === "black" ? styles.dark : styles.light}`} >
             <Title text={'ID:'}/>
-            <div className={styles.displayInputLike}>{project?.id} <CopyIcon text={project?.id}/></div>
+            <div className={styles.displayInputLike}>{project?.id} <CopyIcon copyValue={project?.id} toastValue={'Copied project id!'}/></div>
             <Title text={'Name:'}/>
             <FormTextInput name={"title"} value={formData.title} onChange={handleChange} placeholder={"title"}/>
             <Title text={'Description:'}/>

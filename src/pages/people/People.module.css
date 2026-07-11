@@ -1,28 +1,136 @@
-.main{
-    padding: 40px;
-}
-
-ul{
+.main {
+    /*max-width: 650px; !* 🔥 Збільшуємо ширину всієї робочої зони *!*/
+    width: 700px;
+    margin: 0 auto;
+    padding: 40px 20px;
     display: flex;
     flex-direction: column;
+    gap: 24px;
 }
 
-.element{
-    margin: 4px 0;
-    padding: 8px 4px;
+.contactsSection {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.sectionTitle {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #4b5563;
+    margin-bottom: 4px;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.element {
+    background: white;
+    padding: 16px 24px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px gray solid;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    border: 1px solid #e5e7eb;
+    transition: all 0.2s ease-in-out;
 }
 
-.userIconContainer {
-    width: 80px;
+.element:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    border-color: #d1d5db;
 }
+
+.userInfo {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.userMeta {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.userEmail {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #1f2937;
+}
+
+.userRole {
+    font-size: 0.85rem;
+    color: #6b7280;
+    text-transform: capitalize;
+}
+
+/* 🔥 Стилізація кнопки видалення */
+.deleteBtn {
+    cursor: pointer;
+    color: #9ca3af;
+    transition: all 0.2s ease;
+    padding: 8px;
+    border-radius: 50%;
+}
+
+.deleteBtn:hover {
+    color: #ef4444;
+    background-color: #fef2f2;
+}
+
+.deleteBtn:active {
+    transform: scale(0.9);
+}
+
+.noData {
+    text-align: center;
+    color: #9ca3af;
+    padding: 30px;
+    font-style: italic;
+}
+
+
 
 .buttonsContainer {
     display: flex;
-    gap: 24px;
-    width: 80px;
-    justify-content: end;
+    align-items: center;
+    gap: 8px; /* Невеликий відступ між іконками дій */
+}
+
+/* 🔥 Базовий стиль для всіх інтерактивних кнопок-іконок */
+.iconBtn {
+    cursor: pointer;
+    color: #64748b; /* Приємний нейтральний колір за замовчуванням */
+    padding: 2px;
+    border-radius: 50%;
+    /*border-radius: 20px;*/
+    transition: all 0.2s ease;
+}
+
+.iconBtn:hover {
+    background-color: #f1f5f9;
+}
+
+.iconBtn:active {
+    transform: scale(0.9);
+}
+
+/* 🔥 Специфічний ховер для копіювання */
+.copyBtn:hover {
+    color: #3b82f6; /* Синій при ховері */
+}
+
+/* 🔥 Специфічний ховер для видалення (зробили яскравішим і більшим) */
+.deleteBtn:hover {
+    color: #ef4444; /* Червоний при ховері */
+    background-color: #fef2f2;
 }
