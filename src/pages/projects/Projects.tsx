@@ -24,14 +24,16 @@ const Projects = () => {
     if (isPending) return <ProjectsSkeleton/>;
 
     return (
-        <div className={clsx( styles.main, MODES[theme] )}>
+        <div className={`${styles.main} ${MODES[theme]}`}>
             {
                 projects && projects.length > 0
                     ? projects.map(p => <ProjectCard project={p} key={p.id}/>)
                     : <Error type={'not_found'}/>
             }
-            { isError && <Error type={'server_crash'}/> }
-            <FAB><Plus size={36} color={theme} onClick={() => navigate('/projects/create')}/></FAB>
+            {isError && <Error type={'server_crash'}/>}
+            <FAB>
+                <Plus size={36} color={theme} onClick={() => navigate('/projects/create')}/>
+            </FAB>
         </div>
     );
 };

@@ -1,10 +1,19 @@
 .structure{
     min-height: 100vh;
-    min-width: 100vw;
+    /*min-width: 100vw;*/
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
 }
 
 main{
     width: 100%; /* make paddings only when nav overlay is active */
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 100px);
 }
 
 .copyIcon {
