@@ -1,11 +1,23 @@
 .main{
-    min-height: calc(100vh - 100px);
+    /*height: calc(100vh - 100px);*/
+    /*max-height: calc(100vh - 100px);*/
     padding: 30px 36px;
     display: flex;
     flex-direction: column;
     gap: 12px;
     background-color: #f9f9fb;
     color: black;
+    box-sizing: border-box;
+    /* 🌟 Скроли дозволені ТІЛЬКИ вертикальні і тільки всередині цього компонента */
+    overflow-y: auto;
+    overflow-x: hidden;
+    /* Ховаємо скрол-бар за твоїм правилом, але тепер всередині CSS-модуля */
+    scrollbar-width: none;  /* Firefox */
+    -ms-overflow-style: none;  /* IE/Edge */
+}
+
+.main::-webkit-scrollbar {
+    display: none;
 }
 
 .isDarkMode {
