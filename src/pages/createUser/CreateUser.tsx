@@ -7,7 +7,7 @@ import FormPasswordInput from "../../ui/input/FormPasswordInput";
 import FormSelect from "../../ui/select/FormSelect";
 import FormLayout from "../../layouts/formLayout/FormLayout";
 import CustomForm from "../../ui/form/CustomForm";
-import FormButtonSubmit from "../../ui/button/FormButtonSubmit";
+import CustomButton from "../../ui/button/CustomButton.tsx";
 
 type UserFormData = {
     name: string,
@@ -82,7 +82,7 @@ const CreateUser = () => {
                 <label>Status:
                     <FormSelect name={"role"} value={formData.role} onChange={handleChange} options={["member", "manager", "admin"]}/>
                 </label>
-                <FormButtonSubmit children={"Create user"} disabled={isPending}/>
+                <CustomButton children={"Create user"} disabled={isPending} type={'submit'}/>
             </CustomForm>
         </FormLayout>
     )

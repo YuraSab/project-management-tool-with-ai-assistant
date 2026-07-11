@@ -11,11 +11,11 @@ import FormTextInput from "../../ui/input/FormTextInput.tsx";
 import FormTextarea from "../../ui/textArea/FormTextarea.tsx";
 import FormDateInput from "../../ui/input/FormDateInput.tsx";
 import FormSelect from "../../ui/select/FormSelect.tsx";
-import FormButtonSubmit from "../../ui/button/FormButtonSubmit.tsx";
 import AssignMembers from "../../components/asignMembers/AssignMembers.tsx";
 import {useProjectUsers} from "../../hooks/project/useProjectUsers.ts";
 import styles from './CreateProject.module.css';
 import MemberSelector from "../../ui/memberSelector/MemberSelector.tsx";
+import CustomButton from "../../ui/button/CustomButton.tsx";
 
 type FormData = Pick<Project, 'title' | 'description' | 'status'> & { startDate: string, endDate: string };
 
@@ -99,7 +99,7 @@ const CreateProject = () => {
                 <Title text={'Status:'}/>
                 <FormSelect<ProjectStatus> name={"status"} value={formData.status} onChange={handleChange} options={[ProjectStatus.Planned, ProjectStatus.InProgress, ProjectStatus.Completed]}/>
                 <div className={styles.buttonBlock}>
-                    <FormButtonSubmit children={"Create Project"} customStyles={{ width: 240 }} disabled={isPending}/>
+                    <CustomButton children={"Create Project"} customStyles={{ width: 240 }} disabled={isPending} type={'submit'}/>
                 </div>
             </CustomForm>
         </FormLayout>
