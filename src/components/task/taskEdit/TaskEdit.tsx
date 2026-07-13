@@ -45,7 +45,7 @@ const TaskEdit = () => {
     const { data: projectMembers } = useProjectUsers(project?.assignedMembers || []);
     const { data: taskAssignedMembers } = useProjectUsers(selectedTask?.assignedMembers || []);
     const { data: taskCreator } = useUser(selectedTask?.creatorId || "");
-    const { mutate: updateTask, isPending: isPendingUpdate } = useUpdateTask();
+    const { mutate: updateTask, isPending: isPendingUpdate } = useUpdateTask(projectId || '');
     const { mutate: deleteTask, isPending: isPendingDelete } = useDeleteTask();
 
     const [formData, setFormData] = useState<FormData>(getInitialFormData(selectedTask));
