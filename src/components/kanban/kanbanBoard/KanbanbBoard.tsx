@@ -16,7 +16,8 @@ import {useProfileStore} from "../../../store/profileStore.ts";
 interface KanbanBoardProps { projectId: string }
 const KanbanBoard: React.FC<KanbanBoardProps> = ({ projectId }) => {
     const ownId = useProfileStore((state) => state.profile.uid)
-    const { data: projectTasks, isPending } = useTasks(projectId || "");
+    const { data: projectTasks, isPending } = useTasks(projectId || '', ownId || '');
+
     const taskUpdateMutation = useUpdateTask(projectId);
     const filters = useProjectControlStore(useShallow(state => ({
         users: state.usersFilter,

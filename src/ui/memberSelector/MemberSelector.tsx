@@ -17,7 +17,6 @@ const getRowClassKey = (color: HighlightColor) => `_assignedMembers_button__${co
 const MemberSelector = ({membersMap, selectedMembersIds, clickAction}: MemberSelectorProps) => {
     const highlightColor = useProfileStore((state) => state.profile.highlightColor);
     const members = [...membersMap.values()];
-    console.log(members)
     return (
         <div className={`${styles.block} hideScrollbar ${highlightColor && styles[getBlockClassKey(highlightColor)]}`}>
             {members && members.map((m) => (

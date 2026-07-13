@@ -21,7 +21,7 @@ const AIChat = () => {
         messages: state.messages, addMessage: state.addMessage, clearChat: state.clearChat
     })));
 
-    const {data: projectTasks} = useTasks(selectedProject?.id || "");
+    const {data: projectTasks} = useTasks(selectedProject?.id || '', profile.uid || '');
     const {data: projectUsers} = useProjectUsers(selectedProject?.assignedMembers || []);
 
     const [inputValue, setInputValue] = useState('');
