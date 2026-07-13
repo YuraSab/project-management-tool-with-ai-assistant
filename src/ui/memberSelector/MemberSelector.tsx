@@ -22,7 +22,7 @@ const MemberSelector = ({membersMap, selectedMembersIds, clickAction}: MemberSel
             {members && members.map((m) => (
                 <div className={`${styles.row} ${highlightColor && styles[getRowClassKey(highlightColor)]}`} onClick={() => clickAction(m)} key={m.uid}>
                     <div className={styles.user}>
-                        <CustomUserIcon title={m.displayName[0]} backgroundColor={m.iconColor} size={20} fontSize={14}/>
+                        <CustomUserIcon title={m.displayName && m.displayName[0] || ''} backgroundColor={m.iconColor} size={20} fontSize={14}/>
                         <h3>{m.displayName}</h3>
                     </div>
                     <div>

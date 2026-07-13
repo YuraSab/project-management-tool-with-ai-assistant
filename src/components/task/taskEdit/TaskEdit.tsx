@@ -22,7 +22,7 @@ import MemberSelector from "../../../ui/memberSelector/MemberSelector.tsx";
 import {switchRightPanelView} from "../../../utils/panelManager.ts";
 import {useUser} from "../../../hooks/users/useUser.ts";
 import CustomUserIcon from "../../../ui/icons/CustomUserIcon.tsx";
-import {toast} from "../../../utils/toaster.ts";
+import {useProfileStore} from "../../../store/profileStore.ts";
 
 type FormData = Omit<Task, "id" | "projectId" | "creatorId" | "assignedMembers" | 'startDate' | 'endDate'> & {
     startDate: string, endDate: string, type: TaskType | '', category: TaskCategory | ''
@@ -36,7 +36,8 @@ const getInitialFormData = (task: Task | null): FormData => ({
 
 const TaskEdit = () => {
     const { projectId } = useParams();
-    
+
+    const ownId = useProfileStore((state) => state.profile.uid);
     const selectedTask = useProjectControlStore((state) => state.selectedTask);
     const setIsRightPanelActive = useProjectControlStore((state) => state.setIsRightPanelActive);
     const setIsEditTaskActive = useProjectControlStore((state) => state.setIsEditTaskActive);
@@ -45,7 +46,7 @@ const TaskEdit = () => {
     const { data: projectMembers } = useProjectUsers(project?.assignedMembers || []);
     const { data: taskAssignedMembers } = useProjectUsers(selectedTask?.assignedMembers || []);
     const { data: taskCreator } = useUser(selectedTask?.creatorId || "");
-    const { mutate: updateTask, isPending: isPendingUpdate } = useUpdateTask();
+    const { mutate: updateTask, isPending: isPendingUpdate } = useUpdateTask(projectId || '', ownId || '');
     const { mutate: deleteTask, isPending: isPendingDelete } = useDeleteTask();
 
     const [formData, setFormData] = useState<FormData>(getInitialFormData(selectedTask));
