@@ -7,9 +7,9 @@ interface MutationContext {
     previousTasks?: Task[];
 }
 
-export const useUpdateTask = (projectId: string) => {
+export const useUpdateTask = (projectId: string, userId: string) => {
     const queryClient = useQueryClient();
-    const queryKey = ["tasks", projectId];
+    const queryKey = ["tasks", projectId, userId];
     return useMutation<void, Error, Partial<Task> & { id: string }, MutationContext>({
         mutationFn: updateTask,
         // 🔥 Optimistic update happens HERE

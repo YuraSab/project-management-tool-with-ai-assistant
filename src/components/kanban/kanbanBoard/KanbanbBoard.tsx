@@ -18,7 +18,7 @@ const KanbanBoard: React.FC<KanbanBoardProps> = ({ projectId }) => {
     const ownId = useProfileStore((state) => state.profile.uid)
     const { data: projectTasks, isPending } = useTasks(projectId || '', ownId || '');
 
-    const taskUpdateMutation = useUpdateTask(projectId);
+    const taskUpdateMutation = useUpdateTask(projectId, ownId);
     const filters = useProjectControlStore(useShallow(state => ({
         users: state.usersFilter,
         status: state.statusFilter, priority: state.priorityFilter, noPriority: state.showNoPriorityTasks,
