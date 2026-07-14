@@ -7,7 +7,7 @@ interface TextInputProps {
     required?: boolean,
 }
 
-const TextInput = ({ name, value , onChange, required }: TextInputProps) => {
+const TextInput = ({ name, value , onChange, required, ...props }: TextInputProps) => {
     return <input 
         name={name} 
         value={value} 
@@ -15,6 +15,7 @@ const TextInput = ({ name, value , onChange, required }: TextInputProps) => {
         required={required}
         type="text" 
         className={styles.cunstomInput}
+        {...props}
     />
 }
 

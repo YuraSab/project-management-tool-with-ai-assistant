@@ -1,4 +1,5 @@
 import styles from "./Input.module.css";
+import React from "react";
 
 interface FormTextInputProps {
     name: string, 

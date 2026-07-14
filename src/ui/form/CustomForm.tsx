@@ -5,9 +5,10 @@ import {useProfileStore} from "../../store/profileStore.ts";
 interface CustomFormProps extends ComponentPropsWithoutRef<'form'>{
     children: ReactNode,
     disabled?: boolean,
+    customStyles?: React.CSSProperties
 }
 
-const CustomForm = ({ children, onSubmit, disabled, className, style, ...rest }: CustomFormProps) => {
+const CustomForm = ({ children, onSubmit, disabled, customStyles, className, style, ...rest }: CustomFormProps) => {
     const theme = useProfileStore((state) => state.profile.theme);
 
     const handleSubmit = useCallback((e: FormEvent<HTMLFormElement>) => {
@@ -30,7 +31,7 @@ const CustomForm = ({ children, onSubmit, disabled, className, style, ...rest }:
             <fieldset
                 disabled={disabled}
                 className={formClassName}
-                style={style}
+                style={{...style, ...customStyles}}
             >
                 {children}
             </fieldset>

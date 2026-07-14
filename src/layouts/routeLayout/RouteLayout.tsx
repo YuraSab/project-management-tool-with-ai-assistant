@@ -11,6 +11,7 @@ import EditUser from '../../pages/editUser/EditUser';
 import Personalisation from '../../pages/personalisation/Personalisation';
 import React from "react";
 import {Role} from "../../types/user.ts";
+import Profile from "../../pages/profile/Profile.tsx";
 
 const ALLOWED_ROLES = {
     ALL: [Role.Admin, Role.Manager, Role.Member],
@@ -29,6 +30,7 @@ const RouteLayout = () => (
             <Route path="/people" element={<People/>}/>
             <Route path="/personalisation" element={<Personalisation/>}/>
             <Route path="/projects/create" element={<CreateProject/>}/>
+            <Route path="/profile" element={<Profile/>}/>
         </Route>
         <Route element={<ProtectedRoute allowedRoles={ALLOWED_ROLES.NON_MEMBERS}/>}>
         </Route>

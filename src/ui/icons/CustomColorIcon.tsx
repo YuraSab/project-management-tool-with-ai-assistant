@@ -1,33 +1,30 @@
-import { Check } from "lucide-react";
+import {Check} from "lucide-react";
 import styles from "./CustomColorIcon.module.css";
-import {useProfileStore} from "../../store/profileStore.ts";
 import {ColorPalette, UserProfile} from "../../types/user.ts";
 
-interface CustomColorIconProps<T extends string> {
-    backgroundColor: T,
-    size?: number,
-    field: keyof UserProfile,
-    onClick: (field: keyof UserProfile, color: ColorPalette) => void,
+interface CustomColorIconProps<T extends ColorPalette> {
     currentColor: T,
+    selectedColor: T,
+    onClick: () => void,
+    size?: number,
 }
 
-const CustomColorIcon = <T extends string>({ backgroundColor, size = 36, field, onClick, currentColor }: CustomColorIconProps<T>) => {
-    const theme = useProfileStore((state) => state.profile.theme);
-    return(
-        <div 
-            className={`${styles.iconBlock}`} 
-            style={{ 
-                width: size, 
-                height: size, 
-                backgroundColor: backgroundColor, 
-                color: backgroundColor === "white" ? "black" : "white", 
-                borderColor: theme === "black" ? "white" :"black"
-            }} 
-            onClick={() => onClick(field, backgroundColor)}
-        >
-            { currentColor === backgroundColor && <Check/> }
-        </div>
-    )
-}
+const CustomColorIcon = <T extends ColorPalette>({
+    currentColor, selectedColor, onClick, size = 36
+}: CustomColorIconProps<T>) => (
+    <div
+        className={`${styles.iconBlock}`}
+        style={{
+            width: size,
+            height: size,
+            backgroundColor: currentColor,
+            color: currentColor === "white" ? "black" : "white",
+            borderColor: currentColor === "black" ? "white" :"black"
+        }}
+        onClick={onClick}
+    >
+        {currentColor === selectedColor && <Check/>}
+    </div>
+);
 
 export default CustomColorIcon;
