@@ -80,6 +80,7 @@ const TaskEdit = () => {
             status: formData.status, priority: formData.priority,
             startDate: formData.startDate ? new Date(formData.startDate) : null,
             endDate: formData.endDate ? new Date(formData.endDate) : null,
+            updatedAt: new Date(),
         };
         updateTask(taskData);
         setAddMembersActive(false);
@@ -106,9 +107,9 @@ const TaskEdit = () => {
             <div className={styles.rightPanelChildEdit}>
                 <Title text={'Title'}/>
                 <FormTextInput name={"title"} value={formData.title} onChange={handleChange} required/>
-                <Title text={'Description:'}/>
+                <Title text={'Description'}/>
                 <FormTextarea name={"description"} value={formData.description} onChange={handleChange} />
-                <Title text={'Members:'}/>
+                <Title text={'Members'}/>
                 <AssignMembers
                     assignedMembers={localAssignedMembers}
                     onSelectMembersActive={() => setAddMembersActive(!addMembersActive)}
@@ -125,14 +126,16 @@ const TaskEdit = () => {
                 <FormSelect<TaskType | ''> name="type" value={formData.type || ''} onChange={handleChange} options={['', ...TASK_TYPES]}/>
                 <Title text={'Category'}/>
                 <FormSelect<TaskCategory | ''> name="category" value={formData.category || ''} onChange={handleChange} options={['', ...TASK_CATEGORIES]}/>
-                <Title text={'Status:'}/>
+                <Title text={'Status'}/>
                 <FormSelect<TaskStatus> name={"status"} value={formData.status} onChange={handleChange} options={["todo", "in_progress", "done"]}/>
-                <Title text={'Priority:'}/>
+                <Title text={'Priority'}/>
                 <FormSelect<TaskPriority> name={"priority"} value={formData.priority} onChange={handleChange} options={["low", "medium", "high", "none"]}/>
-                <Title text={'From:'}/>
+                <Title text={'From'}/>
                 <FormDateInput name={"startDate"} value={formData.startDate} onChange={handleChange} />
-                <Title text={'To:'}/>
+                <Title text={'To'}/>
                 <FormDateInput name={"endDate"} value={formData.endDate} onChange={handleChange} />
+                <Title text={'Created'}/>
+                <FormDateInput name={"endDate"} value={formatDateForInput(selectedTask?.createdAt)} onChange={handleChange} disabled={true}/>
                 <div className={styles.buttonBlock}>
                     <CustomButton children={"Save changes"} disabled={isPendingUpdate || isPendingDelete} type={'submit'}/>
                     <CustomButton children={"Delete task"} onClick={handleDelete} customStyles={{backgroundColor: "#D10000"}} disabled={isPendingUpdate || isPendingDelete}/>

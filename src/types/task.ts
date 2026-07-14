@@ -14,6 +14,8 @@ export interface TaskFilters {
     users: UserProfile[],
     start: string,
     end: string,
+    createdAt: string,
+    updatedAt: string,
     priority: TaskPriority,
     noStatus: boolean,
     noPriority: boolean,
@@ -23,7 +25,7 @@ export interface TaskFilters {
     types: TaskType[],
     categories: TaskCategory[],
 }
-export type SortOption = "Start date dec" | "Start date inc" | "End date dec" | "End date inc" | "Create date dec"| "Create date inc" | "none";
+export type SortOption = "Start date dec" | "Start date inc" | "End date dec" | "End date inc" | "Create date dec"| "Create date inc" | "Update date dec"| "Update date inc" | "none";
 
 export interface Task {
     id: string,
@@ -37,6 +39,7 @@ export interface Task {
     startDate?: Timestamp | Date | null,
     endDate?: Timestamp | Date | null,
     createdAt?: Timestamp | Date | null,
+    updatedAt?: Timestamp | Date | null,
     type?: TaskType,
     category?: TaskCategory,
 }
