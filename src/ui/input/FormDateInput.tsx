@@ -1,4 +1,5 @@
 import styles from "./Input.module.css";
+import React from "react";
 
 interface FormDateInputProps {
     name: string, 
@@ -7,7 +8,7 @@ interface FormDateInputProps {
     required?: boolean,
 }
 
-const FormDateInput = ({ name, value , onChange, required = false }: FormDateInputProps) => {
+const FormDateInput = ({ name, value , onChange, required = false, ...props }: FormDateInputProps) => {
     return <input 
         name={name} 
         value={value} 
@@ -15,6 +16,7 @@ const FormDateInput = ({ name, value , onChange, required = false }: FormDateInp
         required={required}
         type="date" 
         className={styles.cunstomInput}
+        {...props}
     />
 }
 

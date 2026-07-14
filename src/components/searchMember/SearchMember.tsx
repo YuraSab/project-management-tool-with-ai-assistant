@@ -7,6 +7,7 @@ import { useProfileStore } from "../../store/profileStore.ts";
 import { useSearchUsers } from "../../hooks/users/useSearchUsers.ts";
 import { useShallow } from "zustand/react/shallow";
 import Error from "../error/Error.tsx";
+import {toast} from "../../utils/toaster.ts";
 
 const SearchMember = () => {
     const [searchTerm, setSearchTerm] = useState<string>('');
@@ -37,6 +38,7 @@ const SearchMember = () => {
         editProfile({ reservedMembers });
         setSearchTerm('');
         setDebounceTerm('');
+        toast.success('Reserved member');
     }, [profile, updateUser, editProfile]);
 
     return (

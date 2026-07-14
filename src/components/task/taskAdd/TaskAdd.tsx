@@ -27,6 +27,7 @@ import {UserProfile} from "../../../types/user.ts";
 import MemberSelector from "../../../ui/memberSelector/MemberSelector.tsx";
 import CustomButton from "../../../ui/button/CustomButton.tsx";
 import {useProfileStore} from "../../../store/profileStore.ts";
+import {updateTasks__TEST} from "../../../services/taskService.ts";
 
 type FormData = Pick<Task, 'title'| 'description'| 'status' | 'priority'> & {
     startDate: string, endDate: string, type: TaskType | '', category: TaskCategory | ''
@@ -84,6 +85,7 @@ const TaskAdd = React.memo(() => {
             startDate: formData.startDate ? new Date(formData.startDate) : null,
             endDate: formData.endDate ? new Date(formData.endDate) : null,
             createdAt: new Date(),
+            updatedAt: new Date(),
             type: formData.type ? formData.type : 'none', category: formData.category ? formData.category : 'none',
         };
         createTask(taskData as Task, {

@@ -5,6 +5,7 @@ export const sortOptions: SortOption[] = [
     "Start date dec", "Start date inc",
     "End date dec", "End date inc",
     "Create date dec", "Create date inc",
+    "Update date dec", "Update date inc",
     "none"
 ];
 

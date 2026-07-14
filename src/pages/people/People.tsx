@@ -8,6 +8,7 @@ import { useUpdateUser } from "../../hooks/users/useUpdateUser.ts";
 import { useShallow } from "zustand/react/shallow";
 import React from "react";
 import CopyIcon from "../../ui/copyIcon/CopyIcon.tsx";
+import {toast} from "../../utils/toaster.ts";
 
 const People = () => {
     const { profile, editProfile } = useProfileStore(useShallow((state) => ({
@@ -23,7 +24,10 @@ const People = () => {
             uid: profile.uid,
             reservedMembers: updatedReservedMembers
         }, {
-            onSuccess: () => editProfile({ reservedMembers: updatedReservedMembers })
+            onSuccess: () => {
+                editProfile({ reservedMembers: updatedReservedMembers });
+                toast.success('Deleted member');
+            }
         });
     };
 
