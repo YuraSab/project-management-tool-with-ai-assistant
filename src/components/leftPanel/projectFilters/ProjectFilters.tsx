@@ -46,7 +46,8 @@ const ProjectFilters: React.FC = () => {
         showTaskCounter, setShowTaskCounter,
         typesFilter, setTypesFilter,
         categoriesFilter, setCategoriesFilter,
-        clearFiltersAndSorts
+        clearFiltersAndSorts,
+        showAIChat, setShowAIChat
     } = useProjectControlStore(useShallow((state) => ({
         statusFilter: state.statusFilter, setStatusFilter: state.setStatusFilter,
         startDateFilter: state.startDateFilter, setStartDateFilter: state.setStartDateFilter,
@@ -61,7 +62,8 @@ const ProjectFilters: React.FC = () => {
         showTaskCounter: state.showTaskCounter, setShowTaskCounter: state.setShowTaskCounter,
         typesFilter: state.typesFilter, setTypesFilter: state.setTypesFilter,
         categoriesFilter: state.categoriesFilter, setCategoriesFilter: state.setCategoriesFilter,
-        clearFiltersAndSorts: state.clearFiltersAndSorts
+        clearFiltersAndSorts: state.clearFiltersAndSorts,
+        showAIChat: state.showAIChat, setShowAIChat: state.setShowAIChat,
     })));
     const [addMembersActive, setAddMembersActive] = useState<boolean>(false);
     const [localAssignedMembersIds, setLocalAssignedMembersIds] = useState<string[]>([]);
@@ -143,7 +145,7 @@ const ProjectFilters: React.FC = () => {
             <Title text={'Categories'}/>
             <SelectorBlock children={'Categories'} onSelectorActive={() => setTaskCategoriesActive((prev) => !prev)}/>
             {taskCategoriesActive && (
-                <CustomMultiSelector options={TASK_CATEGORIES} selectedOptions={categoriesFilter} onChange={setCategoriesFilter}/>
+                <CustomMultiSelector options={TASK_CATEGORIES} selectпгdOptions={categoriesFilter} onChange={setCategoriesFilter}/>
             )}
             <Title text={'From'}/>
             <DateInput value={startDateFilter} onChange={setStartDateFilter}/>
@@ -155,6 +157,7 @@ const ProjectFilters: React.FC = () => {
             <TextInput name={'search'} value={searchTermFilter} onChange={setSearchTermFilter}/>
             <Title text={'Utilities'}/>
             <NoStatusCheckBox text={'Task counter'} checked={showTaskCounter} onChange={setShowTaskCounter} customStyles={{ marginTop: 8 }}/>
+            <NoStatusCheckBox text={'AI Chat'} checked={showAIChat} onChange={setShowAIChat} customStyles={{ marginTop: 8 }}/>
             <CustomButton children={"Clear filters"} onClick={handleClearFilters} customStyles={{ margin: '12px 0' }}/>
         </div>
     );

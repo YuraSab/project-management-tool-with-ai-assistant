@@ -56,9 +56,11 @@ interface ProjectControlState {
     showTaskCounter: boolean;
     setShowTaskCounter: (value: boolean) => void;
     typesFilter: TaskCategory[];
-    setTypesFilter: (TaskCategory) => void;
+    setTypesFilter: (value: TaskCategory) => void;
     categoriesFilter: TaskCategory[];
-    setCategoriesFilter: (TaskCategory) => void;
+    setCategoriesFilter: (value: TaskCategory) => void;
+    showAIChat: boolean;
+    setShowAIChat: (value: boolean) => void;
     clearFiltersAndSorts: () => void;
     closePanels: () => void;
 }
@@ -144,6 +146,8 @@ export const useProjectControlStore = create<ProjectControlState>((set, get) => 
                 : [...cur, value]
         });
     },
+    showAIChat: true,
+    setShowAIChat: (value) => set({ showAIChat: value }),
     clearFiltersAndSorts: () => set({
         statusFilter: [...TASK_STATUSES],
         priorityFilter: [...TASK_PRIORITIES],
@@ -153,7 +157,6 @@ export const useProjectControlStore = create<ProjectControlState>((set, get) => 
         searchTermFilter: '',
         showUnassignedTasks: true,
         showNoPriorityTasks: true,
-        showTaskCounter: true,
         typesFilter: TASK_TYPES,
         categoriesFilter: TASK_CATEGORIES,
     }),
@@ -165,5 +168,4 @@ export const useProjectControlStore = create<ProjectControlState>((set, get) => 
         setIsEditTaskActive: false,
         setIsProjectSettingsActive: false,
     })
-
 }));
