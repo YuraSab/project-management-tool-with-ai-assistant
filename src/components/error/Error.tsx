@@ -2,6 +2,8 @@ import React, {HTMLAttributes} from 'react';
 import {Ban, GlobeOff, LucideProps, SearchAlert, ServerCrash} from 'lucide-react';
 import styles from './Error.module.css';
 import {useProfileStore} from "../../store/profileStore.ts";
+import {getColor} from "../../utils/colorThemeSelector.ts";
+import {HighlightColor} from "../../types/user.ts";
 
 type ErrorType = 'not_found' | 'server_crash' | 'no_access' | 'network_problems';
 
@@ -37,19 +39,18 @@ interface ErrorProps extends HTMLAttributes<HTMLDivElement>{
 const Error = ({ type, text, style, ...rest }: ErrorProps) => {
     const highlightColor = useProfileStore((state) => state.profile.highlightColor)
     const { Icon, defaultText } = ERROR_OPTIONS[type];
-    const combinedStyles: React.CSSProperties = {
-        color: highlightColor,
-        ...style
-    };
-
+    const color = getColor(highlightColor ?? HighlightColor.Purple);
     return (
         <div
             className={styles.block}
-            style={combinedStyles}
+            style={{
+                color: color,
+                ...style
+            }}
             {...rest}
         >
             <h2>{text ? text : defaultText}</h2>
-            <Icon size={54} color={highlightColor}/>
+            <Icon size={54} color={color}/>
         </div>
     );
 };

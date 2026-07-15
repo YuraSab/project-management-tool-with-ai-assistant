@@ -145,7 +145,7 @@ const ProjectFilters: React.FC = () => {
             <Title text={'Categories'}/>
             <SelectorBlock children={'Categories'} onSelectorActive={() => setTaskCategoriesActive((prev) => !prev)}/>
             {taskCategoriesActive && (
-                <CustomMultiSelector options={TASK_CATEGORIES} selectпгdOptions={categoriesFilter} onChange={setCategoriesFilter}/>
+                <CustomMultiSelector options={TASK_CATEGORIES} selectedOptions={categoriesFilter} onChange={setCategoriesFilter}/>
             )}
             <Title text={'From'}/>
             <DateInput value={startDateFilter} onChange={setStartDateFilter}/>

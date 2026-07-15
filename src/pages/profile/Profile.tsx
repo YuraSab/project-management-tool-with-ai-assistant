@@ -2,7 +2,6 @@ import React, {useCallback, useMemo} from 'react';
 import {useProfileStore} from "../../store/profileStore.ts";
 import CustomUserIcon from "../../ui/icons/CustomUserIcon.tsx";
 import Title from "../../ui/title/Title.tsx";
-import TextInput from "../../ui/input/TextInput.tsx";
 import {formatDateForInput} from "../../utils/dateFormat.ts";
 import styles from './Profile.module.css';
 import CustomForm from "../../ui/form/CustomForm.tsx";
@@ -31,7 +30,7 @@ const Profile = () => {
     }, [initialProfile, displayName, theme, iconColor, highlightColor]);
 
     const handleUpdateProfile = useCallback(() => {
-        // if (!hasChangedForm) return;
+        if (!hasChangedForm) return;
         const updatedProfileData: Partial<UserProfile> = {
             displayName,
             theme,

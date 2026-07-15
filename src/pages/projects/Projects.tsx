@@ -2,7 +2,6 @@ import styles from "./Projects.module.css";
 import { useUserProjects } from "../../hooks/users/useUserProjects";
 import {useAuthStore} from "../../store/authStore.ts";
 import ProjectCard from "../../components/projectCard/ProjectCard.tsx";
-import clsx from "clsx";
 import ProjectsSkeleton from "../../components/projectCard/ProjectsSkeleton.tsx";
 import FAB from "../../ui/FAB/FAB.tsx";
 import {Plus} from "lucide-react";

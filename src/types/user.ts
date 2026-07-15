@@ -10,14 +10,20 @@ export enum Theme {
 export enum HighlightColor {
     Purple = 'purple',
     Green = 'green',
-    Orange = 'orange',
-    Blue = 'blue'
+    Teal = 'teal',
+    Slate = 'slate',
+    Violet = 'violet',
+    Blue = 'blue',
+    Orange = 'orange'
 }
 export enum IconColor {
     Purple = 'purple',
     Green = 'green',
-    Orange = 'orange',
-    Blue = 'blue'
+    Teal = 'teal',
+    Slate = 'slate',
+    Violet = 'violet',
+    Blue = 'blue',
+    Orange = 'orange'
 }
 
 export interface UserProfile {
@@ -36,5 +42,22 @@ export interface UserProfile {
 export type ColorPalette = IconColor | HighlightColor | Theme;
 
 export const ThemeSet: Theme[] = [Theme.White, Theme.Black] as const;
-export const HighlightColorSet: HighlightColor[] = [HighlightColor.Purple, HighlightColor.Green, HighlightColor.Orange, HighlightColor.Blue] as const;
-export const IconColorSet: IconColor[] = [IconColor.Purple, IconColor.Green, IconColor.Orange, IconColor.Blue] as const;
+export const HighlightColorSet: HighlightColor[] = [
+    HighlightColor.Purple,
+    HighlightColor.Green,
+    HighlightColor.Teal,
+    HighlightColor.Slate,
+    HighlightColor.Violet,
+    HighlightColor.Blue,
+    HighlightColor.Orange
+] as const;
+
+export const IconColorSet: IconColor[] = [
+    IconColor.Purple,
+    IconColor.Green,
+    IconColor.Teal,
+    IconColor.Slate,
+    IconColor.Violet,
+    IconColor.Blue,
+    IconColor.Orange
+] as const;

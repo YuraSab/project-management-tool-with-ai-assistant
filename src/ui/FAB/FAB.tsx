@@ -1,27 +1,29 @@
 import React, {HTMLAttributes} from 'react';
 import styles from './Fab.module.css';
 import {useProfileStore} from "../../store/profileStore.ts";
+import {HighlightColor} from "../../types/user.ts";
+import {getColorThemeVariables} from "../../utils/colorThemeSelector.ts";
 
 interface FabProps extends HTMLAttributes<HTMLDivElement> {
-    children: React.ReactNode,
     type?: 'filled' | 'hollow',
+    customStyles?: React.CSSProperties
 }
 
-const Fab = ({ children, type = 'filled', onClick, className, style, ...rest }: FabProps) => {
+const Fab = ({ children, type = 'filled', customStyles, onClick, ...rest }: FabProps) => {
     const { theme, highlightColor } = useProfileStore((state) => state.profile);
-    const combinedStyles: React.CSSProperties = {
-        backgroundColor: type === 'filled' ? highlightColor : theme,
-        borderColor: type === 'filled' ? 'none' : highlightColor,
-        ...style,
-    };
-    const combinedClasses = `${styles.fab} ${className || ''}`.trim();
+    const activeColor = highlightColor ?? HighlightColor.Purple;
+    const colorVariables = getColorThemeVariables(activeColor);
 
     return (
         <div
-            {...rest}
             onClick={onClick}
-            className={combinedClasses}
-            style={combinedStyles}
+            className={`${styles.fab} ${styles[type]}`}
+            style={{
+                ...colorVariables,
+                ...customStyles,
+                '--local-theme-color': theme,
+            }}
+            {...rest}
         >
             {children}
         </div>
