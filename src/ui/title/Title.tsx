@@ -5,12 +5,11 @@ interface TitleProps {
     text: string,
 }
 
-const Title = ({ text }: TitleProps) => {
-    return (
-        <span className={styles.title}>
-            {text}
-        </span>
-    );
-};
+const Title = ({text}: TitleProps) => (
+    <span className={styles.title}>
+        {text}
+    </span>
+);
+
 
 export default Title;

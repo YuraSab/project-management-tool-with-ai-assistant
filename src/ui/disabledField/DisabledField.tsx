@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from "../../pages/profile/Profile.module.css";
+import styles from './DisabledField.module.css';
 import CopyIcon from "../copyIcon/CopyIcon.tsx";
 
 interface DisabledFieldProps {

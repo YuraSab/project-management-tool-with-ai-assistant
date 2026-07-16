@@ -4,19 +4,17 @@ interface TextInputProps {
     name: string, 
     value: string,
     onChange: (value: string) => void,
-    required?: boolean,
 }
 
-const TextInput = ({ name, value , onChange, required, ...props }: TextInputProps) => {
-    return <input 
+const TextInput = ({ name, value, onChange, ...props }: TextInputProps) => (
+    <input
         name={name} 
         value={value} 
         onChange={(event) => onChange(event.target.value)} 
-        required={required}
-        type="text" 
-        className={styles.cunstomInput}
+        type="text"
+        className={styles.customInput}
         {...props}
     />
-}
+);
 
 export default TextInput;

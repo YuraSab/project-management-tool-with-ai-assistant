@@ -16,7 +16,7 @@ const FormTextInput = ({ name, value , onChange, required, placeholder}: FormTex
         onChange={onChange} 
         required={required}
         type="text" 
-        className={styles.cunstomInput}
+        className={styles.customInput}
         placeholder={placeholder}
     />
 }

@@ -1,5 +1,9 @@
 .title {
+    /*--color-text-secondary: transparent;*/
     font-weight: 500;
-    color: #1f2937;
+    /*color: var(--color-text-secondary);*/
     padding-top: 12px;
+    font-size: 14px;
+    display: inline-block; /* Щоб padding-top працював коректно */
+    transition: color 0.2s ease;
 }

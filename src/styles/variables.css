@@ -1,19 +1,17 @@
 :root {
+    /* ☀️ Базові змінні для світлої теми за замовчуванням */
+    --color-bg: #ffffff;
+    --color-text-primary: #000000;
+    --color-text-secondary: #4b5563;
+    --color-border: #e5e7eb;
+
+    /* Решта твоїх глобальних змінних */
     --bg-main: #f9f9fb;
     --bg-card: #ffffff;
     --color-text-main: #1A202C;
     --color-text-muted: #4A5568;
     --border-default: 1px solid #E2E8F0;
     --container-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
-
-    /* __THEMES START__ */
-    /* Background */
-    --purple-hover: #f5f3ff;
-    /*--purple-hover: orange;*/
-    --green-hover: #dcfce7;
-    --blue-hover: #dbeafe;
-    --orange-hover: #ffedd5;
-    /* __THEMES END__ */
 
 
 
@@ -73,4 +71,27 @@
     --color-black-dark: #334155;      /* Графітово-сталевий (Slate 700) */
     --color-black-light: #e2e8f0;      /* Попелястий світлий фон для контрасту (Slate 200) */
     --color-black-disabled: #0f172a;   /* Темно-синій заблокований (Slate 900) */
+}
+
+    .light {
+        --color-bg: #ffffff;                  /* Чистий світлий фон */
+        --color-text-primary: #000000;       /* Майже чорний колір для основного тексту */
+        --color-text-secondary: #4b5563;     /* М'який темно-сірий для підписів/лейблів */
+        --color-border: #e5e7eb;             /* Світла рамка для інпутів тощо */
+        --disabled-backgroud: rgba(0,0,0,0.05);
+    }
+
+    .dark {
+        --color-bg: #000000;                  /* Чистий чорний фон */
+        --color-text-primary: #ffffff;       /* Чистий білий для основного тексту */
+        --color-text-secondary: #cbd5e1;     /* Виразний світло-сірий для підписів/Title */
+        --color-border: #334155;             /* Темна рамка для інпутів */
+        --disabled-backgroud: rgba(255, 255, 255, 0.03);
+    }
+
+body {
+    background-color: var(--color-bg);
+    color: var(--color-text-primary);
+    transition: background-color 0.2s ease, color 0.2s ease;
+    margin: 0;
 }

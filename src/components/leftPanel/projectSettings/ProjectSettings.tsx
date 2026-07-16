@@ -16,8 +16,8 @@ import Title from "../../../ui/title/Title.tsx";
 import {useProfileStore} from "../../../store/profileStore.ts";
 import {formatDateForInput} from "../../../utils/dateFormat.ts";
 import {useProject} from "../../../hooks/project/useProject.ts";
-import CopyIcon from "../../../ui/copyIcon/CopyIcon.tsx";
 import MemberSelector from "../../../ui/memberSelector/MemberSelector.tsx";
+import DisabledField from "../../../ui/disabledField/DisabledField.tsx";
 
 type FormData = Pick<Project, 'title' | 'description' | 'status'> & { startDate: string, endDate: string };
 
@@ -103,7 +103,7 @@ const ProjectSettings: React.FC = () => {
     return(
         <div className={`${styles.settingsPanel} ${profile.theme === "black" ? styles.dark : styles.light}`} >
             <Title text={'ID:'}/>
-            <div className={styles.displayInputLike}>{project?.id} <CopyIcon copyValue={project?.id} toastValue={'Copied project id!'}/></div>
+            <DisabledField children={project?.id ?? ''} copyText={project?.id} toastValue={'Copied project ID'}/>
             <Title text={'Name:'}/>
             <FormTextInput name={"title"} value={formData.title} onChange={handleChange} placeholder={"title"}/>
             <Title text={'Description:'}/>

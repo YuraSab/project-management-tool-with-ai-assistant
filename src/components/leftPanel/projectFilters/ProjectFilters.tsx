@@ -131,7 +131,7 @@ const ProjectFilters: React.FC = () => {
                 projectAssignedMembers={projectMembers || []}
                 localAssignedMembersIds={localAssignedMembersIds}
                 onSelectMembersActive={() => setAddMembersActive(!addMembersActive)}
-                uniqueText={"Select members"} maxIcons={3} iconSize={28}
+                uniqueText={"Select members"} maxIcons={2} iconSize={28}
             />
             {addMembersActive && (
                 <MemberSelector membersMap={projectMembersMap} selectedMembersIds={localAssignedMembersIds || []} clickAction={handleMemberClick}/>
