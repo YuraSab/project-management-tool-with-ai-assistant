@@ -1,0 +1,21 @@
+.mainBlock {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.formBlock {
+    width: 700px;
+    padding: 20px;
+}
+
+.palleteBlock{
+    display: flex;
+    gap: 12px;
+    padding-top: 4px;
+}
+
+.logoutBlock{
+    display: flex;
+    justify-content: space-between;
+}

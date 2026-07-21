@@ -123,9 +123,9 @@ const TaskEdit = () => {
                     <CustomUserIcon title={taskCreator ? taskCreator.displayName : "User"} backgroundColor={taskCreator?.iconColor}/>
                 </>)}
                 <Title text={'Type'}/>
-                <FormSelect<TaskType | ''> name="type" value={formData.type || ''} onChange={handleChange} options={['', ...TASK_TYPES]}/>
+                <FormSelect<TaskType | ''> name="type" value={formData.type || ''} onChange={handleChange} options={TASK_TYPES}/>
                 <Title text={'Category'}/>
-                <FormSelect<TaskCategory | ''> name="category" value={formData.category || ''} onChange={handleChange} options={['', ...TASK_CATEGORIES]}/>
+                <FormSelect<TaskCategory | ''> name="category" value={formData.category || ''} onChange={handleChange} options={TASK_CATEGORIES}/>
                 <Title text={'Status'}/>
                 <FormSelect<TaskStatus> name={"status"} value={formData.status} onChange={handleChange} options={["todo", "in_progress", "done"]}/>
                 <Title text={'Priority'}/>

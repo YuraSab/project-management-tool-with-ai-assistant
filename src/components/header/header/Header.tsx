@@ -1,30 +1,27 @@
-import HeaderModalAccount from "../headerModalAccout/HeaderModalAccout";
 import styles from "./Header.module.css";
 import CustomUserIcon from "../../../ui/icons/CustomUserIcon";
 import CustomNavLink from "../../../ui/link/CustomNavLink";
 import {useProfileStore} from "../../../store/profileStore.ts";
-import {useHeaderStore} from "../../../store/headerStore.ts";
+import {getColor} from "../../../utils/colorThemeSelector.ts";
 
 const Header = () => {
     const profile = useProfileStore((state) => state.profile);
-    const isHeaderModalOpened = useHeaderStore((state) => state.isHeaderModalOpened);
-    const setIsHeaderModalToggle = useHeaderStore((state) => state.setIsHeaderModalToggle);
     return (
         <header
             className={styles.main}
-            style={{ borderColor: profile.highlightColor, backgroundColor: profile.theme }}
+            style={{ borderColor: getColor(profile.highlightColor) }}
         >
             <nav className={styles.navigation}>
                 <CustomNavLink to="/projects">Projects</CustomNavLink>
                 <CustomNavLink to="/people">People</CustomNavLink>
             </nav>
-            <CustomUserIcon
-                title={profile ? profile.displayName : "User"}
-                onClick={setIsHeaderModalToggle}
-                backgroundColor={profile.iconColor}
-                size={36}
-            />
-            {isHeaderModalOpened && <HeaderModalAccount/>}
+            <CustomNavLink to={'/profile'}>
+                <CustomUserIcon
+                    title={profile ? profile.displayName : "User"}
+                    backgroundColor={profile.iconColor}
+                    size={36}
+                />
+            </CustomNavLink>
         </header>
     );
 };

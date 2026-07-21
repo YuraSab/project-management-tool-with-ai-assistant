@@ -15,7 +15,7 @@ const FormDateInput = ({ name, value , onChange, required = false, ...props }: F
         onChange={onChange} 
         required={required}
         type="date" 
-        className={styles.cunstomInput}
+        className={styles.customInput}
         {...props}
     />
 }

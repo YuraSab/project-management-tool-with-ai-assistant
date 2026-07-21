@@ -2,22 +2,23 @@ import React from "react";
 import styles from "./CustomButton.module.css";
 import {useProfileStore} from "../../store/profileStore.ts";
 import {HighlightColor} from "../../types/user.ts";
+import {getColorThemeVariables} from "../../utils/colorThemeSelector.ts";
 
 interface CustomButtonProps extends React.ComponentPropsWithoutRef<'button'> {
     customStyles?: React.CSSProperties
 }
 
 const CustomButton = ({ children, customStyles, disabled, type='button', ...rest }: CustomButtonProps) => {
-    const highlightColor = useProfileStore((state) => state.profile.highlightColor);
+    const profile = useProfileStore((state) => state?.profile);
+    const colorTheme = profile?.highlightColor ?? HighlightColor.Purple;
+    const colorVariables = getColorThemeVariables(colorTheme);
+    console.log(profile)
     return (
         <button
             type={type}
             disabled={disabled}
             className={styles.customSubmitButton}
-            style={{
-                backgroundColor: disabled ? '#640564' : (highlightColor ?? HighlightColor.Purple),
-                ...customStyles,
-            }}
+            style={{ ...colorVariables, ...customStyles, color: profile?.theme }}
             {...rest}
         >
             {children}

@@ -52,11 +52,12 @@ const People = () => {
                                         copyValue={m.email}
                                         toastValue={'Email copied!'}
                                         size={20}
-                                        customStyles={{ color: '#64748b' }}
+                                        // customStyles={{ color: '#64748b' }}
                                     />
                                     <UserMinus
                                         size={28}
-                                        className={`${styles.iconBtn} ${styles.deleteBtn}`}
+                                        className={`
+                                        ${styles.deleteBtn}`}
                                         onClick={() => handleRemoveReservedMember(m.uid)}
                                     />
                                 </div>

@@ -3,17 +3,17 @@ import React from "react";
 import {useProfileStore} from "../../store/profileStore.ts";
 import {Theme} from "../../types/user.ts";
 import styles from "./CustomNavLink.module.css";
+import {getColor} from "../../utils/colorThemeSelector.ts";
 
-interface CustomNavLinkProps extends NavLinkProps  {
-    className?: string,
+interface CustomNavLinkProps extends Pick<NavLinkProps, 'to' | 'children'>{
     customStyles?: React.CSSProperties,
 }
 
-const CustomNavLink = ({ className = "", customStyles = {}, ...navLinkProps }: CustomNavLinkProps) => {
+const CustomNavLink = ({ to, children, customStyles }: CustomNavLinkProps) => {
     const profile = useProfileStore((state) => state.profile);
-    const getLinkStyles = ({isActive}: {isActive: boolean}) => {
-        const activeColor = profile.highlightColor;
-        const inactiveColor = Theme.White ? Theme.Black : Theme.White;
+    const getLinkStyles = ({ isActive }: { isActive: boolean }) => {
+        const activeColor = getColor(profile.highlightColor);
+        const inactiveColor = profile.theme === Theme.White ? Theme.Black : Theme.White;
         return {
             color: isActive ? activeColor : inactiveColor,
             borderBottom: `2px solid ${isActive ? activeColor : "transparent"}`,
@@ -23,10 +23,15 @@ const CustomNavLink = ({ className = "", customStyles = {}, ...navLinkProps }: C
 
     return (
         <NavLink
-            {...navLinkProps}
+            to={to}
+            className={({ isActive }) => `
+                ${styles.navLink} 
+                ${!isActive ? styles.hoverEffects : ''}
+            `}
             style={getLinkStyles}
-            className={({ isActive }) => `${styles.navLink} ${className} ${!isActive ? styles.hoverEffects : ""}`}
-        />
+        >
+            { children }
+        </NavLink>
     );
 };
 

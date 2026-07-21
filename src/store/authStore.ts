@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import {AuthUser} from "../types/auth.ts";
+import {useProfileStore} from "./profileStore.ts";
 
 // true storage !!!!
 interface AuthState {
@@ -19,23 +20,27 @@ export const useAuthStore = create<AuthState>()(
         (set) => ({
             user: null,
             isUserLoading: true,
-            isHeaderModalActive: false,
+            isHeaderModalActive: false, // todo delete
 
             setLogin: (user) => set({
                 user: user,
                 isUserLoading: false,
                 isHeaderModalActive: false
             }),
-            setLogout: () => set({
-                user: null,
-                isUserLoading: false,
-                headerModalActive: false
-            }),
+            setLogout: () => {
+                useProfileStore.getState().setProfile(null);
+                set({
+                    user: null,
+                    isUserLoading: false,
+                    // headerModalActive: false
+                });
+            },
             setIsUserLoading: (value) => set({ isUserLoading: value }),
             setIsHeaderModalActive: (value) => set({ isHeaderModalActive: value }),
         }),
         {
             name: "auth-session-storage", // ключ у localStorage
+            partialize: (state) => ({ user: state.user })
         }
     )
 );

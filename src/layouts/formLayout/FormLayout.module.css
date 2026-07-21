@@ -1,7 +1,8 @@
 .formLayout{
     min-height: calc(100vh - 100px);
-    /*padding: 30px 36px 0;*/
+    background-color: var(--color-bg);
     display: flex;
     align-items: center;
     justify-content: center;
+    transition: background-color 0.2s ease;
 }

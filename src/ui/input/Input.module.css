@@ -1,9 +1,28 @@
-input{
-  margin-top: 4px;
-  padding: 8px;
-  border-radius: 8px;
-  border: 1px solid #cbd5e1;
-  font-size: 14px;
-  background-color: white;
-  color: black;
+.customInput {
+    margin-top: 4px;
+    padding: 8px;
+    border-radius: 8px;
+    font-size: 14px;
+    color: var(--color-text-primary);
+    background-color: var(--color-bg);
+    border: 1px solid var(--color-border);
+    --local-color: var(--color-border);
+    transition: color 0.2s ease, background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.customInput:focus {
+    outline: none;
+    border-color: var(--color-text-secondary);
+    box-shadow: 0 0 0 3px var(--disabled-backgroud);
+}
+
+.customInput::-webkit-calendar-picker-indicator {
+    cursor: pointer;
+    filter: var(--calendar-icon-filter, none);
+    opacity: 0.7;
+    transition: opacity 0.2s ease;
+}
+
+.customInput::-webkit-calendar-picker-indicator:hover {
+    opacity: 1;
 }

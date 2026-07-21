@@ -1,7 +1,6 @@
 .customSubmitButton {
   height: 40px;
   padding: 10px 0;
-  background-color: purple;
   color: white;
   border: none;
   border-radius: 8px;
@@ -11,9 +10,28 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  /*background-color: #640564;*/
 
+
+  /* 🌟 Ініціалізуємо змінні для IDE, щоб не було червоних помилок */
+  --local-color: transparent;
+  --local-dark: transparent;
+  --local-light: transparent;
+  --local-disabled: transparent;
+
+  /* 🌟 Застосовуємо наші динамічні кольори */
+  background-color: var(--local-color);
 }
-.customSubmitButton:hover {
-  background-color: rgba(128, 0, 128, 0.832);
+
+
+/* 🌟 Ефект наведення для активної кнопки (використовує темніший відтінок) */
+.customSubmitButton:not(:disabled):hover {
+  background-color: var(--local-dark);
+}
+
+/* 🌟 Стилі для заблокованої кнопки */
+.customSubmitButton:disabled {
+  background-color: var(--local-disabled);
+  color: var(--local-light); /* М'який пастельний колір тексту в disabled стані */
+  cursor: not-allowed;
+  transform: none;
 }

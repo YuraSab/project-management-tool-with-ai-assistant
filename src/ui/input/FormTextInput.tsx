@@ -1,4 +1,5 @@
 import styles from "./Input.module.css";
+import React from "react";
 
 interface FormTextInputProps {
     name: string, 
@@ -15,7 +16,7 @@ const FormTextInput = ({ name, value , onChange, required, placeholder}: FormTex
         onChange={onChange} 
         required={required}
         type="text" 
-        className={styles.cunstomInput}
+        className={styles.customInput}
         placeholder={placeholder}
     />
 }

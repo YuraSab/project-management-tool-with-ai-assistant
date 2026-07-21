@@ -78,16 +78,16 @@ const CreateProject = () => {
 
     return (
         <FormLayout>
-            <CustomForm onSubmit={handleCreate} disabled={isPending} className={styles.main}>
-                <Title text={'Title:'}/>
+            <CustomForm onSubmit={handleCreate} disabled={isPending} style={{ maxWidth: '80%', minWidth: 800, padding: '40px 80px' }}>
+                <Title text={'Title'}/>
                 <FormTextInput name={"title"} value={formData.title} onChange={handleChange} required/>
-                <Title text={'Description:'}/>
+                <Title text={'Description'}/>
                 <FormTextarea name={"description"} value={formData.description} onChange={handleChange}/>
-                <Title text={'Start Date:'}/>
+                <Title text={'Start Date'}/>
                 <FormDateInput name={"startDate"} value={formData.startDate} onChange={handleChange}/>
-                <Title text={'End Date:'}/>
+                <Title text={'End Date'}/>
                 <FormDateInput name={"endDate"} value={formData.endDate} onChange={handleChange}/>
-                <Title text={'Members:'}/>
+                <Title text={'Members'}/>
                 <AssignMembers
                     assignedMembers={assignedMembers}
                     onSelectMembersActive={() => setAddMembersActive(!addMembersActive)}
@@ -96,7 +96,7 @@ const CreateProject = () => {
                 {addMembersActive && (
                     <MemberSelector membersMap={reservedMembersMap} selectedMembersIds={assignedMembersIds} clickAction={handleFilterMember} />
                 )}
-                <Title text={'Status:'}/>
+                <Title text={'Status'}/>
                 <FormSelect<ProjectStatus> name={"status"} value={formData.status} onChange={handleChange} options={[ProjectStatus.Planned, ProjectStatus.InProgress, ProjectStatus.Completed]}/>
                 <div className={styles.buttonBlock}>
                     <CustomButton children={"Create Project"} customStyles={{ width: 240 }} disabled={isPending} type={'submit'}/>

@@ -8,6 +8,8 @@ import { useSearchUsers } from "../../hooks/users/useSearchUsers.ts";
 import { useShallow } from "zustand/react/shallow";
 import Error from "../error/Error.tsx";
 import {toast} from "../../utils/toaster.ts";
+import {getColorThemeVariables} from "../../utils/colorThemeSelector.ts";
+import {HighlightColor} from "../../types/user.ts";
 
 const SearchMember = () => {
     const [searchTerm, setSearchTerm] = useState<string>('');
@@ -19,6 +21,8 @@ const SearchMember = () => {
 
     // Передаємо тільки profile.uid
     const { data: searchMembers, isPending, isError } = useSearchUsers(debounceTerm, profile.uid);
+
+    const colorVariables = getColorThemeVariables(profile.highlightColor ?? HighlightColor.Purple);
 
     useEffect(() => {
         const timerId = setTimeout(() => {
@@ -49,6 +53,7 @@ const SearchMember = () => {
                 className={styles.searchInput}
                 placeholder="Search user by email..."
                 onChange={(e) => setSearchTerm(e.target.value)}
+                style={colorVariables}
             />
 
             {isPending && debounceTerm.trim() !== "" && <p style={{ color: '#6b7280', fontSize: '14px' }}>Searching...</p>}

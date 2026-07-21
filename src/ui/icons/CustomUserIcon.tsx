@@ -10,11 +10,13 @@ interface UserIconProps {
     size?: number,
     fontSize?: number,
     onClick?: React.Dispatch<React.SetStateAction<boolean>>,
+    customStyles?: React.CSSProperties
 }
 
-// todo - parse whole user here to optional display avatar
-const CustomUserIcon: React.FC<UserIconProps> = ({ title = '', backgroundColor, total, size=36, fontSize = 18, onClick }) => {
-    const highlightColor = useProfileStore((state) => state.profile.highlightColor)
+const CustomUserIcon: React.FC<UserIconProps> = ({ title = '', backgroundColor, customStyles, total, size=36, fontSize = 18, onClick }) => {
+    const highlightColor = useProfileStore((state) => state.profile.highlightColor);
+    const activeColor = backgroundColor ?? highlightColor;
+    const cssBackgroundColor = `var(--color-${activeColor})`;
     return(
         <div className={styles.iconWrapper} title={title}>
             <div 
@@ -23,14 +25,15 @@ const CustomUserIcon: React.FC<UserIconProps> = ({ title = '', backgroundColor, 
                     width: size, 
                     height: size, 
                     fontSize: fontSize, 
-                    backgroundColor: backgroundColor ?? highlightColor
+                    backgroundColor: cssBackgroundColor,
+                    ...customStyles
                 }} 
                 onClick={() => onClick && onClick((prev) => !prev)}
             >
                 { total ? title : title[0] }
             </div>
         </div>
-    )
-}
+    );
+};
 
 export default CustomUserIcon;
