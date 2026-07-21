@@ -15,7 +15,6 @@ const KanbanCard = ({ task, handleOnTaskClick }: KanbanCardProps) => {
     const { data: assignedMembersProfiles } = useProjectUsers(task.assignedMembers); // todo - make some hook for UserIconCollection and pass there ids only
     const isLeftPanelActive = useProjectControlStore((state) => state.isLeftPanelActive);
     const isRightPanelActive = useProjectControlStore((state) => state.isRightPanelActive);
-    const theme = useProfileStore((state) => state.profile.theme);
     return (
         <div
             className={styles.cardMain  + " w-full"} onClick={() => handleOnTaskClick(task)}

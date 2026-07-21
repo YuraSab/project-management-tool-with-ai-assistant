@@ -101,7 +101,8 @@
 
         --color-dividor: rgb(255, 255, 255, 0.04);
         --color-column: rgba(255, 255, 255, 0.10);
-        --color-card: rgba(255,255,255,0.08);
+        /*--color-card: rgb(255,255,255,0.08);*/
+        --color-card: #282828;
     }
 
 body {
