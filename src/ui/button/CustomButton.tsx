@@ -9,15 +9,16 @@ interface CustomButtonProps extends React.ComponentPropsWithoutRef<'button'> {
 }
 
 const CustomButton = ({ children, customStyles, disabled, type='button', ...rest }: CustomButtonProps) => {
-    const { theme, highlightColor } = useProfileStore((state) => state.profile);
-    const colorTheme = highlightColor ?? HighlightColor.Purple;
+    const profile = useProfileStore((state) => state?.profile);
+    const colorTheme = profile?.highlightColor ?? HighlightColor.Purple;
     const colorVariables = getColorThemeVariables(colorTheme);
+    console.log(profile)
     return (
         <button
             type={type}
             disabled={disabled}
             className={styles.customSubmitButton}
-            style={{ ...colorVariables, ...customStyles, color: theme }}
+            style={{ ...colorVariables, ...customStyles, color: profile?.theme }}
             {...rest}
         >
             {children}

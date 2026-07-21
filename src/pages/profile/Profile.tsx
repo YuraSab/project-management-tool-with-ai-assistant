@@ -5,7 +5,8 @@ import Title from "../../ui/title/Title.tsx";
 import {formatDateForInput} from "../../utils/dateFormat.ts";
 import styles from './Profile.module.css';
 import CustomForm from "../../ui/form/CustomForm.tsx";
-import {HighlightColor, HighlightColorSet, IconColor, IconColorSet, Theme, ThemeSet, UserProfile} from "../../types/user.ts";
+import { HighlightColor,  HighlightColorSet,  IconColor,  IconColorSet,  Theme,  ThemeSet,  UserProfile
+} from "../../types/user.ts";
 import CustomColorIcon from "../../ui/icons/CustomColorIcon.tsx";
 import CustomButton from "../../ui/button/CustomButton.tsx";
 import DisabledField from "../../ui/disabledField/DisabledField.tsx";
@@ -13,10 +14,15 @@ import {useUpdateUser} from "../../hooks/users/useUpdateUser.ts";
 import {toast} from "../../utils/toaster.ts";
 import {useUser} from "../../hooks/users/useUser.ts";
 import FormTextInput from "../../ui/input/FormTextInput.tsx";
+import {LogOut} from "lucide-react";
+import {useLogout} from "../../hooks/auth/useLogout.ts";
 
 const Profile = () => {
-    const { uid, email, role, displayName, createdAt, theme, iconColor, highlightColor } = useProfileStore((state) => state.profile);
+    const logout = useLogout();
+    const profile = useProfileStore((state) => state.profile);
+    const { uid, email, role, displayName, createdAt, theme, iconColor, highlightColor } = profile;
     const editProfile = useProfileStore((state) => state.editProfile);
+
     const { data: initialProfile } = useUser(uid || "");
     const { mutate: updateUser } = useUpdateUser();
 
@@ -44,7 +50,10 @@ const Profile = () => {
 
     return (
         <CustomForm onSubmit={handleUpdateProfile} style={{ border: "none", marginTop: 20 }}>
-            <Title text='Avatar' style={{ paddingTop: 0 }}/>
+            <div  className={styles.logoutBlock}>
+                <Title text='Avatar' style={{ paddingTop: 0 }}/>
+                <LogOut onClick={logout}/>
+            </div>
             <CustomUserIcon backgroundColor={iconColor} title={displayName[0]} customStyles={{ marginTop: 4 }}/>
             <Title text='ID'/>
             <DisabledField children={uid} copyText={uid} toastValue={'User ID copied'}/>
