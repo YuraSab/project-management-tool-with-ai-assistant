@@ -37,7 +37,8 @@
 }
 
 .statusColumn {
-  background-color: #f3f4f6;
+  /*background-color: #f3f4f6;*/
+  background-color: var(--color-column);
   border-bottom-right-radius: 16px;
   border-bottom-left-radius: 16px;
   padding: 10px;

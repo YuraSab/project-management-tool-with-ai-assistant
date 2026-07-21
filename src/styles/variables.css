@@ -77,20 +77,31 @@
         --color-bg: #ffffff;                  /* Чистий світлий фон */
         --color-text-primary: #000000;       /* Майже чорний колір для основного тексту */
         --color-text-secondary: #4b5563;     /* М'який темно-сірий для підписів/лейблів */
+        --color-text-tertiary: #4b5563;
         --color-border: #e5e7eb;             /* Світла рамка для інпутів тощо */
         --disabled-backgroud: rgba(0,0,0,0.05);
         /*--block-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);*/
         --block-shadow: 0 4px 20px #e1e6f3;
+        --color-dividor: #f3f4f6;
+        --color-column: #f3f4f6;
+        --color-card: #ffffff;
     }
 
     .dark {
         --color-bg: #000000;                  /* Чистий чорний фон */
         --color-text-primary: #ffffff;       /* Чистий білий для основного тексту */
         --color-text-secondary: #cbd5e1;     /* Виразний світло-сірий для підписів/Title */
+        --color-text-tertiary: #a1a1aa;
         --color-border: #334155;             /* Темна рамка для інпутів */
         --disabled-backgroud: rgba(255, 255, 255, 0.03);
         --block-shadow: 0 4px 20px #4b5563;
         --calendar-icon-filter: invert(1);
+        /*--color-dividor: rgb(255, 255, 255, 0.12);*/
+        /*--color-column: rgba(255, 255, 255, 0.04);*/
+
+        --color-dividor: rgb(255, 255, 255, 0.04);
+        --color-column: rgba(255, 255, 255, 0.10);
+        --color-card: rgba(255,255,255,0.08);
     }
 
 body {

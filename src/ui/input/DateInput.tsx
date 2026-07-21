@@ -12,7 +12,7 @@ const DateInput = ({ value , onChange, required, ...props }: FormDateInputProps)
         onChange={(event) => onChange(event.target.value)} 
         required={required}
         type="date" 
-        className={styles.cunstomInput}
+        className={styles.customInput}
         {...props}
     />
 }
