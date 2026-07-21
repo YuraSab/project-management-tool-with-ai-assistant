@@ -1,5 +1,4 @@
 .main {
-    /*max-width: 650px; !* 🔥 Збільшуємо ширину всієї робочої зони *!*/
     width: 700px;
     margin: 0 auto;
     padding: 40px 20px;
@@ -17,8 +16,9 @@
 .sectionTitle {
     font-size: 1.1rem;
     font-weight: 600;
-    color: #4b5563;
+    color: var(--color-text-secondary);
     margin-bottom: 4px;
+    transition: color 0.2s ease;
 }
 
 ul {
@@ -31,21 +31,21 @@ ul {
 }
 
 .element {
-    background: white;
+    background: var(--color-bg);
     padding: 16px 24px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     border-radius: 12px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-    border: 1px solid #e5e7eb;
+    border: 1px solid var(--color-border);
+    box-shadow: var(--block-shadow);
     transition: all 0.2s ease-in-out;
 }
 
 .element:hover {
     transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
-    border-color: #d1d5db;
+    /*box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);*/
+    border-color: var(--color-text-secondary)
 }
 
 .userInfo {
@@ -64,27 +64,27 @@ ul {
     margin: 0;
     font-size: 1rem;
     font-weight: 500;
-    color: #1f2937;
+    color: var(--color-text-primary);
 }
 
 .userRole {
     font-size: 0.85rem;
-    color: #6b7280;
+    color: var(--color-text-secondary);
     text-transform: capitalize;
 }
 
 /* 🔥 Стилізація кнопки видалення */
 .deleteBtn {
     cursor: pointer;
-    color: #9ca3af;
+    color: var(--color-text-secondary);
     transition: all 0.2s ease;
-    padding: 8px;
+    padding: 2px;
     border-radius: 50%;
 }
 
 .deleteBtn:hover {
     color: #ef4444;
-    background-color: #fef2f2;
+    background-color: rgba(239, 68, 68, 0.15);
 }
 
 .deleteBtn:active {
@@ -93,7 +93,7 @@ ul {
 
 .noData {
     text-align: center;
-    color: #9ca3af;
+    color: var(--color-text-secondary);
     padding: 30px;
     font-style: italic;
 }
@@ -103,21 +103,20 @@ ul {
 .buttonsContainer {
     display: flex;
     align-items: center;
-    gap: 8px; /* Невеликий відступ між іконками дій */
+    gap: 8px;
 }
 
-/* 🔥 Базовий стиль для всіх інтерактивних кнопок-іконок */
 .iconBtn {
     cursor: pointer;
-    color: #64748b; /* Приємний нейтральний колір за замовчуванням */
+    color: var(--color-text-secondary);
     padding: 2px;
     border-radius: 50%;
-    /*border-radius: 20px;*/
     transition: all 0.2s ease;
 }
 
 .iconBtn:hover {
-    background-color: #f1f5f9;
+    background-color: var(--disabled-backgroud);
+    color: var(--color-text-primary);
 }
 
 .iconBtn:active {
@@ -130,7 +129,7 @@ ul {
 }
 
 /* 🔥 Специфічний ховер для видалення (зробили яскравішим і більшим) */
-.deleteBtn:hover {
-    color: #ef4444; /* Червоний при ховері */
-    background-color: #fef2f2;
-}
+/*.deleteBtn:hover {*/
+/*    color: #ef4444; !* Червоний при ховері *!*/
+/*    background-color: #fef2f2;*/
+/*}*/

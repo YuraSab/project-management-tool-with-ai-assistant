@@ -5,8 +5,8 @@ interface TitleProps {
     text: string,
 }
 
-const Title = ({text}: TitleProps) => (
-    <span className={styles.title}>
+const Title = ({text, ...props}: TitleProps) => (
+    <span className={styles.title} {...props}>
         {text}
     </span>
 );

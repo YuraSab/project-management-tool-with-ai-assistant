@@ -78,7 +78,7 @@ const CreateProject = () => {
 
     return (
         <FormLayout>
-            <CustomForm onSubmit={handleCreate} disabled={isPending} className={styles.main}>
+            <CustomForm onSubmit={handleCreate} disabled={isPending} style={{ maxWidth: '80%', minWidth: 800, padding: '40px 80px' }}>
                 <Title text={'Title:'}/>
                 <FormTextInput name={"title"} value={formData.title} onChange={handleChange} required/>
                 <Title text={'Description:'}/>

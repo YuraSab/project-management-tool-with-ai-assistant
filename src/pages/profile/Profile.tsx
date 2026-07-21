@@ -43,8 +43,8 @@ const Profile = () => {
     }, [uid, displayName, theme, iconColor, highlightColor, updateUser, editProfile, hasChangedForm]);
 
     return (
-        <CustomForm onSubmit={handleUpdateProfile} customStyles={{ border: "none", marginTop: 10 }}>
-            <Title text='Avatar'/>
+        <CustomForm onSubmit={handleUpdateProfile} style={{ border: "none", marginTop: 20 }}>
+            <Title text='Avatar' style={{ paddingTop: 0 }}/>
             <CustomUserIcon backgroundColor={iconColor} title={displayName[0]} customStyles={{ marginTop: 4 }}/>
             <Title text='ID'/>
             <DisabledField children={uid} copyText={uid} toastValue={'User ID copied'}/>

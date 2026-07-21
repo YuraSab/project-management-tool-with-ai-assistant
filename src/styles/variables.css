@@ -79,6 +79,8 @@
         --color-text-secondary: #4b5563;     /* М'який темно-сірий для підписів/лейблів */
         --color-border: #e5e7eb;             /* Світла рамка для інпутів тощо */
         --disabled-backgroud: rgba(0,0,0,0.05);
+        /*--block-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);*/
+        --block-shadow: 0 4px 20px #e1e6f3;
     }
 
     .dark {
@@ -87,6 +89,7 @@
         --color-text-secondary: #cbd5e1;     /* Виразний світло-сірий для підписів/Title */
         --color-border: #334155;             /* Темна рамка для інпутів */
         --disabled-backgroud: rgba(255, 255, 255, 0.03);
+        --block-shadow: 0 4px 20px #4b5563;
     }
 
 body {
