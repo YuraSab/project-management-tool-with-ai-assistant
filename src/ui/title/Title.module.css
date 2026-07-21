@@ -1,9 +1,8 @@
 .title {
-    /*--color-text-secondary: transparent;*/
     font-weight: 500;
-    /*color: var(--color-text-secondary);*/
+    color: var(--color-text-primary);
     padding-top: 12px;
     font-size: 14px;
-    display: inline-block; /* Щоб padding-top працював коректно */
+    display: inline-block;
     transition: color 0.2s ease;
 }

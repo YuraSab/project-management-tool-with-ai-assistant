@@ -90,6 +90,7 @@
         --color-border: #334155;             /* Темна рамка для інпутів */
         --disabled-backgroud: rgba(255, 255, 255, 0.03);
         --block-shadow: 0 4px 20px #4b5563;
+        --calendar-icon-filter: invert(1);
     }
 
 body {

@@ -17,25 +17,21 @@
 .assignBlock button {
   width: auto;
   white-space: nowrap;
-  --local-color: transparent;
-  --local-dark: transparent;
-  --local-light: transparent;
-  --local-disabled: transparent;
-
   grid-area: button;
   margin-top: 4px;
   padding: 6px 20px;
   border-radius: 6px;
   cursor: pointer;
   font-size: 14px;
-  transition: background-color 0.2s, border-color 0.2s, color 0.2s, transform 0.1s;
-  background-color: var(--local-light);
-  border: 1px solid var(--local-light);
-  color: var(--local-color);
+  background-color: var(--local-light, var(--disabled-backgroud));
+  border: 1px solid var(--local-color, var(--color-border));
+  color: var(--local-dark, var(--color-text-primary));
   box-sizing: content-box;
+  transition: all 0.2s ease;
 }
 
 .assignButton:hover {
-  border-color: var(--local-dark);
-  color: var(--local-dark);
+  background-color: var(--local-color, var(--color-text-secondary));
+  border-color: var(--local-dark, var(--color-border));
+  color: #ffffff;
 }

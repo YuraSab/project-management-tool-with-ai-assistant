@@ -9,10 +9,7 @@ const Header = () => {
     return (
         <header
             className={styles.main}
-            style={{
-                borderColor: getColor(profile.highlightColor),
-                backgroundColor: getColor(profile.theme)
-            }}
+            style={{ borderColor: getColor(profile.highlightColor) }}
         >
             <nav className={styles.navigation}>
                 <CustomNavLink to="/projects">Projects</CustomNavLink>
