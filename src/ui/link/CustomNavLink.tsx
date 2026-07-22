@@ -7,9 +7,10 @@ import {getColor} from "../../utils/colorThemeSelector.ts";
 
 interface CustomNavLinkProps extends Pick<NavLinkProps, 'to' | 'children'>{
     customStyles?: React.CSSProperties,
+    onClick?: () => void,
 }
 
-const CustomNavLink = ({ to, children, customStyles }: CustomNavLinkProps) => {
+const CustomNavLink = ({ to, children, customStyles, onClick }: CustomNavLinkProps) => {
     const profile = useProfileStore((state) => state.profile);
     const getLinkStyles = ({ isActive }: { isActive: boolean }) => {
         const activeColor = getColor(profile.highlightColor);
@@ -29,6 +30,7 @@ const CustomNavLink = ({ to, children, customStyles }: CustomNavLinkProps) => {
                 ${!isActive ? styles.hoverEffects : ''}
             `}
             style={getLinkStyles}
+            onClick={onClick}
         >
             { children }
         </NavLink>
