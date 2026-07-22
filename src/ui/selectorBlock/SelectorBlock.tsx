@@ -2,26 +2,22 @@ import React from "react";
 import {HighlightColor} from "../../types/user";
 import styles from "./SelectorBlock.module.css";
 import {useProfileStore} from "../../store/profileStore.ts";
+import {getColorThemeVariables} from "../../utils/colorThemeSelector.ts";
 
 interface SelectorBlockProps {
     onSelectorActive: () => void,
+    children: React.ReactNode,
 }
 
-const themeClassMap: Record<HighlightColor, string> = {
-    purple: styles._assignedMembers_button__purple,
-    green: styles._assignedMembers_button__green,
-    blue: styles._assignedMembers_button__blue,
-    orange: styles._assignedMembers_button__orange,
-};
-
 const SelectorBlock = ({onSelectorActive, children}: SelectorBlockProps) => {
-    const highlightColor = useProfileStore((state) => state.profile.highlightColor);
+    const profile = useProfileStore((state) => state.profile);
+    const highlightColor: HighlightColor = profile?.highlightColor ?? HighlightColor.Purple;
     return (
         <div className={styles.assignedMembers}>
             <button
-                className={highlightColor && themeClassMap[highlightColor]}
+                style={getColorThemeVariables(highlightColor)}
                 onClick={onSelectorActive}
-                type="button"
+                type='button'
             >
                 {children}
             </button>
