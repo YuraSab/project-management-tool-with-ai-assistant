@@ -66,7 +66,7 @@ const Profile = () => {
             <Title text='Name'/>
             <FormTextInput name={'displayName'} value={displayName} onChange={(e) => editProfile({ displayName: e.target.value })}/>
             <Title text={'Your icon color'}/>
-            <div className={styles.palleteBlock}>
+            <div className={styles.paletteBlock}>
                 {IconColorSet.map((color) => (
                     <CustomColorIcon<IconColor>
                         currentColor={color}
@@ -77,7 +77,7 @@ const Profile = () => {
                 ))}
             </div>
             <Title text={'Highlight color'}/>
-            <div className={styles.palleteBlock}>
+            <div className={styles.paletteBlock}>
                 {HighlightColorSet.map((color) => (
                     <CustomColorIcon<HighlightColor>
                         currentColor={color}
@@ -88,7 +88,7 @@ const Profile = () => {
                 ))}
             </div>
             <Title text={'Theme color'}/>
-            <div className={styles.palleteBlock}>
+            <div className={styles.paletteBlock}>
                 {ThemeSet.map((color) => (
                     <CustomColorIcon<Theme>
                         currentColor={color}

@@ -11,4 +11,33 @@
     border-radius: 6px;
     font-size: 14px;
     transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+    box-sizing: border-box;
+    min-width: 0; /* Важливо для flex-контейнерів, щоб спан усередині міг стискатися */
+}
+
+.displayInputLike > span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin-right: 8px;
+}
+
+@media (max-width: 400px) {
+    .displayInputLike {
+        height: 36px;       /* Трохи зменшуємо висоту */
+        padding: 0 8px;     /* Компактніші внутрішні відступи */
+        font-size: 13px;    /* Оптимальний розмір шрифту */
+    }
+}
+
+@media (max-width: 300px) {
+    .displayInputLike {
+        height: 32px;       /* Ще компактніша висота */
+        padding: 0 6px;
+        font-size: 12px;    /* Шрифту достатньо для читабельності */
+    }
+
+    .displayInputLike > span {
+        margin-right: 4px;
+    }
 }

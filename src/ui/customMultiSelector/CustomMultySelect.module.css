@@ -19,6 +19,7 @@
 
 .row:hover {
     background-color: var(--local-light);
+    color: var(--local-color);
 }
 
 .block .row:first-child {
