@@ -14,6 +14,27 @@
     display: none;
 }
 
+.fabGroup {
+    position: fixed;
+    bottom: 36px;
+    right: 36px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: center;
+    z-index: 999;
+    /*transition: right 0.3s ease;*/
+}
+
+@media (min-width: 1024px) {
+    .fabGroup.panelOpen {
+        right: 376px;
+    }
+    .fabGroup.panelOpen.aiChatOpen {
+        right: 436px;
+    }
+}
+
 @media (max-width: 1024px) {
     .backdrop {
         display: block;
@@ -31,5 +52,18 @@
     }
     .projectSettingsIcon{
         display: flex;
+    }
+}
+
+@media (max-width: 550px) {
+    .fabGroup{
+        gap: 10px;
+        right: 15px;
+    }
+}
+
+@media (max-width: 400px) {
+    .fabGroup{
+        gap: 7px;
     }
 }

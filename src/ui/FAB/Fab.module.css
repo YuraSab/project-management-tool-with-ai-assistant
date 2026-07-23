@@ -39,5 +39,14 @@
     .fab {
         right: 12px;
         bottom: 20px;
+        width: 46px;
+        height: 46px;
+    }
+}
+
+@media (max-width: 400px) {
+    .fab {
+        width: 40px;
+        height: 40px;
     }
 }
