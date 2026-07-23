@@ -76,7 +76,7 @@ const CreateProject = () => {
     };
 
     return (
-        <CustomForm onSubmit={handleCreate} disabled={isPending} style={{ marginTop: 20 }}>
+        <CustomForm onSubmit={handleCreate} disabled={isPending} className={styles.mainBlock}>
             <Title text={'Title'}/>
             <FormTextInput name={"title"} value={formData.title} onChange={handleChange} required/>
             <Title text={'Description'}/>

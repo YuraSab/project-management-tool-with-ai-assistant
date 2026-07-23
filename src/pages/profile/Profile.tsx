@@ -49,7 +49,7 @@ const Profile = () => {
     }, [uid, displayName, theme, iconColor, highlightColor, updateUser, editProfile, hasChangedForm]);
 
     return (
-        <CustomForm onSubmit={handleUpdateProfile} style={{ marginTop: 20 }}>
+        <CustomForm onSubmit={handleUpdateProfile} className={styles.mainBlock}>
             <div  className={styles.logoutBlock}>
                 <Title text='Avatar' style={{ paddingTop: 0 }}/>
                 <LogOut onClick={logout}/>

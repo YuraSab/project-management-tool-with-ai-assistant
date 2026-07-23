@@ -1,3 +1,9 @@
+.mainBlock{
+    margin-top: 20px;
+    justify-self: center;
+    width: 700px;
+}
+
 .buttonBlock{
     display: flex;
     justify-content: center;

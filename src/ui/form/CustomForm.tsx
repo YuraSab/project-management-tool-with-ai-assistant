@@ -5,9 +5,10 @@ interface CustomFormProps extends ComponentPropsWithoutRef<'form'>{
     children: React.ReactNode,
     disabled?: boolean,
     isDrawer?: boolean,
+    className?: string,
 }
 
-const CustomForm = ({ onSubmit, children, disabled, isDrawer = false, style, ...props }: CustomFormProps) => {
+const CustomForm = ({ onSubmit, children, disabled, isDrawer = false, className = '', style, ...props }: CustomFormProps) => {
     const handleSubmit = useCallback((e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (onSubmit)
@@ -21,7 +22,7 @@ const CustomForm = ({ onSubmit, children, disabled, isDrawer = false, style, ...
         >
             <fieldset
                 disabled={disabled}
-                className={`${styles.customForm} ${isDrawer ? styles.isDrawer : ''}`}
+                className={`${styles.customForm} ${isDrawer ? styles.isDrawer : ''} ${className}`}
                 style={style}
             >
                 {children}
