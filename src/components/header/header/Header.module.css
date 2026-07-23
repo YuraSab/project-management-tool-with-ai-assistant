@@ -33,7 +33,7 @@
 @media (max-width: 500px) {
     .main {
         height: 54px; /* Компактний, акуратний хедер */
-        padding: 0 16px;
+        padding: 0 12px;
         --user-icon-size: 28px;
     }
 

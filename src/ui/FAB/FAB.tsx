@@ -6,10 +6,11 @@ import {getColorThemeVariables} from "../../utils/colorThemeSelector.ts";
 
 interface FabProps extends HTMLAttributes<HTMLDivElement> {
     type?: 'filled' | 'hollow',
-    customStyles?: React.CSSProperties
+    customStyles?: React.CSSProperties,
+    className?: string,
 }
 
-const Fab = ({ children, type = 'filled', customStyles, onClick, ...rest }: FabProps) => {
+const Fab = ({ children, type = 'filled', customStyles, className = '', onClick, ...rest }: FabProps) => {
     const { theme, highlightColor } = useProfileStore((state) => state.profile);
     const activeColor = highlightColor ?? HighlightColor.Purple;
     const colorVariables = getColorThemeVariables(activeColor);
@@ -17,7 +18,7 @@ const Fab = ({ children, type = 'filled', customStyles, onClick, ...rest }: FabP
     return (
         <div
             onClick={onClick}
-            className={`${styles.fab} ${styles[type]}`}
+            className={`${styles.fab} ${styles[type]} ${className}`}
             style={{
                 ...colorVariables,
                 ...customStyles,

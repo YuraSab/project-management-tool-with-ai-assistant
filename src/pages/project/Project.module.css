@@ -5,3 +5,31 @@
 .burgerMenu {
     padding: 35px 0 0 15px;
 }
+
+.backdrop {
+    display: none;
+}
+
+.projectSettingsIcon{
+    display: none;
+}
+
+@media (max-width: 1024px) {
+    .backdrop {
+        display: block;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, 0.6);
+        backdrop-filter: blur(2px);
+        z-index: 1000;
+    }
+    .burgerMenu{
+        display: none;
+    }
+    .projectSettingsIcon{
+        display: flex;
+    }
+}

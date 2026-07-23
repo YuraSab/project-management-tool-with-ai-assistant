@@ -2,10 +2,12 @@ import React, {ComponentPropsWithoutRef, FormEvent, useCallback} from "react";
 import styles from "./CustomForm.module.css";
 
 interface CustomFormProps extends ComponentPropsWithoutRef<'form'>{
+    children: React.ReactNode,
     disabled?: boolean,
+    isDrawer?: boolean,
 }
 
-const CustomForm = ({ onSubmit, children, disabled, style, ...props }: CustomFormProps) => {
+const CustomForm = ({ onSubmit, children, disabled, isDrawer = false, style, ...props }: CustomFormProps) => {
     const handleSubmit = useCallback((e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (onSubmit)
@@ -19,7 +21,7 @@ const CustomForm = ({ onSubmit, children, disabled, style, ...props }: CustomFor
         >
             <fieldset
                 disabled={disabled}
-                className={styles.customForm}
+                className={`${styles.customForm} ${isDrawer ? styles.isDrawer : ''}`}
                 style={style}
             >
                 {children}

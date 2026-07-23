@@ -164,8 +164,9 @@ export const useProjectControlStore = create<ProjectControlState>((set, get) => 
         selectedTask: null,
         isLeftPanelActive: false,
         isRightPanelActive: false,
-        setIsAddTaskActive: false,
-        setIsEditTaskActive: false,
-        setIsProjectSettingsActive: false,
+        isAddTaskActive: false,
+        isEditTaskActive: false,
+        // isProjectSettingsActive: false,
+        showAIChat: false,
     })
 }));

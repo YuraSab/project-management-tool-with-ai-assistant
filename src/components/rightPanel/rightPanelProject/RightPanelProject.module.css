@@ -1,11 +1,12 @@
 .main{
-    /*width: 340px;*/
     max-width: 400px;
-    flex-shrink: 0;      /* КРИТИЧНО: забороняє флексу стискати цю панель */
+    flex-shrink: 0;
     height: 100%;
     min-height: calc(100vh - 100px);
     z-index: 1001;
-    /*margin-top: 15px;*/
+    transition: transform 0.3s ease;
+    display: flex;
+    flex-direction: column;
 }
 
 .rightPanelChild{
@@ -13,7 +14,10 @@
     overflow-y: auto;
     scrollbar-width: none; /* Firefox */
     -ms-overflow-style: none;  /* Internet Explorer 10+ */
+    display: flex;
+    flex-direction: column;
 }
+
 .rightPanelChild::-webkit-scrollbar {
     display: none; /* Chrome, Safari, Edge */
 }
@@ -21,6 +25,34 @@
     margin: 0;
 }
 
-/*.rightPanelChild label{*/
-/*    margin-top: 16px;*/
-/*}*/
+@media (max-width: 1024px) {
+    .main {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        height: 100vh !important;
+        min-height: 100vh !important;
+        /*width: 100%;*/
+        /*max-width: 420px; !* Або 100% на зовсім малих мобілках *!*/
+        z-index: 1010;   /* Більше за backdrop (1000), щоб бути ПОВЕРХ блюра */
+        /*box-shadow: -4px 0 20px rgba(0, 0, 0, 0.5);*/
+        overflow: hidden !important;
+        /*overflow-y: auto;*/
+    }
+    .rightPanelChild,
+    .rightPanelChildEdit {
+        height: auto !important;
+        max-height: 100% !important;
+        overflow-y: auto !important;
+        /*min-height: 100%;*/
+        -webkit-overflow-scrolling: touch; /* Плавний скрол на iOS */
+        padding-bottom: 50px;
+    }
+}
+
+@media (max-width: 500px) {
+    .main {
+        max-width: 100%; /* На мобілках займає весь екран */
+    }
+}

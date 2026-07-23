@@ -434,3 +434,23 @@
     line-height: 1.4;
     word-break: break-word; /* Щоб ID не ламав верстку */
 }
+
+
+@media (max-width: 1024px) {
+    .container {
+        height: 100vh;
+        /*margin: 0;*/
+        /*border-radius: 0;*/
+        /*width: 100%;*/
+        /*display: none;*/
+    }
+}
+
+@media (max-width: 600px) {
+    /*.container {*/
+    /*    height: 100vh;*/
+    /*    margin: 0;*/
+    /*    border-radius: 0;*/
+        width: 300%;
+    /*}*/
+}

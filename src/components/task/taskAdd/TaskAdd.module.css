@@ -18,8 +18,8 @@
   -ms-overflow-style: none;  /* Internet Explorer 10+ */
   display: flex;
   flex-direction: column;
-  /*gap: 10px;*/
 }
+
 .rightPanelChild::-webkit-scrollbar {
   display: none; /* Chrome, Safari, Edge */
 }
@@ -29,4 +29,11 @@ label {
   flex-direction: column;
   font-weight: 500;
   color: #1f2937;
+}
+
+@media (max-width: 1024px) {
+  .rightPanelChild {
+    height: calc(100vh - 100px) !important;
+    margin: 0;
+  }
 }

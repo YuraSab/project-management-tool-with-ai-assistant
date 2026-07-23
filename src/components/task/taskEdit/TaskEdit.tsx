@@ -101,8 +101,15 @@ const TaskEdit = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [selectedTask?.id, taskAssignedMembers]);
 
-    return (
-        <CustomForm onSubmit={handleUpdate} style={{margin: 15, height: "calc(100vh - 130px)"}} disabled={isPendingUpdate || isPendingDelete}>
+    // const AdaptiveScope = screen.width > 1024 ? <CustomForm/> : <div>...</div>;
+        return (
+        // <AdaptiveScope>...</AdaptiveScope>
+        <CustomForm
+            onSubmit={handleUpdate}
+            style={{height: "calc(100vh - 130px)"}}
+            disabled={isPendingUpdate || isPendingDelete}
+            isDrawer={true}
+        >
             <RightPanelHeader taskTitle={selectedTask?.title || ""} setIsEditTaskActive={setIsEditTaskActive} setIsRightPanelActive={setIsRightPanelActive}/>
             <div className={styles.rightPanelChildEdit}>
                 <Title text={'Title'}/>

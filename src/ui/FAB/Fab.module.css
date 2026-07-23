@@ -34,3 +34,10 @@
     background-color: var(--local-theme-color);
     color: var(--local-color);
 }
+
+@media (max-width: 550px) {
+    .fab {
+        right: 12px;
+        bottom: 20px;
+    }
+}

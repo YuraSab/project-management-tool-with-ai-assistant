@@ -26,7 +26,7 @@ const ProjectSidebar: React.FC = () => {
                 {profile?.role !== "member" && (
                     <button
                         className={styles.iconBtn}
-                        onClick={() => setIsProjectSettingsActive()}
+                        onClick={setIsProjectSettingsActive}
                         type={"button"}
                     >
                         <Settings size={28}/>
