@@ -12,7 +12,7 @@ const CustomButton = ({ children, customStyles, disabled, type='button', ...rest
     const profile = useProfileStore((state) => state?.profile);
     const colorTheme = profile?.highlightColor ?? HighlightColor.Purple;
     const colorVariables = getColorThemeVariables(colorTheme);
-    console.log(profile)
+
     return (
         <button
             type={type}

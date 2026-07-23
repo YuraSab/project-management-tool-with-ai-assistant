@@ -1,10 +1,10 @@
-.mainBlock {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    /*align-items: center;*/
-    /*width: 100%;*/
-}
+/*.mainBlock {*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    justify-content: center;*/
+/*    !*align-items: center;*!*/
+/*    !*width: 100%;*!*/
+/*}*/
 
 .formBlock {
     width: 100%;
@@ -36,6 +36,8 @@
     opacity: 0.7;
 }
 
+
+
 @media (max-width: 600px) {
     .formBlock {
         max-width: 100%;
@@ -43,7 +45,6 @@
         box-shadow: none;
         border-radius: 0;
     }
-
     .paletteBlock {
         gap: 10px; /* Трохи компактніші відступи між кружечками на мобілці */
     }
