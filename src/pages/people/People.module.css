@@ -5,6 +5,7 @@
     display: flex;
     flex-direction: column;
     gap: 24px;
+    box-sizing: border-box;
 }
 
 .contactsSection {
@@ -27,12 +28,12 @@ ul {
     margin: 0;
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 8px;
 }
 
 .element {
     background: var(--color-bg);
-    padding: 16px 24px;
+    padding: 16px 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -40,11 +41,12 @@ ul {
     border: 1px solid var(--color-border);
     box-shadow: var(--block-shadow);
     transition: all 0.2s ease-in-out;
+    box-sizing: border-box;
+    height: 70px;
 }
 
 .element:hover {
     transform: translateY(-1px);
-    /*box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);*/
     border-color: var(--color-text-secondary)
 }
 
@@ -52,12 +54,14 @@ ul {
     display: flex;
     align-items: center;
     gap: 16px;
+    min-width: 0;
 }
 
 .userMeta {
     display: flex;
     flex-direction: column;
     gap: 2px;
+    min-width: 0;
 }
 
 .userEmail {
@@ -65,6 +69,10 @@ ul {
     font-size: 1rem;
     font-weight: 500;
     color: var(--color-text-primary);
+    /* 🔥 Захист від занадто довгих емейлів */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .userRole {
@@ -104,6 +112,7 @@ ul {
     display: flex;
     align-items: center;
     gap: 8px;
+    flex-shrink: 0;
 }
 
 .iconBtn {
@@ -133,3 +142,31 @@ ul {
 /*    color: #ef4444; !* Червоний при ховері *!*/
 /*    background-color: #fef2f2;*/
 /*}*/
+
+@media (max-width: 700px) {
+    .main {
+        width: 100%;
+    }
+}
+
+@media (max-width: 550px) {
+    .main {
+        padding: 16px 12px;
+        gap: 16px;
+    }
+    .element {
+        height: 60px;
+        padding: 8px 12px;
+    }
+    .userInfo {
+        gap: 10px;
+    }
+    .userEmail {
+        font-size: 0.9rem;
+    }
+    .buttonsContainer{
+        /*flex-direction: column;*/
+        /*justify-content: center;*/
+        gap: 4px;
+    }
+}
