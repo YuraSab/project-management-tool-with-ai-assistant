@@ -14,3 +14,13 @@
     border: 3px purple solid;
     border-radius: 12px;
 }
+
+@media (max-width: 500px) {
+    .formAuth {
+        border: none;
+        border-radius: 0;
+        width: 100%;
+        padding: 20px;
+        box-shadow: none;
+    }
+}
