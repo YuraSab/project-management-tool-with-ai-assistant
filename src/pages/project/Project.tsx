@@ -29,14 +29,12 @@ const Project = () => {
         isRightPanelActive, setIsLeftPanelActive,
         isLeftPanelActive,
         isAddTaskActive,
-        showAIChat,
         closePanels
     } = useProjectControlStore(useShallow((state) => ({
         selectedTask: state.selectedTask,
         isRightPanelActive: state.isRightPanelActive, setIsLeftPanelActive: state.setIsLeftPanelActive,
         isLeftPanelActive: state.isLeftPanelActive,
         isAddTaskActive: state.isAddTaskActive,
-        showAIChat: state.showAIChat,
         closePanels: state.closePanels,
     })));
 
@@ -66,36 +64,17 @@ const Project = () => {
             {isRightPanelActive && (isRightPanelActive || !isLoadingProject && (isAddTaskActive || selectedTask !== null)) && (
                 <RightPanelProject/>
             )}
-
-
-
             <div className={`${styles.fabGroup} ${isRightPanelActive ? styles.panelOpen : ''} ${isAIChatOpened ? styles.aiChatOpen : ''}`}>
-            <FAB
-                className={styles.projectSettingsIcon}
-                customStyles={{ position: "static" }}
-                // customStyles={{ right: isRightPanelActive ? (isAIChatOpened ? 436 : 376) : 36, bottom: 164 }}
-                onClick={() => setIsLeftPanelActive(true)}
-            >
-                <Settings size={32} color={theme}/>
-            </FAB>
-            <FAB
-                customStyles={{ position: "static" }}
-                // customStyles={{ right: isRightPanelActive ? (isAIChatOpened ? 436 : 376) : 36, bottom: 100 }}
-                onClick={() => switchRightPanelView(isAddTaskActive ? 'closeAll' : 'addTask')}
-            >
-                <Plus size={36} color={theme}/>
-            </FAB>
-            <FAB
-                customStyles={{ position: "static" }}
-                // customStyles={{ right: isRightPanelActive ? (isAIChatOpened ? 436 : 376) : 36 }}
-                type={'hollow'}
-                onClick={() => switchRightPanelView(isAIChatOpened ? 'closeAll' : 'aiChat')}
-            >
-                <GeminiIcon size={32}/>
-            </FAB>
+                <FAB customStyles={{ position: "static" }} onClick={() => setIsLeftPanelActive(true)} className={styles.projectSettingsIcon}>
+                    <Settings size={32} color={theme}/>
+                </FAB>
+                <FAB customStyles={{ position: "static" }} onClick={() => switchRightPanelView(isAddTaskActive ? 'closeAll' : 'addTask')}>
+                    <Plus size={36} color={theme}/>
+                </FAB>
+                <FAB customStyles={{ position: "static" }} onClick={() => switchRightPanelView(isAIChatOpened ? 'closeAll' : 'aiChat')} type={'hollow'}>
+                    <GeminiIcon size={32}/>
+                </FAB>
             </div>
-
-
         </div>
     );
 };

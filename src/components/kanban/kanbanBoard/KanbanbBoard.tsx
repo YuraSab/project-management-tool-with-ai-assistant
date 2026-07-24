@@ -52,15 +52,12 @@ const KanbanBoard: React.FC<KanbanBoardProps> = ({ projectId }) => {
 
         const currentFilters = {
             users: filters.users,
-            start: filters.start,
-            end: filters.end,
-            priority: filters.priority,
-            noPriority: filters.noPriority,
+            start: filters.start, end: filters.end,
+            priority: filters.priority, noPriority: filters.noPriority,
             searchTerm: filters.searchTermFilter,
             isInitialLoad: filters.isInitialLoad,
             unassignedTasks: filters.unassignedTasks,
-            types: filters.typesFilter,
-            categories: filters.categoriesFilter,
+            types: filters.typesFilter, categories: filters.categoriesFilter,
         } as TaskFilters;
 
         const processTasks = (status: TaskStatus) => {
@@ -95,45 +92,40 @@ const KanbanBoard: React.FC<KanbanBoardProps> = ({ projectId }) => {
         { id: "done" as TaskStatus, title: "Done", tasks: filteredTasks.done, headerClass: styles.doneHeader,counts: taskCounter.done },
     ], [filteredTasks, taskCounter]);
 
-    const gridStyle = useMemo(() => {
-        const count = columns.filter(col => shouldShowColumn(col.id)).length;
-        return {display: 'grid', gridTemplateColumns: `repeat(${count}, 1fr)`};
-    }, [columns, shouldShowColumn]);
-
-    return <DragDropContext onDragEnd={handleDragEnd}>
-        <div className={styles.kanbanBoard} style={gridStyle}>
-            {/* Column headers */}
-            {columns.map(col => shouldShowColumn(col.id) && (
-                <div key={`${col.id}-header`} className={`${styles.columnHeader} ${col.headerClass}`}>
-                    <span className={styles.columnTitle}>{col.title}</span>
-                    {filters.showTaskCounter && (
-                        <span className={styles.counterBlock}>{col.counts.own}/{col.counts.total}</span>
-                    )}
-                </div>
-            ))}
-            {/* Column bodies */}
-            {columns.map(col => shouldShowColumn(col.id) && (
-                <DroppableColumnBody key={`${col.id}-body`} droppableId={col.id}>
-                    <div className={styles.statusColumn}>
-                        {
-                            isPending
-                                ? ([...Array(3)].map((_, i) => (
-                                    <KanbanCardSkeleton key={i} isCompact={statuses.isLeftPanelActive && statuses.isRightPanelActive}/>
-                                )))
-                                : (col.tasks.map((task, index) => (
-                                    <KanbanDraggableCard
-                                        key={task.id}
-                                        task={task}
-                                        index={index}
-                                        handleOnTaskClick={() => switchRightPanelView('editTask', task)}
-                                    />
-                                )))
-                        }
+    return (
+        <DragDropContext onDragEnd={handleDragEnd}>
+            <div className={styles.kanbanBoard}>
+                {columns.map(col => shouldShowColumn(col.id) && (
+                    <div key={col.id} className={styles.columnWrapper}>
+                        <div className={`${styles.columnHeader} ${col.headerClass}`}> {/* column header */}
+                            <span className={styles.columnTitle}>{col.title}</span>
+                            {filters.showTaskCounter && (
+                                <span className={styles.counterBlock}>{col.counts.own}/{col.counts.total}</span>
+                            )}
+                        </div>
+                        <DroppableColumnBody droppableId={col.id}> {/* column body */}
+                            {/*<div className={styles.statusColumn}>*/}
+                                {isPending ? (
+                                    [...Array(3)].map((_, i) => (
+                                        <KanbanCardSkeleton key={i} isCompact={statuses.isLeftPanelActive && statuses.isRightPanelActive}/>
+                                    ))
+                                ) : (
+                                    col.tasks.map((task, index) => (
+                                        <KanbanDraggableCard
+                                            key={task.id}
+                                            task={task}
+                                            index={index}
+                                            handleOnTaskClick={() => switchRightPanelView('editTask', task)}
+                                        />
+                                    ))
+                                )}
+                            {/*</div>*/}
+                        </DroppableColumnBody>
                     </div>
-                </DroppableColumnBody>
-            ))}
-        </div>
-    </DragDropContext>
-}
+                ))}
+            </div>
+        </DragDropContext>
+    );
+};
 
 export default memo(KanbanBoard);
