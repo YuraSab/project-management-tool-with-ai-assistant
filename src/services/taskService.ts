@@ -37,3 +37,55 @@ export const deleteTask = async (taskId: string): Promise<void> => {
     const taskRef = doc(db, 'tasks', taskId);
     return await deleteDoc(taskRef);
 };
+
+export const updateTasks__TEST = async (): Promise<void> => {
+    try {
+        console.log("🚀 Start Migration...");
+        const tasksRef = collection(db, 'tasks');
+        const tasksSnap = await getDocs(tasksRef);
+        let updatedCount = 0;
+
+        console.log(`📊 Усього тасок у базі: ${tasksSnap.docs.length}`);
+        tasksSnap.docs.forEach((taskDoc) => {
+            const data = taskDoc.data();
+            console.log(`ID: [${taskDoc.id}] | Title: "${data.title}" | updatedAt:`, data.updatedAt);
+        });
+
+        const now = new Date().toISOString(); // Поточний час для ініціалізації дат
+        // const targetCreatorId = 'nmt7XA4CQUQtSQlItj0B35Qitkx2';
+
+        for (const taskDoc of tasksSnap.docs) {
+            const data = taskDoc.data();
+            const taskRef = doc(db, 'tasks', taskDoc.id);
+            // if (data.type === undefined || data.category === undefined) {
+            //     await updateDoc(taskRef, {
+            //         type: data.type ?? 'none',
+            //         category: data.category ?? 'none'
+            //     });
+            //     updatedCount++;
+            // }
+            // const targetCreatorId = 'nmt7XA4CQUQtSQlItj0B35Qitkx2';
+            // if (data.creatorId === undefined) {
+            //     await updateDoc(taskRef, 'creatorId', targetCreatorId);
+            //     updatedCount++
+            // }
+
+            const updates: Record<string, any> = {};
+            if (data.updatedAt === undefined) {
+                updates.updatedAt = now;
+            }
+            // Якщо для цієї таски немає поля updatedAt, оновлюємо її
+            if (Object.keys(updates).length > 0) {
+                await updateDoc(taskRef, updates);
+                updatedCount++;
+                console.log(`📝 Added updatedAt to task [${taskDoc.id}]:`, updates.updatedAt);
+            }
+        }
+        console.log(`⚙️ Updated tasks: ${updatedCount}`);
+    } catch (error) {
+        console.error("❌ Migration error:", error);
+    }
+    finally {
+        console.log('✅ End Migration!');
+    }
+};

@@ -20,29 +20,6 @@ export const getGeminiResponse = async (
     },
     history: Message[]
 ) => {
-    // const systemInstruction = `
-    // Ти — AI менеджер системи "ProjectFlow". Твоя мета — допомагати керувати проектом: ${context.project.title}.
-    //
-    // ПОТОЧНИЙ КОНТЕКСТ:
-    // - Проект ID: ${context.project.id}
-    // - Таски: ${context.tasks.map(t => `ID: ${t.id}, Title: ${t.title}, Status: ${t.status}`).join('; ')}
-    // - Команда: ${context.members.map(m => `${m.displayName} (ID: ${m.uid})`).join(', ')}
-    //
-    // ПРАВИЛА ВІДПОВІДІ:
-    // 1. Якщо користувач просить змінити щось, ти ЗАВЖДИ генеруєш один або кілька JSON блоків ACTION.
-    // 2. Ти можеш редагувати будь-яке поле таски: title, description, status, priority, assignedMembers, startDate, endDate.
-    // 3. Ти можеш редагувати поля проекту: title, description, status.
-    //
-    // ФОРМАТИ КОМАНД (ACTION):
-    // - Створити таску: ACTION: {"type": "CREATE_TASK", "payload": {"title": "...", "description": "...", "status": "..."}}
-    // - Оновити таску: ACTION: {"type": "UPDATE_TASK", "payload": {"id": "ID", "title": "Нова назва", "status": "..."}}
-    // - Видалити таску: ACTION: {"type": "DELETE_TASK", "payload": {"id": "ID"}}
-    // - Оновити проект: ACTION: {"type": "UPDATE_PROJECT", "payload": {"title": "Нова назва проекту"}}
-    //
-    // Якщо треба змінити кілька тасок одночасно, виводь кілька блоків ACTION підряд.
-    // Твій текст-відповідь має бути дружнім, але команди ACTION повинні бути точними.
-    // `;
-
     const systemInstruction = `
     Ти — AI менеджер системи "ProjectFlow". Проект: ${context.project.title}.
 

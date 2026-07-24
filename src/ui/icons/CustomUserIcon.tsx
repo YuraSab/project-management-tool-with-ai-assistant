@@ -10,27 +10,30 @@ interface UserIconProps {
     size?: number,
     fontSize?: number,
     onClick?: React.Dispatch<React.SetStateAction<boolean>>,
+    customStyles?: React.CSSProperties
 }
 
-const CustomUserIcon: React.FC<UserIconProps> = ({ title = '', backgroundColor, total, size=36, fontSize = 18, onClick }) => {
-    // const highlightMode = useUserThemeStore((state) => state.highlightMode);
-    const highlightColor = useProfileStore((state) => state.profile.highlightColor)
+const CustomUserIcon: React.FC<UserIconProps> = ({ title = '', backgroundColor, customStyles, total, size=36, fontSize = 18, onClick }) => {
+    const highlightColor = useProfileStore((state) => state.profile.highlightColor);
+    const activeColor = backgroundColor ?? highlightColor;
+    const cssBackgroundColor = `var(--color-${activeColor})`;
     return(
         <div className={styles.iconWrapper} title={title}>
             <div 
                 className={`${styles.iconBlock} ${total && styles.smallerText}`}
                 style={{ 
-                    width: size, 
-                    height: size, 
+                    width: 'var(--user-icon-size, 36px)',
+                    height: 'var(--user-icon-size, 36px)',
                     fontSize: fontSize, 
-                    backgroundColor: backgroundColor ?? highlightColor
+                    backgroundColor: cssBackgroundColor,
+                    ...customStyles
                 }} 
                 onClick={() => onClick && onClick((prev) => !prev)}
             >
                 { total ? title : title[0] }
             </div>
         </div>
-    )
-}
+    );
+};
 
 export default CustomUserIcon;

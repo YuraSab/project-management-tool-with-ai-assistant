@@ -1,3 +1,11 @@
+body {
+    &::-webkit-scrollbar {  /* For Chrome, Safari, Edge, Opera */
+        display: none;
+    }
+    scrollbar-width: none;  /* For Firefox */
+    -ms-overflow-style: none;
+}
+
 .click-effect {
     cursor: pointer;
     transition: transform 0.2s ease-out;
@@ -5,4 +13,18 @@
 
 .click-effect:active {
     transform: scale(0.7);
+}
+
+.hideScrollbar {
+    &::-webkit-scrollbar {  /* For Chrome, Safari, Edge, Opera */
+        display: none;
+    }
+    scrollbar-width: none;  /* For Firefox */
+    -ms-overflow-style: none;   /* For old Internet Explorer & Edge */
+}
+
+/* Блокуємо вертикальний скрол усього сайту, якщо всередині канбану щось перетягується */
+body:has([data-pangea-drag-handle]),
+body:has([data-rbd-drag-handle]) {
+    overflow-y: hidden !important;
 }

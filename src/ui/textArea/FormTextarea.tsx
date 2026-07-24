@@ -1,4 +1,5 @@
 import styles from "./FormTextarea.module.css";
+import React from "react";
 
 interface FormTextareaProps {
     name: string,
@@ -7,11 +8,11 @@ interface FormTextareaProps {
 }
 
 const FormTextarea = ({ name, value, onChange }: FormTextareaProps) => {
-    return <textarea 
+    return <textarea
         name={name}
         value={value} 
         onChange={onChange}
-        className={styles.customTextarea}
+        className={`${styles.customTextarea} hideScrollbar`}
     />
 }
 

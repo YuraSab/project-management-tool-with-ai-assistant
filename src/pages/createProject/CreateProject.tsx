@@ -1,7 +1,6 @@
 import React, {useCallback, useMemo, useState} from "react";
 import {Project, ProjectStatus} from "../../types/project";
 import CustomForm from "../../ui/form/CustomForm";
-import FormLayout from "../../layouts/formLayout/FormLayout";
 import {useNavigate} from "react-router-dom";
 import {useProfileStore} from "../../store/profileStore.ts";
 import {UserProfile} from "../../types/user.ts";
@@ -11,11 +10,11 @@ import FormTextInput from "../../ui/input/FormTextInput.tsx";
 import FormTextarea from "../../ui/textArea/FormTextarea.tsx";
 import FormDateInput from "../../ui/input/FormDateInput.tsx";
 import FormSelect from "../../ui/select/FormSelect.tsx";
-import FormButtonSubmit from "../../ui/button/FormButtonSubmit.tsx";
 import AssignMembers from "../../components/asignMembers/AssignMembers.tsx";
-import AddMember from "../../modals/AddMember/AddMember.tsx";
 import {useProjectUsers} from "../../hooks/project/useProjectUsers.ts";
 import styles from './CreateProject.module.css';
+import MemberSelector from "../../ui/memberSelector/MemberSelector.tsx";
+import CustomButton from "../../ui/button/CustomButton.tsx";
 
 type FormData = Pick<Project, 'title' | 'description' | 'status'> & { startDate: string, endDate: string };
 
@@ -77,39 +76,31 @@ const CreateProject = () => {
     };
 
     return (
-        <FormLayout>
-            <CustomForm onSubmit={handleCreate} disabled={isPending} className={styles.main}>
-                <Title text={'Title:'}/>
-                <FormTextInput name={"title"} value={formData.title} onChange={handleChange} required/>
-                <Title text={'Description:'}/>
-                <FormTextarea name={"description"} value={formData.description} onChange={handleChange}/>
-                <Title text={'Start Date:'}/>
-                <FormDateInput name={"startDate"} value={formData.startDate} onChange={handleChange}/>
-                <Title text={'End Date:'}/>
-                <FormDateInput name={"endDate"} value={formData.endDate} onChange={handleChange}/>
-                <Title text={'Members:'}/>
-                <AssignMembers
-                    assignedMembers={assignedMembers}
-                    setAddMembersActive={setAddMembersActive}
-                    users={assignedMembers}
-                    maxIcons={6} iconSize={28}
-                />
-                <Title text={'Status:'}/>
-                <FormSelect<ProjectStatus> name={"status"} value={formData.status} onChange={handleChange} options={[ProjectStatus.Planned, ProjectStatus.InProgress, ProjectStatus.Completed]}/>
-                <div className={styles.buttonBlock}>
-                    <FormButtonSubmit text={"Create Project"} customStyles={{width: 240}}/>
-                </div>
-            </CustomForm>
-            { addMembersActive && (
-                <AddMember
-                    membersMap={reservedMembersMap}
-                    selectedMembersIds={assignedMembersIds}
-                    filterMemberAction={handleFilterMember}
-                    exitAction={() => setAddMembersActive(false)}
-                />
+        <CustomForm onSubmit={handleCreate} disabled={isPending} className={styles.mainBlock}>
+            <Title text={'Title'}/>
+            <FormTextInput name={"title"} value={formData.title} onChange={handleChange} required/>
+            <Title text={'Description'}/>
+            <FormTextarea name={"description"} value={formData.description} onChange={handleChange}/>
+            <Title text={'Start Date'}/>
+            <FormDateInput name={"startDate"} value={formData.startDate} onChange={handleChange}/>
+            <Title text={'End Date'}/>
+            <FormDateInput name={"endDate"} value={formData.endDate} onChange={handleChange}/>
+            <Title text={'Members'}/>
+            <AssignMembers
+                assignedMembers={assignedMembers}
+                onSelectMembersActive={() => setAddMembersActive(!addMembersActive)}
+                maxIcons={6} iconSize={28}
+            />
+            {addMembersActive && (
+                <MemberSelector membersMap={reservedMembersMap} selectedMembersIds={assignedMembersIds} clickAction={handleFilterMember} />
             )}
-        </FormLayout>
-    )
-}
+            <Title text={'Status'}/>
+            <FormSelect<ProjectStatus> name={"status"} value={formData.status} onChange={handleChange} options={[ProjectStatus.Planned, ProjectStatus.InProgress, ProjectStatus.Completed]}/>
+            <div className={styles.buttonBlock}>
+                <CustomButton children={"Create Project"} disabled={isPending} type={'submit'}/>
+            </div>
+        </CustomForm>
+    );
+};
 
 export default CreateProject;

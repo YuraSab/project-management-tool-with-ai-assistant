@@ -11,4 +11,42 @@
     align-items: center;
     flex-direction: column;
     box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+
+    transition: transform 0.1s ease;
+
+    --local-color: transparent;
+    --local-dark: transparent;
+    --local-light: transparent;
+    --local-disabled: transparent;
+    --local-theme-color: transparent;
+}
+
+.fab:active {
+    transform: scale(0.95);
+}
+
+.filled {
+    background-color: var(--local-color);
+    color: white;
+}
+
+.hollow {
+    background-color: var(--local-theme-color);
+    color: var(--local-color);
+}
+
+@media (max-width: 550px) {
+    .fab {
+        right: 12px;
+        bottom: 20px;
+        width: 46px;
+        height: 46px;
+    }
+}
+
+@media (max-width: 400px) {
+    .fab {
+        width: 40px;
+        height: 40px;
+    }
 }

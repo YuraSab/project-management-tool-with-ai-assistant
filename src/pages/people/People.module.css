@@ -1,28 +1,172 @@
-.main{
-    padding: 40px;
-}
-
-ul{
+.main {
+    width: 700px;
+    margin: 0 auto;
+    padding: 40px 20px;
     display: flex;
     flex-direction: column;
+    gap: 24px;
+    box-sizing: border-box;
 }
 
-.element{
-    margin: 4px 0;
-    padding: 8px 4px;
+.contactsSection {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.sectionTitle {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--color-text-secondary);
+    margin-bottom: 4px;
+    transition: color 0.2s ease;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.element {
+    background: var(--color-bg);
+    padding: 16px 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px gray solid;
+    border-radius: 12px;
+    border: 1px solid var(--color-border);
+    box-shadow: var(--block-shadow);
+    transition: all 0.2s ease-in-out;
+    box-sizing: border-box;
+    height: 70px;
 }
 
-.userIconContainer {
-    width: 80px;
+.element:hover {
+    transform: translateY(-1px);
+    border-color: var(--color-text-secondary)
 }
+
+.userInfo {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    min-width: 0;
+}
+
+.userMeta {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+}
+
+.userEmail {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--color-text-primary);
+    /* 🔥 Захист від занадто довгих емейлів */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.userRole {
+    font-size: 0.85rem;
+    color: var(--color-text-secondary);
+    text-transform: capitalize;
+}
+
+/* 🔥 Стилізація кнопки видалення */
+.deleteBtn {
+    cursor: pointer;
+    color: var(--color-text-secondary);
+    transition: all 0.2s ease;
+    padding: 2px;
+    border-radius: 50%;
+}
+
+.deleteBtn:hover {
+    color: #ef4444;
+    background-color: rgba(239, 68, 68, 0.15);
+}
+
+.deleteBtn:active {
+    transform: scale(0.9);
+}
+
+.noData {
+    text-align: center;
+    color: var(--color-text-secondary);
+    padding: 30px;
+    font-style: italic;
+}
+
+
 
 .buttonsContainer {
     display: flex;
-    gap: 24px;
-    width: 80px;
-    justify-content: end;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+.iconBtn {
+    cursor: pointer;
+    color: var(--color-text-secondary);
+    padding: 2px;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+}
+
+.iconBtn:hover {
+    background-color: var(--disabled-backgroud);
+    color: var(--color-text-primary);
+}
+
+.iconBtn:active {
+    transform: scale(0.9);
+}
+
+/* 🔥 Специфічний ховер для копіювання */
+.copyBtn:hover {
+    color: #3b82f6; /* Синій при ховері */
+}
+
+/* 🔥 Специфічний ховер для видалення (зробили яскравішим і більшим) */
+/*.deleteBtn:hover {*/
+/*    color: #ef4444; !* Червоний при ховері *!*/
+/*    background-color: #fef2f2;*/
+/*}*/
+
+@media (max-width: 700px) {
+    .main {
+        width: 100%;
+    }
+}
+
+@media (max-width: 550px) {
+    .main {
+        padding: 16px 12px;
+        gap: 16px;
+    }
+    .element {
+        height: 60px;
+        padding: 8px 12px;
+    }
+    .userInfo {
+        gap: 10px;
+    }
+    .userEmail {
+        font-size: 0.9rem;
+    }
+    .buttonsContainer{
+        /*flex-direction: column;*/
+        /*justify-content: center;*/
+        gap: 4px;
+    }
 }

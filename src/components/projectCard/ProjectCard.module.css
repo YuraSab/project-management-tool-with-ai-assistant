@@ -1,4 +1,4 @@
-.element{
+.element {
     border: var(--border-default);
     border-radius: 12px;
     padding: 16px;
@@ -7,18 +7,19 @@
     cursor: pointer;
     transition: background-color 0.2s ease, box-shadow 0.2s ease;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    justify-content: start;
+    flex-direction: column;
+    align-items: start;
 }
 
-.element h3{
+.element h3 {
     font-size: 18px;
     font-weight: 600;
     color: var(--color-text-main);
     margin-bottom: 4px;
 }
 
-.element p{
+.element p {
     font-size: 14px;
     color: var(--color-text-muted);
 }
@@ -28,7 +29,7 @@
 }
 
 .settingIconWrapper:hover .settingsIcon {
-    color: purple;
+    color: var(--local-hover-color);
 }
 
 .settingsIcon {
@@ -36,15 +37,56 @@
     transition: color 0.3s ease;
 }
 
-.purpleBlock:hover{
-    background-color: var(--purple-hover);
+.element:hover {
+    background-color: var(--local-light-bg);
 }
-.greenBlock:hover {
-    background-color: var(--green-hover);
+
+.purple {
+    --local-light-bg: var(--color-purple-light);
+    --local-hover-color: var(--color-purple);
 }
-.blueBlock:hover {
-    background-color: var(--blue-hover);
+
+.green {
+    --local-light-bg: var(--color-green-light);
+    --local-hover-color: var(--color-green);
 }
-.orangeBlock:hover {
-    background-color: var(--orange-hover);
+
+.teal {
+    --local-light-bg: var(--color-teal-light);
+    --local-hover-color: var(--color-teal);
+}
+
+.slate {
+    --local-light-bg: var(--color-slate-light);
+    --local-hover-color: var(--color-slate);
+}
+
+.violet {
+    --local-light-bg: var(--color-violet-light);
+    --local-hover-color: var(--color-violet);
+}
+
+.blue {
+    --local-light-bg: var(--color-blue-light);
+    --local-hover-color: var(--color-blue);
+}
+
+.orange {
+    --local-light-bg: var(--color-orange-light);
+    --local-hover-color: var(--color-orange);
+}
+
+
+@media (max-width: 550px) {
+    .element {
+        padding: 10px 8px;
+    }
+    .element h3 {
+        font-size: 16px;
+        font-weight: 500;
+        margin-bottom: 0;
+    }
+    .element p {
+        font-size: 12px;
+    }
 }

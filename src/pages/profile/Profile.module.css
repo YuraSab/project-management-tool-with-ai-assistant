@@ -1,0 +1,55 @@
+.mainBlock{
+    margin-top: 20px;
+    justify-self: center;
+    width: 700px;
+}
+
+.formBlock {
+    width: 100%;
+    max-width: 500px;
+    padding: 24px;
+    box-sizing: border-box;
+}
+
+.paletteBlock{
+    display: flex;
+    gap: 12px;
+    padding-top: 4px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.logoutBlock{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logoutBlock svg {
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+}
+
+.logoutBlock svg:hover {
+    opacity: 0.7;
+}
+
+
+
+@media (max-width: 600px) {
+    .formBlock {
+        max-width: 100%;
+        padding: 16px 12px;
+        box-shadow: none;
+        border-radius: 0;
+    }
+    .paletteBlock {
+        gap: 10px; /* Трохи компактніші відступи між кружечками на мобілці */
+    }
+}
+
+@media (max-width: 380px) {
+    .paletteBlock {
+        gap: 8px; /* Додаткова компактність для дуже маленьких екранів (320px - 360px) */
+    }
+}

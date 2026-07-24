@@ -1,11 +1,26 @@
-.customTextarea{
-  margin-top: 4px;
-  padding: 8px;
-  border-radius: 8px;
-  border: 1px solid #cbd5e1;
-  font-size: 14px;
-  resize: vertical;
-  min-height: 80px;
-  background-color: white;
-  color: black;
+.customTextarea {
+    margin-top: 4px;
+    padding: 8px;
+    border-radius: 8px;
+    border: 1px solid var(--color-border);
+    background-color: var(--color-bg);
+    color: var(--color-text-primary);
+    font-size: 14px;
+    font-family: inherit;
+    width: 100%;
+    box-sizing: border-box;
+    resize: none;
+    min-height: 150px;
+    transition: border-color 0.2s ease, background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.customTextarea::placeholder {
+    color: var(--color-text-secondary);
+    opacity: 0.6;
+}
+
+.customTextarea:focus {
+    outline: none;
+    border-color: var(--color-text-secondary);
+    box-shadow: 0 0 0 3px var(--disabled-backgroud);
 }

@@ -2,8 +2,8 @@
     width: 300px;
     min-width: 300px;
     box-sizing: border-box;
-    padding: 35px 15px;
-    border-right: 2px #f3f4f6 solid;
+    padding: 35px 15px 5px;
+    border-right: 2px solid var(--color-dividor);
     height: calc(100vh - 100px);
     display: flex;
     flex-direction: column;
@@ -46,4 +46,15 @@
 
 .iconBtn:hover {
     opacity: 0.7;
+}
+
+@media (max-width: 1024px) {
+    .main {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        z-index: 1001; /* Понад Kanban і FAB */
+        box-shadow: 4px 0 16px rgba(0, 0, 0, 0.4);
+    }
 }

@@ -12,16 +12,16 @@ import {Sender} from "../../types/aiChat.ts";
 import {useShallow} from "zustand/react/shallow";
 import {parseAIActions} from "../../utils/parseAIActions.ts";
 import {getGeminiResponse} from "../../services/aiService.ts";
+import {switchRightPanelView} from "../../utils/panelManager.ts";
 
-    const AIChat = () => {
+const AIChat = () => {
     const profile = useProfileStore((state) => state.profile);
     const selectedProject = useProjectControlStore((state) => state.selectedProject)
-    const {messages, addMessage, clearChat, setIsAIChatOpened} = useAIChatStore(useShallow((state) => ({
-        messages: state.messages, addMessage: state.addMessage, clearChat: state.clearChat, setIsAIChatOpened: state.setIsAIChatOpened
+    const {messages, addMessage, clearChat} = useAIChatStore(useShallow((state) => ({
+        messages: state.messages, addMessage: state.addMessage, clearChat: state.clearChat
     })));
 
-    // Думаю на момент переходу на сторінку проекту - вартувало б додавати до zustand всі таски і юзерів заесайнених до проекту, щоб брати дані з zustand а не з нових запитів
-    const {data: projectTasks} = useTasks(selectedProject?.id || "");
+    const {data: projectTasks} = useTasks(selectedProject?.id || '', profile.uid || '');
     const {data: projectUsers} = useProjectUsers(selectedProject?.assignedMembers || []);
 
     const [inputValue, setInputValue] = useState('');
@@ -33,7 +33,6 @@ import {getGeminiResponse} from "../../services/aiService.ts";
             messagesEndRef.current?.scrollIntoView({behavior: "smooth"} as ScrollIntoViewOptions);
     }, [messages]);
 
-    console.log('projectTasks', projectTasks)
     const handleSend = async () => {
         if (!inputValue.trim() || !selectedProject || isLoading) return;
 
@@ -57,7 +56,6 @@ import {getGeminiResponse} from "../../services/aiService.ts";
                 members: projectUsers
             };
 
-            // const aiRawResponse = `Ось зміни. ACTION: {"type": "UPDATE_TASK", "title": "Rofler", "payload": {"id": "7gy1WlyQWucUee6CMkoE", "description": "tiktok audience"}}`;
             const aiRawResponse = await getGeminiResponse(userText, context, historyForGemini);
             const { cleanText, actions } = parseAIActions(aiRawResponse);
             addMessage({
@@ -85,13 +83,23 @@ import {getGeminiResponse} from "../../services/aiService.ts";
                 </div>
                 <div className={styles.actions}>
                     <Trash2 size={18} className={styles.icon} onClick={clearChat}/>
-                    <X size={24} className={styles.icon} onClick={() => setIsAIChatOpened(false)}/>
+                    <X size={24} className={styles.icon} onClick={() => switchRightPanelView('closeAll')}/>
                 </div>
             </div>
             <div className={styles.scrollArea}>
                 <Messages/>
                 <div ref={messagesEndRef}/>
             </div>
+            {isLoading && (
+                <div className={styles.aiTypingBlock}>
+                    <GeminiIcon size={28}/>
+                    <div className={styles.aiTyping}>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </div>
+                </div>
+            )}
             <div className={styles.inputArea}>
                 <input
                     type="text"

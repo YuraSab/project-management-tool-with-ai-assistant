@@ -2,7 +2,6 @@ import styles from "./Projects.module.css";
 import { useUserProjects } from "../../hooks/users/useUserProjects";
 import {useAuthStore} from "../../store/authStore.ts";
 import ProjectCard from "../../components/projectCard/ProjectCard.tsx";
-import clsx from "clsx";
 import ProjectsSkeleton from "../../components/projectCard/ProjectsSkeleton.tsx";
 import FAB from "../../ui/FAB/FAB.tsx";
 import {Plus} from "lucide-react";
@@ -18,20 +17,22 @@ const MODES = {
 const Projects = () => {
     const navigate = useNavigate();
     const user = useAuthStore((state) => state.user)
-    const { data: projects, isPending, isError } = useUserProjects(user?.uid ?? "");
     const theme = useProfileStore((state) => state.profile.theme);
+    const { data: projects, isPending, isError } = useUserProjects(user?.uid ?? "");
 
     if (isPending) return <ProjectsSkeleton/>;
 
     return (
-        <div className={clsx( styles.main, MODES[theme] )}>
+        <div className={`${styles.main} ${MODES[theme]}`}>
             {
                 projects && projects.length > 0
                     ? projects.map(p => <ProjectCard project={p} key={p.id}/>)
                     : <Error type={'not_found'}/>
             }
-            { isError && <Error type={'server_crash'}/> }
-            <FAB><Plus size={36} color={theme} onClick={() => navigate('/projects/create')}/></FAB>
+            {isError && <Error type={'server_crash'}/>}
+            <FAB>
+                <Plus size={36} color={theme} onClick={() => navigate('/projects/create')}/>
+            </FAB>
         </div>
     );
 };

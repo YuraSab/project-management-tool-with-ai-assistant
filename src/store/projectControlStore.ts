@@ -1,5 +1,14 @@
 import { create } from "zustand";
-import {SortOption, Task, TaskPriority, TaskStatus} from "../types/task";
+import {
+    SortOption,
+    Task, TASK_CATEGORIES,
+    TASK_PRIORITIES,
+    TASK_STATUSES,
+    TASK_TYPES,
+    TaskCategory,
+    TaskPriority,
+    TaskStatus
+} from "../types/task";
 import { Project, ProjectStatus } from "../types/project";
 import {UserProfile} from "../types/user.ts";
 
@@ -34,9 +43,26 @@ interface ProjectControlState {
     setPriorityFilter: (value: TaskPriority) => void;
     sortValue: SortOption;
     setSortValue: (value: SortOption) => void;
-    clearFiltersAndSorts: () => void;
     isProjectSettingsActive: boolean;
     setIsProjectSettingsActive: () => void;
+    searchTermFilter: string;
+    setSearchTermFilter: (value: string) => void;
+    isInitialLoad: boolean;
+    setIsInitialLoad: (value: boolean) => void;
+    showUnassignedTasks: boolean;
+    setShowUnassignedTasks: (value: boolean) => void;
+    showNoPriorityTasks: boolean;
+    setShowNoPriorityTasks: (value: boolean) => void;
+    showTaskCounter: boolean;
+    setShowTaskCounter: (value: boolean) => void;
+    typesFilter: TaskCategory[];
+    setTypesFilter: (value: TaskCategory) => void;
+    categoriesFilter: TaskCategory[];
+    setCategoriesFilter: (value: TaskCategory) => void;
+    showAIChat: boolean;
+    setShowAIChat: (value: boolean) => void;
+    clearFiltersAndSorts: () => void;
+    closePanels: () => void;
 }
 
 export const useProjectControlStore = create<ProjectControlState>((set, get) => ({
@@ -46,6 +72,7 @@ export const useProjectControlStore = create<ProjectControlState>((set, get) => 
     setSelectedTask: (task) => set({ selectedTask: task }),
     clearSelectedTask: () => set({ selectedTask: null }),
     isAddMembersActive: false,
+    // todo - remove field
     setIsAddMembersActive: (value) => set({ isAddMembersActive: value }),
     isRightPanelActive: false,
     setIsRightPanelActive: (value) => set({ isRightPanelActive: value }),
@@ -55,12 +82,9 @@ export const useProjectControlStore = create<ProjectControlState>((set, get) => 
     setIsEditTaskActive: (value) => set({ isEditTaskActive: value }),
     isAddTaskActive: false,
     setIsAddTaskActive: (value) => set({ isAddTaskActive: value }),
-    statusFilter: [],
+    statusFilter: [...TASK_STATUSES],
     setStatusFilter: (value) => {
         const currentStatuses = get().statusFilter;
-        // currentStatuses.includes(value)
-        // ? set({ statusFilter: currentStatuses.filter((el) => el != value) })
-        // : set({ statusFilter: [...currentStatuses, value] })
         set({
             statusFilter: currentStatuses.includes(value)
                 ? currentStatuses.filter((el) => el != value)
@@ -70,9 +94,6 @@ export const useProjectControlStore = create<ProjectControlState>((set, get) => 
     usersFilter: [],
     setUserFilter: (chosenUser) => {
         const currentUsers = get().usersFilter;
-        // currentUsers.some((u) => u.id === chosenUser.uid)
-        // ? set({ usersFilter: currentUsers.filter((el) => el.id != chosenUser.uid) })
-        // : set({ usersFilter: [...currentUsers, chosenUser] });
         set({
             usersFilter: currentUsers.some((u) => u.uid === chosenUser.uid)
                 ? currentUsers.filter((el) => el.uid != chosenUser.uid)
@@ -84,12 +105,9 @@ export const useProjectControlStore = create<ProjectControlState>((set, get) => 
     setStartDateFilter: (value) => set({ startDateFilter: value }),
     endDateFilter: "",
     setEndDateFilter: (value) => set({ endDateFilter: value }),
-    priorityFilter: [],
+    priorityFilter: [...TASK_PRIORITIES],
     setPriorityFilter: (value) => {
         const currentPriorities = get().priorityFilter;
-        // currentPriorities.includes(value)
-        // ? set({ priorityFilter: currentPriorities.filter((el) => el != value) })
-        // : set({ priorityFilter: [...currentPriorities, value] })
         set({
             priorityFilter: currentPriorities.includes(value)
             ? currentPriorities.filter((el) => el != value)
@@ -98,20 +116,57 @@ export const useProjectControlStore = create<ProjectControlState>((set, get) => 
     },
     sortValue: "none",
     setSortValue: (value) => set({ sortValue: value }),
-    clearFiltersAndSorts: () => {
-        set({ 
-            selectedTask: null,
-            isAddMembersActive: false,
-            isRightPanelActive: false,
-            isLeftPanelActive: false,
-            statusFilter: [] ,
-            usersFilter: [],
-            startDateFilter: "",
-            endDateFilter: "",
-            priorityFilter: [],
-            sortValue: "none",
-        });
-    },
     isProjectSettingsActive: false,
     setIsProjectSettingsActive: () => set({ isProjectSettingsActive: !get().isProjectSettingsActive }),
+    searchTermFilter: '',
+    setSearchTermFilter: (value) => set({ searchTermFilter: value }),
+    isInitialLoad: true,
+    setIsInitialLoad: (value) => set({ isInitialLoad: value }),
+    showUnassignedTasks: true,
+    setShowUnassignedTasks: (value) => set({ showUnassignedTasks: value }),
+    showNoPriorityTasks: true,
+    setShowNoPriorityTasks: (value) => set({ showNoPriorityTasks: value }),
+    showTaskCounter: true,
+    setShowTaskCounter: (value) => set({ showTaskCounter: value }),
+    typesFilter: TASK_TYPES,
+    setTypesFilter: (value) => {
+        const cur = get().typesFilter;
+        set({
+            typesFilter: cur.includes(value)
+            ? cur.filter((t) => t !== value)
+            : [...cur, value]
+        });
+    },
+    categoriesFilter: TASK_CATEGORIES,
+    setCategoriesFilter: (value) => {
+        const cur = get().categoriesFilter;
+        set({
+            categoriesFilter: cur.includes(value)
+                ? cur.filter((t) => t !== value)
+                : [...cur, value]
+        });
+    },
+    showAIChat: true,
+    setShowAIChat: (value) => set({ showAIChat: value }),
+    clearFiltersAndSorts: () => set({
+        statusFilter: [...TASK_STATUSES],
+        priorityFilter: [...TASK_PRIORITIES],
+        startDateFilter: "",
+        endDateFilter: "",
+        sortValue: "none",
+        searchTermFilter: '',
+        showUnassignedTasks: true,
+        showNoPriorityTasks: true,
+        typesFilter: TASK_TYPES,
+        categoriesFilter: TASK_CATEGORIES,
+    }),
+    closePanels: () => set({
+        selectedTask: null,
+        isLeftPanelActive: false,
+        isRightPanelActive: false,
+        isAddTaskActive: false,
+        isEditTaskActive: false,
+        // isProjectSettingsActive: false,
+        showAIChat: false,
+    })
 }));

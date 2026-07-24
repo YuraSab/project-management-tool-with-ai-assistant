@@ -1,55 +1,37 @@
-.asignBlock{
-  display: grid;
-  grid-template-areas:
-  "label label"
-  "button icons";
+.assignBlock{
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  gap: 16px;
 }
-.asignBlock *{
+
+.assignBlock *{
   align-self: center;
 }
-.asignBlock label{
+
+.assignBlock label{
   width: 100%;
   grid-area: label;
 }
-  
-.assignedMembers button {
+
+.assignBlock button {
+  width: auto;
+  white-space: nowrap;
+  grid-area: button;
   margin-top: 4px;
   padding: 6px 20px;
   border-radius: 6px;
   cursor: pointer;
   font-size: 14px;
-  grid-area: button;
+  background-color: var(--local-light, var(--disabled-backgroud));
+  border: 1px solid var(--local-color, var(--color-border));
+  color: var(--local-dark, var(--color-text-primary));
+  box-sizing: content-box;
+  transition: all 0.2s ease;
 }
 
-._assignedMembers_button__purple {
-  background-color: #f3e8ff;
-  border: 1px solid #d8b4fe;
-  color: purple;
-}
-._assignedMembers_button__purple:hover {
-  background-color: #ede9fe;
-}
-._assignedMembers_button__green {
-    background-color: #dcfce7;
-    border: 1px solid #86efac;
-    color: #166534;
-}
-._assignedMembers_button__green:hover {
-  background-color: #bbf7d0;
-}
-._assignedMembers_button__blue {
-    background-color: #dbeafe;
-    border: 1px solid #93c5fd;
-    color: #1e3a8a;
-}
-._assignedMembers_button__blue:hover {
-  background-color: #bfdbfe;
-}
-._assignedMembers_button__orange {
-    background-color: #ffedd5;
-    border: 1px solid #fdba74;
-    color: #9a3412;
-}
-._assignedMembers_button__orange:hover {
-  background-color: #fed7aa;
+.assignButton:hover {
+  background-color: var(--local-color, var(--color-text-secondary));
+  border-color: var(--local-dark, var(--color-border));
+  color: #ffffff;
 }

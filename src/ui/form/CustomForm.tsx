@@ -1,35 +1,28 @@
-import React, {ComponentPropsWithoutRef, FormEvent, ReactNode, useCallback} from "react";
+import React, {ComponentPropsWithoutRef, FormEvent, useCallback} from "react";
 import styles from "./CustomForm.module.css";
-import {useProfileStore} from "../../store/profileStore.ts";
 
 interface CustomFormProps extends ComponentPropsWithoutRef<'form'>{
-    children: ReactNode,
+    children: React.ReactNode,
     disabled?: boolean,
+    isDrawer?: boolean,
+    className?: string,
 }
 
-const CustomForm = ({ children, onSubmit, disabled, className, style, ...rest }: CustomFormProps) => {
-    const theme = useProfileStore((state) => state.profile.theme);
-
+const CustomForm = ({ onSubmit, children, disabled, isDrawer = false, className = '', style, ...props }: CustomFormProps) => {
     const handleSubmit = useCallback((e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (onSubmit)
             onSubmit(e);
     }, [onSubmit]);
 
-    const formClassName = `
-        ${styles.customForm}
-        ${theme === 'black' ? styles.dark : styles.light}
-        ${className || ''}
-    `.trim();
-
     return (
         <form
-            {...rest}
             onSubmit={handleSubmit}
+            {...props}
         >
             <fieldset
                 disabled={disabled}
-                className={formClassName}
+                className={`${styles.customForm} ${isDrawer ? styles.isDrawer : ''} ${className}`}
                 style={style}
             >
                 {children}

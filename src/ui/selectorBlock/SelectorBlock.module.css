@@ -1,0 +1,22 @@
+.assignedMembers {
+    width: 100%;
+}
+
+.assignedMembers button {
+    width: 100%;
+    margin-top: 4px;
+    padding: 6px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    grid-area: button;
+    background-color: var(--local-light);
+    border: 1px solid var(--local-color);
+    color: var(--local-dark);
+    transition: all 0.2s ease;
+}
+
+.assignedMembers button:hover {
+    background-color: var(--local-color);
+    color: #ffffff;
+}

@@ -26,20 +26,20 @@ const ProjectSidebar: React.FC = () => {
                 {profile?.role !== "member" && (
                     <button
                         className={styles.iconBtn}
-                        onClick={() => setIsProjectSettingsActive()}
+                        onClick={setIsProjectSettingsActive}
                         type={"button"}
                     >
                         <Settings size={28}/>
                     </button>
                 )}
             </nav>
-            <div className={styles.contentArea}>
+            <div className={`${styles.contentArea} hideScrollbar`}>
                 <Suspense fallback={null}>
                     {isProjectSettingsActive ? <LeftPanelSettings/> : <LeftPanelInfoBlock/>}
                 </Suspense>
             </div>
         </aside>
-);
-}
+    );
+};
 
 export default ProjectSidebar;

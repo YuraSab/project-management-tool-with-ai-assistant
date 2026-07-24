@@ -1,7 +1,18 @@
 .formLayout{
-    min-height: calc(100vh - 100px);
-    /*padding: 30px 36px 0;*/
     display: flex;
     align-items: center;
     justify-content: center;
+    max-width: 500px;
+    /*width: 100%;*/
+    min-height: calc(100vh - 100px);
+    background-color: var(--color-bg);
+    box-sizing: border-box;
+    transition: background-color 0.2s ease;
+}
+
+@media (max-width: 550px) {
+    .formLayout{
+        padding: 12px 0;
+        align-items: flex-start;
+    }
 }

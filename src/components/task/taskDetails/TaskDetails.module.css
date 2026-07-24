@@ -19,3 +19,9 @@
   display: -webkit-box;
   -webkit-box-orient: vertical;
 }
+
+@media (max-width: 1024px) {
+  .main{
+    margin: 0;
+  }
+}

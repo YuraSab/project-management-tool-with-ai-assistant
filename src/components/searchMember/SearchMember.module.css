@@ -1,42 +1,111 @@
-.searchInput {
-    padding: 8px 12px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    margin-bottom: 16px;
-    width: 100%;
-    font-size: 16px;
-}
-
-.searchElement{
-    padding: 8px 4px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid;
-    margin-bottom: 45px;
-}
-
-ul{
+.searchSection {
     display: flex;
     flex-direction: column;
+    gap: 8px;
+    width: 100%;
 }
 
-.userIconContainer {
-    width: 80px;
+.searchInput {
+    padding: 12px 16px;
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    width: 100%;
+    font-size: 16px;
+    box-sizing: border-box;
+    background-color: var(--color-bg);
+    color: var(--color-text-primary);
+    transition: all 0.2s ease;
 }
 
-.element{
+.searchInput::placeholder {
+    color: var(--color-text-secondary);
+    opacity: 0.6;
+}
+
+.searchInput:focus {
+    outline: none;
+    border-color: var(--color-text-secondary);
+    box-shadow: 0 0 0 3px var(--disabled-backgroud);
+}
+
+.searchingText {
+    color: var(--color-text-secondary);
+    font-size: 14px;
     margin: 4px 0;
-    padding: 8px 4px;
+}
+
+.resultsList {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 16px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+/* 🌟 Картка результату пошуку — копіює стиль контактів, але має інший фон */
+.searchResultCard {
+    background: var(--disabled-backgroud);
+    padding: 12px 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px gray solid;
+    border-radius: 12px;
+    border: 1px dashed var(--color-border); /* Пунктир підкреслює, що це динамічний результат */
+    transition: background-color 0.2s ease, background-color 0.2s ease;
+    box-sizing: border-box;
+    height: 70px;
 }
 
-.buttonsContainer {
+.userInfo {
     display: flex;
-    gap: 20px;
-    width: 80px;
-    justify-content: end;
+    align-items: center;
+    gap: 16px;
+    min-width: 0; /* Дозволяє обрізатися тексту */
+}
+
+.userEmail {
+    margin: 0;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--color-text-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis; /* Покращення для довгих e-mail у пошуку */
+}
+
+/* 🌟 Стилізація кнопки додавання */
+.plusBtn {
+    cursor: pointer;
+    color: var(--color-text-secondary);
+    padding: 2px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    transition: all 0.2s ease;
+}
+
+.plusBtn:hover {
+    color: #10b981;
+    background-color: rgba(16, 185, 129, 0.15);
+}
+
+.plusBtn:active {
+    transform: scale(0.9);
+}
+
+@media (max-width: 550px) {
+    .searchInput {
+        padding: 8px 12px;
+        font-size: 14px;
+    }
+    .searchResultCard {
+        height: 60px;
+        padding: 8px 12px;
+    }
+    .userInfo {
+        gap: 10px;
+    }
+    .userEmail {
+        font-size: 0.88rem;
+    }
 }

@@ -6,15 +6,17 @@ import {useUpdateTask} from "../task/useUpdateTask.ts";
 import {useDeleteTask} from "../task/useDeleteTask.ts";
 import {Sender} from "../../types/aiChat.ts";
 import {useShallow} from "zustand/react/shallow";
+import {useProfileStore} from "../../store/profileStore.ts";
 
 export const useAIChatActions = () => {
+    const ownId = useProfileStore((state) => state.profile.uid)
     const selectedProject = useProjectControlStore((state) => state.selectedProject);
     const {addMessage, updateMessageActions} = useAIChatStore(useShallow((state) => ({
         addMessage: state.addMessage, updateMessageActions: state.updateMessageActions
     })));
 
     const {mutate: createTask} = useCreateTask();
-    const {mutate: updateTask} = useUpdateTask();
+    const {mutate: updateTask} = useUpdateTask(selectedProject?.id ?? '', ownId);
     const {mutate: deleteTask} = useDeleteTask();
 
     const handleApply = async (messageId: string, actions: AIChatAction[]) => {
