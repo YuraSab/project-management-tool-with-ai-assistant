@@ -23,3 +23,9 @@
 .buttonBlock button {
     width: 100%;
 }
+
+@media (max-width: 1024px) {
+    .rightPanelChildEdit {
+        height: calc(100vh - 100px) !important;
+    }
+}

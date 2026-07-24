@@ -9,9 +9,21 @@
     text-transform: capitalize;
     cursor: pointer;
     z-index: 0;
+    width: var(--user-icon-size, 36px);
+    height: var(--user-icon-size, 36px);
+    font-size: var(--user-icon-font-size, 16px);
+    transition: all 0.2s ease;
 }
 
 .smallerText {
   font-size: 16px;
   background-color: gray;
+}
+
+@media (max-width: 550px) {
+    .iconBlock{
+        width: 30px !important;
+        height: 30px !important;
+        font-size: 13px !important;
+    }
 }

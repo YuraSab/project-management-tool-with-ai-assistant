@@ -1,6 +1,6 @@
 import {useParams} from "react-router-dom";
 import {useProjectControlStore} from "../../store/projectControlStore";
-import {AlignJustify, Plus} from "lucide-react";
+import {AlignJustify, Plus, Settings} from "lucide-react";
 import LeftPanelProject from "../../components/leftPanel/projectSidebar/ProjectSidebar.tsx";
 import KanbanBoard from "../../components/kanban/kanbanBoard/KanbanbBoard";
 import RightPanelProject from "../../components/rightPanel/rightPanelProject/RightPanelProject";
@@ -29,13 +29,13 @@ const Project = () => {
         isRightPanelActive, setIsLeftPanelActive,
         isLeftPanelActive,
         isAddTaskActive,
-        showAIChat,
+        closePanels
     } = useProjectControlStore(useShallow((state) => ({
         selectedTask: state.selectedTask,
         isRightPanelActive: state.isRightPanelActive, setIsLeftPanelActive: state.setIsLeftPanelActive,
         isLeftPanelActive: state.isLeftPanelActive,
         isAddTaskActive: state.isAddTaskActive,
-        showAIChat: state.showAIChat,
+        closePanels: state.closePanels,
     })));
 
     const canAccess = useMemo(() =>
@@ -50,21 +50,31 @@ const Project = () => {
 
     return (
         <div className={styles.main}>
-            {
-                isLeftPanelActive && !isLoadingProject
-                    ? <LeftPanelProject/>
-                    : (
-                        <div onClick={() => setIsLeftPanelActive(true)} className={styles.burgerMenu}>
-                            <AlignJustify size={28}/>
-                        </div>
-                    )
-            }
+            {(isLeftPanelActive || isRightPanelActive) && (
+                <div className={styles.backdrop} onClick={closePanels}></div>
+            )}
+            {(isLeftPanelActive && !isLoadingProject ) ? (
+                <LeftPanelProject/>
+            ) : (
+                <div onClick={() => setIsLeftPanelActive(true)} className={styles.burgerMenu}>
+                    <AlignJustify size={28}/>
+                </div>
+            )}
             <KanbanBoard projectId={projectId}/>
-            { isRightPanelActive && (isRightPanelActive || !isLoadingProject && (isAddTaskActive || selectedTask !== null)) && (
+            {isRightPanelActive && (isRightPanelActive || !isLoadingProject && (isAddTaskActive || selectedTask !== null)) && (
                 <RightPanelProject/>
             )}
-            <FAB customStyles={{ visibility: showAIChat ? 'visible' : 'hidden', right: isRightPanelActive ? (isAIChatOpened ? 436 : 376) : 36, bottom: 100 }} type={'hollow'} onClick={() => switchRightPanelView(isAIChatOpened ? 'closeAll' : 'aiChat')}><GeminiIcon size={32}/></FAB>
-            <FAB customStyles={{ right: isRightPanelActive ? (isAIChatOpened ? 436 : 376) : 36 }} onClick={() => switchRightPanelView(isAddTaskActive ? 'closeAll' : 'addTask')}><Plus size={36} color={theme}/></FAB>
+            <div className={`${styles.fabGroup} ${isRightPanelActive ? styles.panelOpen : ''} ${isAIChatOpened ? styles.aiChatOpen : ''}`}>
+                <FAB customStyles={{ position: "static" }} onClick={() => setIsLeftPanelActive(true)} className={styles.projectSettingsIcon}>
+                    <Settings size={32} color={theme}/>
+                </FAB>
+                <FAB customStyles={{ position: "static" }} onClick={() => switchRightPanelView(isAddTaskActive ? 'closeAll' : 'addTask')}>
+                    <Plus size={36} color={theme}/>
+                </FAB>
+                <FAB customStyles={{ position: "static" }} onClick={() => switchRightPanelView(isAIChatOpened ? 'closeAll' : 'aiChat')} type={'hollow'}>
+                    <GeminiIcon size={32}/>
+                </FAB>
+            </div>
         </div>
     );
 };

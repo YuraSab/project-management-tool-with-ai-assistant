@@ -1,6 +1,23 @@
+.mainBlock{
+    margin-top: 20px;
+    justify-self: center;
+    width: 700px;
+}
+
 .buttonBlock{
     display: flex;
     justify-content: center;
     align-items: center;
     margin-top: 20px;
+    width: 100%;
+}
+
+.buttonBlock button {
+    width: 240px;
+}
+
+@media (max-width: 550px) {
+    .buttonBlock button{
+        width: 100%;
+    }
 }

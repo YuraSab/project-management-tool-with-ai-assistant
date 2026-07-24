@@ -75,3 +75,18 @@
     --local-light-bg: var(--color-orange-light);
     --local-hover-color: var(--color-orange);
 }
+
+
+@media (max-width: 550px) {
+    .element {
+        padding: 10px 8px;
+    }
+    .element h3 {
+        font-size: 16px;
+        font-weight: 500;
+        margin-bottom: 0;
+    }
+    .element p {
+        font-size: 12px;
+    }
+}

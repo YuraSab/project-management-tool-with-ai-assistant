@@ -10,3 +10,13 @@
 .hoverEffects:hover {
     border-bottom: 2px solid #e2e8f0;
 }
+
+@media (max-width: 500px) {
+    .navLink {
+        font-size: 16px;
+        font-weight: 600;
+        padding: 0;
+        border-radius: 20px; /* М'які кругі кути */
+        border-bottom: none !important; /* Прибираємо підкреслення */
+    }
+}

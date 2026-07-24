@@ -12,9 +12,9 @@
     width: 100%;
     font-size: 16px;
     box-sizing: border-box;
-    transition: all 0.2s ease;
     background-color: var(--color-bg);
     color: var(--color-text-primary);
+    transition: all 0.2s ease;
 }
 
 .searchInput::placeholder {
@@ -53,12 +53,15 @@
     border-radius: 12px;
     border: 1px dashed var(--color-border); /* Пунктир підкреслює, що це динамічний результат */
     transition: background-color 0.2s ease, background-color 0.2s ease;
+    box-sizing: border-box;
+    height: 70px;
 }
 
 .userInfo {
     display: flex;
     align-items: center;
     gap: 16px;
+    min-width: 0; /* Дозволяє обрізатися тексту */
 }
 
 .userEmail {
@@ -66,6 +69,9 @@
     font-size: 0.95rem;
     font-weight: 500;
     color: var(--color-text-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis; /* Покращення для довгих e-mail у пошуку */
 }
 
 /* 🌟 Стилізація кнопки додавання */
@@ -74,15 +80,32 @@
     color: var(--color-text-secondary);
     padding: 2px;
     border-radius: 50%;
+    flex-shrink: 0;
     transition: all 0.2s ease;
 }
 
 .plusBtn:hover {
     color: #10b981;
-    /*background-color: #ecfdf5;*/
     background-color: rgba(16, 185, 129, 0.15);
 }
 
 .plusBtn:active {
     transform: scale(0.9);
+}
+
+@media (max-width: 550px) {
+    .searchInput {
+        padding: 8px 12px;
+        font-size: 14px;
+    }
+    .searchResultCard {
+        height: 60px;
+        padding: 8px 12px;
+    }
+    .userInfo {
+        gap: 10px;
+    }
+    .userEmail {
+        font-size: 0.88rem;
+    }
 }

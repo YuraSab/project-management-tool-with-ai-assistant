@@ -27,7 +27,6 @@ import {UserProfile} from "../../../types/user.ts";
 import MemberSelector from "../../../ui/memberSelector/MemberSelector.tsx";
 import CustomButton from "../../../ui/button/CustomButton.tsx";
 import {useProfileStore} from "../../../store/profileStore.ts";
-import {updateTasks__TEST} from "../../../services/taskService.ts";
 
 type FormData = Pick<Task, 'title'| 'description'| 'status' | 'priority'> & {
     startDate: string, endDate: string, type: TaskType | '', category: TaskCategory | ''
@@ -98,7 +97,12 @@ const TaskAdd = React.memo(() => {
     };
 
     return (
-        <CustomForm onSubmit={handleSubmit} disabled={isPending} style={{margin: 15, height: "calc(100vh - 130px)"}}>
+        <CustomForm
+            onSubmit={handleSubmit}
+            disabled={isPending}
+            style={{ height: "calc(100vh - 130px)" }}
+            isDrawer={true}
+        >
             <RightPanelHeader taskTitle={"Add task"}/>
             <div className={styles.rightPanelChild}>
                 <Title text={'Title:'}/>

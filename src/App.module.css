@@ -22,3 +22,9 @@ main{
 .copyIcon:active {
     transform: scale(0.7);
 }
+
+@media (max-width: 500px) {
+    main {
+        height: calc(100vh - 54px);
+    }
+}

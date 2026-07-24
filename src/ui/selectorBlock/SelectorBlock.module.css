@@ -1,3 +1,7 @@
+.assignedMembers {
+    width: 100%;
+}
+
 .assignedMembers button {
     width: 100%;
     margin-top: 4px;
@@ -6,37 +10,13 @@
     cursor: pointer;
     font-size: 14px;
     grid-area: button;
+    background-color: var(--local-light);
+    border: 1px solid var(--local-color);
+    color: var(--local-dark);
+    transition: all 0.2s ease;
 }
 
-._assignedMembers_button__purple {
-    background-color: #f3e8ff;
-    border: 1px solid #d8b4fe;
-    color: purple;
-}
-._assignedMembers_button__purple:hover {
-    background-color: #ede9fe;
-}
-._assignedMembers_button__green {
-    background-color: #dcfce7;
-    border: 1px solid #86efac;
-    color: #166534;
-}
-._assignedMembers_button__green:hover {
-    background-color: #bbf7d0;
-}
-._assignedMembers_button__blue {
-    background-color: #dbeafe;
-    border: 1px solid #93c5fd;
-    color: #1e3a8a;
-}
-._assignedMembers_button__blue:hover {
-    background-color: #bfdbfe;
-}
-._assignedMembers_button__orange {
-    background-color: #ffedd5;
-    border: 1px solid #fdba74;
-    color: #9a3412;
-}
-._assignedMembers_button__orange:hover {
-    background-color: #fed7aa;
+.assignedMembers button:hover {
+    background-color: var(--local-color);
+    color: #ffffff;
 }
