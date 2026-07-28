@@ -29,13 +29,15 @@ const Project = () => {
         isRightPanelActive, setIsLeftPanelActive,
         isLeftPanelActive,
         isAddTaskActive,
-        closePanels
+        closePanels,
+        showAIChat
     } = useProjectControlStore(useShallow((state) => ({
         selectedTask: state.selectedTask,
         isRightPanelActive: state.isRightPanelActive, setIsLeftPanelActive: state.setIsLeftPanelActive,
         isLeftPanelActive: state.isLeftPanelActive,
         isAddTaskActive: state.isAddTaskActive,
         closePanels: state.closePanels,
+        showAIChat: state.showAIChat
     })));
 
     const canAccess = useMemo(() =>
@@ -71,9 +73,11 @@ const Project = () => {
                 <FAB customStyles={{ position: "static" }} onClick={() => switchRightPanelView(isAddTaskActive ? 'closeAll' : 'addTask')}>
                     <Plus size={36} color={theme}/>
                 </FAB>
-                <FAB customStyles={{ position: "static" }} onClick={() => switchRightPanelView(isAIChatOpened ? 'closeAll' : 'aiChat')} type={'hollow'}>
-                    <GeminiIcon size={32}/>
-                </FAB>
+                {showAIChat && (
+                    <FAB customStyles={{ position: "static" }} onClick={() => switchRightPanelView(isAIChatOpened ? 'closeAll' : 'aiChat')} type={'hollow'}>
+                        <GeminiIcon size={32}/>
+                    </FAB>
+                )}
             </div>
         </div>
     );
