@@ -1,5 +1,5 @@
 .main{
-    /*height: calc(100vh - 100px);*/
+    min-height: calc(100vh - 100px);
     /*max-height: calc(100vh - 100px);*/
     /*align-self: center;*/
     /*width: 100%;*/
@@ -41,6 +41,6 @@
 
 @media (max-width: 500px) {
     .main {
-        height: calc(100vh - 54px);
+        min-height: calc(100vh - 54px);
     }
 }
