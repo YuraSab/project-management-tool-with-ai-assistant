@@ -1,48 +1,95 @@
-# ProjectFlow — AI-Driven Project Management Tool
+# 🚀 ProjectFlow — AI-Driven Project Management Tool
 
-An intelligent project management system featuring an integrated AI assistant that allows you to manage workflows using natural language. This project was developed as part of a diploma thesis.
+> An intelligent, full-stack project management platform with an integrated AI Assistant that automates project workflows using natural language commands.
 
-## 🌟 Key Features
-- **AI Assistant:** Create, update, and decompose tasks through an interactive chat interface.
-- **Project Tracking:** Visualize tasks, statuses, and priorities with ease.
-- **Team Management:** Assign team members and monitor workload.
-- **Real-time Sync:** Instant data synchronization powered by Firebase Firestore.
+🌐 **Live Application:** [Click here to open ProjectFlow](https://your-app-name.vercel.app)
 
-## 🚀 Setup Instructions
+> 🔗 **URL:** `https://your-app-name.vercel.app`
+---
 
-To run this project locally, you will need to set up your own Firebase and Gemini API services.
+## 🔑 Demo Access
 
-### 1. Firebase Configuration
-1. Go to the [Firebase Console](https://console.firebase.google.com/) and create a new project.
-2. Enable **Firestore Database** and select **"Test Mode"** for the initial setup.
-3. Under the **Authentication** section, enable the **"Email/Password"** sign-in method.
-4. Register a new **"Web App"** in your project settings and copy the `firebaseConfig` object.
+To explore pre-configured projects, tasks, and team members without registering, use the following demo credentials:
 
-### 2. Gemini API Configuration
-1. Visit [Google AI Studio](https://aistudio.google.com/).
-2. Click on **"Get API key"** and create a new API Key.
-3. Copy the token to use in your environment variables.
+* **Email:** `demo.user@example.com`
+* **Password:** `password123`
 
-### 3. Installation and Launch
-```bash
-# Clone the repository
-git clone [https://github.com/YuraSab/project-management-tools-diploma.git](https://github.com/YuraSab/project-management-tools-diploma.git)
+---
 
-# Navigate to the project directory
-cd project-management-tools-diploma
+## ✨ Features Showcase
 
-# Install dependencies
-npm install
+### 1. 🤖 AI Assistant Workflow
+Execute complex project actions, update task statuses, and decompose workflows via natural language chat.
 
-# Environment Variables Setup
-# Create a .env file in the root directory and add the following:
-VITE_FIREBASE_API_KEY="your_api_key"
-VITE_FIREBASE_AUTH_DOMAIN="your-project.firebaseapp.com"
-VITE_FIREBASE_PROJECT_ID="your-project-id"
-VITE_FIREBASE_STORAGE_BUCKET="your-project.appspot.com"
-VITE_FIREBASE_MESSAGING_SENDER_ID="your-sender-id"
-VITE_FIREBASE_APP_ID="your-app-id"
-VITE_GEMINI_API_KEY="your_gemini_api_key"
+![AI Assistant Demo](./assets/gifs/11.gif)
 
-# Run the project
-npm run dev
+---
+
+### 2. 📂 Project Management
+Create, edit, delete, and seamlessly switch between multiple projects.
+
+![Projects Demo](./assets/gifs/4.gif)
+![Projects Demo](./assets/gifs/5.gif)
+
+---
+
+### 3. 📝 Task Operations & Drag-and-Drop
+Full control over task lifecycles with detail modals, quick updates, and dynamic board management.
+
+![Tasks Demo](./assets/gifs/7.gif)
+![Tasks Demo](./assets/gifs/8.gif)
+![Tasks Demo](./assets/gifs/13.gif)
+
+---
+
+### 4. 🔍 Advanced Filtering & Sorting
+Filter tasks by assignees, status, priority, type, and categories in real-time.
+
+![Filtering Demo](./assets/gifs/6.gif)
+
+---
+
+### 5. 👁️ Custom View & Layout Controls
+Flexible UI options: toggle column task counters, expand/hide the AI chat panel, and focus on your work.
+
+![View Controls Demo](./assets/gifs/9.gif)
+
+---
+
+### 6. 👥 Team & Member Management
+Invite team members, view contacts, and assign roles across projects.
+
+![Team Management Demo](./assets/gifs/3.gif)
+
+---
+
+### 7. 🎨 Personalization & Themes
+Customize your workspace with custom color themes and layout preferences.
+
+![Personalization Demo](./assets/gifs/12.gif)
+
+---
+
+## 🛠️ Tech Stack
+
+* **Frontend:** React 19, TypeScript, Vite, React Router v7
+* **State & Data Management:** Zustand, TanStack Query (React Query)
+* **Styling & Components:** Tailwind CSS v4, Lucide React, clsx
+* **Drag and Drop:** @hello-pangea/dnd
+* **Backend & Database:** Firebase (Authentication & Firestore)
+* **AI Engine:** Google Gemini API (`@google/generative-ai`)
+
+---
+
+## 💡 Engineering & Architecture Highlights
+
+* **Structured Prompt Processing:** Parses natural language intent into real-time Firestore database mutations.
+* **Optimistic UI & Caching:** Powered by TanStack Query and Zustand for fast UI responses.
+* **Clean & Modular Architecture:** Fully typed with TypeScript, scalable component layout, and strict ESLint configurations.
+
+---
+
+## 👤 Author
+
+* **Developer:** Yura Sab
+* **GitHub:** [@YuraSab](https://github.com/YuraSab)

@@ -10,7 +10,7 @@ import CustomButton from "../../ui/button/CustomButton.tsx";
 
 const Login = () => {
     const navigate = useNavigate();
-    const [formData, setFormData] = useState({ email: "", password: "" });
+    const [formData, setFormData] = useState({ email: "demo.user@example.com", password: "password123" });
     const [showPassword, setShowPassword] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState(false);
 
