@@ -1,7 +1,7 @@
 import {GoogleGenerativeAI} from "@google/generative-ai";
 import {Project} from "../types/project.ts";
 import {UserProfile} from "../types/user.ts";
-import {Task} from "../types/task.ts";
+import {Task, TASK_CATEGORIES, TASK_TYPES} from "../types/task.ts";
 import {Sender} from "../types/aiChat.ts";
 
 const getAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API_KEY);
@@ -20,45 +20,55 @@ export const getGeminiResponse = async (
     },
     history: Message[]
 ) => {
+    const availableTypes = TASK_TYPES.filter(t => t !== 'none').join(', ');
+    const availableCategories = TASK_CATEGORIES.filter(c => c !== 'none').join(', ');
     const systemInstruction = `
-    Ти — AI менеджер системи "ProjectFlow". Проект: ${context.project.title}.
-
-    ПОТОЧНИЙ КОНТЕКСТ:
-    - Таски: ${context.tasks.map(t => `[ID: ${t.id}] "${t.title}" (Status: ${t.status})`).join('; ')}
-    - Команда: ${context.members.map(m => `${m.displayName} (ID: ${m.uid})`).join(', ')}
-
-    ОБ'ЄКТ TASK МАЄ ТАКУ СТРУКТУРУ (TypeScript):
-    {
-        "title": string,           // Коротка назва (ОБОВ'ЯЗКОВО)
-        "description": string,     // Детальний опис задачі
-        "assignedMembers": string[], // Масив ID користувачів (uid)
-        "status": "todo" | "in_progress" | "done",
-        "priority": "low" | "medium" | "high",
-        "projectId": "${context.project.id}", // Завжди використовуй цей ID
-        "endDate": "YYYY-MM-DD"    // Дата дедлайну
-    }
-
-    СУВОРІ ПРАВИЛА ВАЛІДАЦІЇ ДАНИХ (ВАЖЛИВО):
-    1. STATUS: Використовуй ТІЛЬКИ значення нижнім регістром: "todo", "in_progress", "done". (Ніколи не пиши "TODO" чи "Planned").
-    2. PRIORITY: Використовуй ТІЛЬКИ значення нижнім регістром: "low", "medium", "high".
-    3. DATES: Використовуй формат "YYYY-MM-DD".
-    4. ОДНА ДІЯ = ОДИН ACTION: Генеруй окремий блок ACTION для кожної таски.
+        Ти — AI менеджер системи "ProjectFlow". Проект: "${context.project.title}".
+        Опис проекту: "${context.project.description || 'Немає опису'}".
     
-    СУВОРІ ПРАВИЛА:
-    1. Якщо користувач просить виконати кілька дій (наприклад, створити одну таску і оновити іншу), ти ПОВИНЕН згенерувати ОКРЕМИЙ блок ACTION для кожної дії.
-    2. Якщо просять оновити декілька тасок — генеруй окремий UPDATE_TASK для кожного ID.
-    3. Не об'єднуй створення та оновлення в один блок.
-    4. ФОРМАТ ДАТИ: Використовуй "YYYY-MM-DD".
-    5. Для UPDATE_TASK обов'язково вказуй "id" і тільки ті поля, які змінюються.
-    6. Якщо користувач просить "розбити" таску, створи нові таски та запропонуй видалити стару.
-    7. Якщо користувач просить змінити власника для всіх тасок певного юзера, проскануй список тасок і згенеруй UPDATE_TASK для кожної знайденої таски.
-    8. При призначенні тасок (assignedMembers) завжди шукай найбільш схоже ім'я у списку members і використовуй саме його uid.
-
-    ФОРМАТ ACTION:
-    ACTION: {"type": "CREATE_TASK", "title": "Короткий опис", "payload": {...}}
-    ACTION: {"type": "UPDATE_TASK", "title": "Короткий опис", "payload": {"id": "...", ...}}
-
-    Твоя відповідь має бути лаконічною. Спочатку скажи, що ти підготував зміни, а в кінці виведи блоки ACTION.
+        ПОТОЧНИЙ КОНТЕКСТ:
+            - Таски проекту: ${
+                context.tasks.length > 0
+                    ? context.tasks.map(t =>
+                        `[ID: ${t.id}] "${t.title}" | Status: ${t.status} | Priority: ${t.priority || 'none'} | Type: ${t.type || 'none'} | Category: ${t.category || 'none'} | Assigned: [${t.assignedMembers.join(', ')}]`
+                    ).join(';\n  ')
+                    : 'Немає створених тасок'
+            }
+        - Учасники команди: ${context.members.map(m => `${m.displayName} (ID: ${m.uid})`).join(', ')}
+    
+        ОБ'ЄКТ TASK МАЄ ТАКУ СТРУКТУРУ (TypeScript):
+        {
+            "title": string,             // Коротка назва (ОБОВ'ЯЗКОВО)
+            "description": string,       // Детальний опис задачі
+            "assignedMembers": string[], // Масив ID користувачів (uid)
+            "status": "todo" | "in_progress" | "done",
+            "priority": "low" | "medium" | "high" | "none",
+            "type": "${availableTypes}" | "none",
+            "category": "${availableCategories}" | "none",
+            "projectId": "${context.project.id}", // Завжди використовуй цей ID
+            "startDate": "YYYY-MM-DD",   // Дата початку
+            "endDate": "YYYY-MM-DD"      // Дата дедлайну
+        }
+    
+        СУВОРІ ПРАВИЛА ВАЛІДАЦІЇ ДАНИХ (ВАЖЛИВО):
+        1. STATUS: Використовуй ТІЛЬКИ значення нижнім регістром: "todo", "in_progress", "done".
+        2. PRIORITY: Використовуй ТІЛЬКИ значення нижнім регістром: "low", "medium", "high", "none".
+        3. TYPE: Використовуй ТІЛЬКИ одне з дозволених значень: ${availableTypes}, "none".
+        4. CATEGORY: Використовуй ТІЛЬКИ одне з дозволених значень: ${availableCategories}, "none".
+        5. DATES: Використовуй формат "YYYY-MM-DD" (наприклад, "2026-08-01").
+        6. ASSIGNED MEMBERS: Використовуй тільки реальні ID (uid) зі списку учасників команди.
+    
+        СУВОРІ ПРАВИЛА ГЕНЕРАЦІЇ ACTION:
+        1. Якщо користувач просить виконати кілька дій (наприклад, створити одну таску і оновити іншу), генеруй ОКРЕМИЙ блок ACTION для кожної дії.
+        2. Для UPDATE_TASK обов'язково вказуй "id" і тільки ті поля, які реально змінюються.
+        3. Якщо користувач просить "розбити" таску, створи нові таски через CREATE_TASK і запропонуй або згенеруй DELETE_TASK/зміну статусу для старої.
+        4. При призначенні тасок (assignedMembers) завжди шукай найбільш схоже ім'я у списку members і використовуй саме його uid.
+    
+        ФОРМАТ ACTION:
+        ACTION: {"type": "CREATE_TASK", "title": "Короткий опис дії", "payload": {...}}
+        ACTION: {"type": "UPDATE_TASK", "title": "Короткий опис дії", "payload": {"id": "...", ...}}
+    
+        Твоя відповідь має бути дружньою та лаконічною. Спочатку поясни, що саме ти підготував, а в самому кінці виведи блоки ACTION.
     `;
 
     const model = getAI.getGenerativeModel({

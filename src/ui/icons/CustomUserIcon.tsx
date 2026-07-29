@@ -22,8 +22,8 @@ const CustomUserIcon: React.FC<UserIconProps> = ({ title = '', backgroundColor, 
             <div 
                 className={`${styles.iconBlock} ${total && styles.smallerText}`}
                 style={{ 
-                    width: 'var(--user-icon-size, 36px)',
-                    height: 'var(--user-icon-size, 36px)',
+                    width: 'var(--user-icon-size, 30px)',
+                    height: 'var(--user-icon-size, 30px)',
                     fontSize: fontSize, 
                     backgroundColor: cssBackgroundColor,
                     ...customStyles
