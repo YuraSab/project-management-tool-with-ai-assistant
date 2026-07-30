@@ -1,4 +1,3 @@
-import React from 'react';
 import {HighlightColor} from "../../types/user.ts";
 import {Check} from "lucide-react";
 import {useProfileStore} from "../../store/profileStore.ts";

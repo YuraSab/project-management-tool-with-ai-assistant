@@ -1,4 +1,3 @@
-import React from 'react';
 import styles from './TaskInfo.module.css';
 import {Trash2} from "lucide-react";
 import {Task} from "../../types/task.ts";

@@ -1,4 +1,3 @@
-import React from 'react';
 import {useAIChatStore} from "../../store/aiChatStore.ts";
 import styles from "./AIChat.module.css";
 import CustomUserIcon from "../../ui/icons/CustomUserIcon.tsx";
@@ -20,7 +19,7 @@ const Messages = () => {
                 <div key={index} className={`${styles.messageWrapper} ${m.role === Sender.user ? styles.userWrapper : styles.aiWrapper}`}>
                     <div className={styles.avatar}>
                         {m.role === Sender.user
-                            ? <CustomUserIcon title={profile.displayName?.[0]} size={32}/>
+                            ? <CustomUserIcon title={profile?.displayName[0] ?? 'U'} size={32}/>
                             : <GeminiIcon size={28}/>}
                     </div>
                     <div className={styles.messageContent}>

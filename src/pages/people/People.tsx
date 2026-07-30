@@ -6,7 +6,6 @@ import { useProfileStore } from "../../store/profileStore.ts";
 import { useProjectUsers } from "../../hooks/project/useProjectUsers.ts";
 import { useUpdateUser } from "../../hooks/users/useUpdateUser.ts";
 import { useShallow } from "zustand/react/shallow";
-import React from "react";
 import CopyIcon from "../../ui/copyIcon/CopyIcon.tsx";
 import {toast} from "../../utils/toaster.ts";
 
@@ -14,11 +13,13 @@ const People = () => {
     const { profile, editProfile } = useProfileStore(useShallow((state) => ({
         profile: state.profile, editProfile: state.editProfile
     })));
-    const { data: reservedMembers } = useProjectUsers(profile.reservedMembers);
+    const { data: reservedMembers } = useProjectUsers(profile?.reservedMembers || []);
     const { mutate: updateProfile } = useUpdateUser();
 
     const handleRemoveReservedMember = (memberId: string) => {
-        if (!profile.uid) return alert('Profile not found.');
+        if (!profile || !profile.uid)
+            return alert('Profile not found.');
+
         const updatedReservedMembers = profile.reservedMembers.filter(mId => mId !== memberId);
         updateProfile({
             uid: profile.uid,

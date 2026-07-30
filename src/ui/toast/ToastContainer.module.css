@@ -11,18 +11,10 @@
 
 .toastCard {
     pointer-events: auto;
-
-    /* 🌟 Змінюємо на триколонковий Grid */
     display: grid;
-    /* 1-а колонка (іконка) забирає мінімум простору,
-       2-а колонка (текст) забирає весь вільний простір,
-       3-я колонка — це пустий "фантомний" простір, рівний першій колоні */
     grid-template-columns: minmax(24px, auto) 1fr minmax(24px, auto);
     align-items: center;
-
-    /* Прибираємо колишній gap, бо ми вирівняємо текст по центру grid-колонки */
     padding: 14px 22px;
-    /*border-radius: 8px;*/
     border-radius: 16px;
     color: white;
     font-weight: 500;
@@ -33,7 +25,6 @@
     animation: slideIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
 }
 
-/* 🌟 Перший span (іконка) */
 .toastCard > span:first-child {
     grid-column: 1;
     display: flex;
@@ -41,15 +32,13 @@
     font-size: 18px;
 }
 
-/* 🌟 Другий span (текст повідомлення) */
 .toastCard > span:last-child {
-    grid-column: 2; /* Чітко стає в центральну колонку */
-    text-align: center; /* Центрує текст всередині своєї колонки */
+    grid-column: 2;
+    text-align: center;
     font-size: 14px;
     line-height: 1.4;
 }
 
-/* 🔥 Клас, який тригереть анімацію зникнення */
 .slideOut {
     animation: slideOut 0.3s cubic-bezier(0.6, -0.28, 0.735, 0.045) forwards !important;
 }
@@ -83,7 +72,6 @@
         right: 16px;
         gap: 8px;
     }
-
     .toastCard {
         min-width: 220px;
         max-width: 320px;
@@ -91,11 +79,9 @@
         border-radius: 12px;
         grid-template-columns: minmax(20px, auto) 1fr minmax(20px, auto);
     }
-
     .toastCard > span:first-child {
         font-size: 16px;
     }
-
     .toastCard > span:last-child {
         font-size: 13px;
     }
@@ -109,7 +95,6 @@
         align-items: flex-end;
         gap: 6px;
     }
-
     .toastCard {
         min-width: unset;
         max-width: 100%;
@@ -117,11 +102,9 @@
         border-radius: 10px;
         grid-template-columns: minmax(18px, auto) 1fr minmax(18px, auto);
     }
-
     .toastCard > span:first-child {
         font-size: 12px;
     }
-
     .toastCard > span:last-child {
         font-size: 12px;
         line-height: 1.3;

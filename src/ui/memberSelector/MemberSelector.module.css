@@ -23,7 +23,7 @@
 }
 
 .row:hover {
-    background-color: var(--disabled-backgroud);
+    background-color: var(--disabled-background);
 }
 
 .block .row:first-child {

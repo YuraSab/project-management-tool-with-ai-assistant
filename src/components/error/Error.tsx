@@ -37,7 +37,7 @@ interface ErrorProps extends HTMLAttributes<HTMLDivElement>{
 }
 
 const Error = ({ type, text, style, ...rest }: ErrorProps) => {
-    const highlightColor = useProfileStore((state) => state.profile.highlightColor)
+    const highlightColor = useProfileStore((state) => state.profile?.highlightColor)
     const { Icon, defaultText } = ERROR_OPTIONS[type];
     const color = getColor(highlightColor ?? HighlightColor.Purple);
     return (

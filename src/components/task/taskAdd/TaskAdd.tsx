@@ -42,7 +42,7 @@ const INITIAL_TASK: FormData = {
 const TaskAdd = React.memo(() => {
     const {projectId} = useParams();
 
-    const profileId = useProfileStore((state) => state.profile.uid);
+    const profileId = useProfileStore((state) => state.profile?.uid);
     const { data: project} = useProject(projectId || "");
     const { data: projectMembers} = useProjectUsers(project?.assignedMembers || []);
     const { mutate: createTask, isPending } = useCreateTask();

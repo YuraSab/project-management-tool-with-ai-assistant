@@ -29,7 +29,7 @@ const INITIAL_FORM_DATA: FormData = {
 const CreateProject = () => {
     const navigate = useNavigate();
     const profile = useProfileStore((state) => state.profile);
-    const { data: reservedMembers} = useProjectUsers(profile.reservedMembers);
+    const { data: reservedMembers} = useProjectUsers(profile?.reservedMembers || []);
     const { mutate: createProject, isPending} = useCreateProject();
 
     const [formData, setFormData] = useState<FormData>(INITIAL_FORM_DATA);
@@ -62,7 +62,9 @@ const CreateProject = () => {
     }, []);
 
     const handleCreate = () => {
-        if ( !formData.title.trim() )
+        if (!profile)
+            return alert("No profile found!");
+        if (!formData.title.trim())
             return alert("Please fill all the required fields!");
         createProject({
             ...formData,

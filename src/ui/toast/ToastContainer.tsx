@@ -1,13 +1,14 @@
 import React, {useCallback, useEffect, useState} from "react";
-import {_subscribeToast, ToastType} from "../../utils/toaster.ts";
-import {createPortal} from "react-dom";
+import { createPortal } from "react-dom";
+import { nanoid } from "nanoid";
+import { _subscribeToast, ToastType } from "../../utils/toaster";
 import styles from './ToastContainer.module.css';
 
 interface ToastItem {
     id: string,
     message: string,
     type: ToastType,
-    isExiting?: boolean, // exit animation tracking field
+    isExiting?: boolean,
 }
 
 const TOAST_CONFIG: Record<ToastType, { backgroundColor: string; icon: string }> = {
@@ -21,37 +22,36 @@ export const ToastContainer = () => {
     const [toasts, setToasts] = useState<ToastItem[]>([]);
 
     const dismissToast = useCallback((id: string) => {
-        // 1. First, set the exit status for the specific toast.
+        // 1. First, set the exit status for disappear animation (style).
         setToasts((prev) =>
             prev.map((t) => (t.id === id ? { ...t, isExiting: true } : t))
         );
-        // 2. Wait 300ms (for the CSS animation to complete) and remove from the DOM
-        setTimeout(() => {
+        // 2. After timing delete element from array.
+        setTimeout(() =>
             setToasts((prev) => prev.filter((t) => t.id !== id))
-        }, 300);
+        , 300);
     }, []);
 
     useEffect(() => {
         // 1. SUBSCRIPTION: Pass the manager a function capable of updating the React state.
         const unsubscribe = _subscribeToast((message, type) => {
-            const id = crypto.randomUUID(); // // генеруємо унікальний id для списку key={}
+            const id = nanoid();
             // Add a new toast to the array
-            setToasts((prev) => [...prev, { id, message, type }]);
-            // Automatically dismiss this toast after 3.5 seconds
-            setTimeout(() => {
-                dismissToast(id);
-            }, 3500);
+            setToasts((prev) => [...prev, {id, message, type}]);
+            // After timing delete toast by function
+            setTimeout(() =>
+                dismissToast(id)
+            , 3500);
         });
         return () => {
             unsubscribe();
         };
     }, [dismissToast]);
 
-    return createPortal(
+    return createPortal (
         <div className={styles.toastContainer}>
             {toasts.map((toast) => {
                 const config = TOAST_CONFIG[toast.type];
-                // 🔥 If the toast is exiting, add a special exit CSS class
                 const cardClassName = `${styles.toastCard} ${toast.isExiting ? styles.slideOut : ''}`;
                 return (
                     <div
@@ -69,4 +69,3 @@ export const ToastContainer = () => {
         document.body
     );
 };
-

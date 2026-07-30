@@ -25,7 +25,7 @@
 .searchInput:focus {
     outline: none;
     border-color: var(--color-text-secondary);
-    box-shadow: 0 0 0 3px var(--disabled-backgroud);
+    box-shadow: 0 0 0 3px var(--disabled-background);
 }
 
 .searchingText {
@@ -45,7 +45,7 @@
 
 /* 🌟 Картка результату пошуку — копіює стиль контактів, але має інший фон */
 .searchResultCard {
-    background: var(--disabled-backgroud);
+    background: var(--disabled-background);
     padding: 12px 20px;
     display: flex;
     justify-content: space-between;

@@ -1,9 +1,10 @@
 import styles from "./KanbanCardSkeleton.module.css";
 import {useProfileStore} from "../../../store/profileStore.ts";
+import {Theme} from "../../../types/user.ts";
 // import skeletonStyles from "./Skeleton.module.css";
 
 const KanbanCardSkeleton = ({ isCompact }: { isCompact: boolean }) => {
-    const theme = useProfileStore((state) => state.profile.theme);
+    const theme = useProfileStore((state) => state.profile?.theme) || Theme.White;
     const iconSize = isCompact ? 20 : 24;
     return (
         <div

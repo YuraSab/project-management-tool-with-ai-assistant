@@ -23,7 +23,7 @@
   border-radius: 6px;
   cursor: pointer;
   font-size: 14px;
-  background-color: var(--local-light, var(--disabled-backgroud));
+  background-color: var(--local-light, var(--disabled-background));
   border: 1px solid var(--local-color, var(--color-border));
   color: var(--local-dark, var(--color-text-primary));
   box-sizing: content-box;

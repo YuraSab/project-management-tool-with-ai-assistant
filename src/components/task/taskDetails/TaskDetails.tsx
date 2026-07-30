@@ -1,14 +1,12 @@
-
-import { useProjectControlStore } from "../../../store/projectControlStore";
+import {useProjectControlStore} from "../../../store/projectControlStore";
 import StatusText from "../../../ui/statusText/StatusText";
 import styles from "./TaskDetails.module.css";
 
-import React, {useCallback, useMemo} from "react";
+import {useCallback} from "react";
 import {useProfileStore} from "../../../store/profileStore.ts";
 import RightPanelHeader from "../../rightPanel/rightPanelHeader/RightPanelHeader.tsx";
 import {formatDateForInput} from '../../../utils/dateFormat.ts';
 import UserIconCollection from "../../usersIconsCollection/UsersIconsCollection.tsx";
-import {useTaskUsers} from "../../../hooks/task/useTaskUsers.ts";
 import {useProjectUsers} from "../../../hooks/project/useProjectUsers.ts";
 import Title from "../../../ui/title/Title.tsx";
 
@@ -18,7 +16,7 @@ const TaskDetails = () => {
     const setIsEditTaskActive = useProjectControlStore((state) => state.setIsEditTaskActive);
     const setIsAddTaskActive = useProjectControlStore((state) => state.setIsAddTaskActive);
     // const backgroundMode = useUserThemeStore((state) => state.backgroundMode);
-    const theme = useProfileStore((state) => state.profile.theme)
+    const theme = useProfileStore((state) => state.profile?.theme)
     // const { data: assignedTaskUsers } = useTaskUsers(selectedTask?.assignedMembers || []);
     // const { data: usersThemes } = useUsersThemes(selectedTask?.assignedMembers || []);
 

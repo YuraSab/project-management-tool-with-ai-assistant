@@ -9,7 +9,7 @@ import {useShallow} from "zustand/react/shallow";
 import {useProfileStore} from "../../store/profileStore.ts";
 
 export const useAIChatActions = () => {
-    const ownId = useProfileStore((state) => state.profile.uid)
+    const ownId = useProfileStore((state) => state.profile?.uid || '')
     const selectedProject = useProjectControlStore((state) => state.selectedProject);
     const {addMessage, updateMessageActions} = useAIChatStore(useShallow((state) => ({
         addMessage: state.addMessage, updateMessageActions: state.updateMessageActions

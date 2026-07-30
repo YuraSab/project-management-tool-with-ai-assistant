@@ -1,4 +1,3 @@
-import React from 'react';
 import geminiLogo from '../../assets/gemini-icon.svg'; // Імпортуємо як змінну
 
 interface GeminiIconProps {

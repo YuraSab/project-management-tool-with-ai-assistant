@@ -14,7 +14,7 @@ const ProjectSidebar: React.FC = () => {
     const setIsProjectSettingsActive = useProjectControlStore((state) => state.setIsProjectSettingsActive);
 
     return (
-        <aside className={styles.main} style={{backgroundColor: profile.theme}}>
+        <aside className={styles.main} style={{backgroundColor: profile?.theme}}>
             <nav className={styles.navigation}>
                 <button
                     className={styles.iconBtn}

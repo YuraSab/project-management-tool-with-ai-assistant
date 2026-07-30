@@ -37,7 +37,7 @@ const getInitialFormData = (task: Task | null): FormData => ({
 const TaskEdit = () => {
     const { projectId } = useParams();
 
-    const ownId = useProfileStore((state) => state.profile.uid);
+    const ownId = useProfileStore((state) => state.profile?.uid);
     const selectedTask = useProjectControlStore((state) => state.selectedTask);
     const setIsRightPanelActive = useProjectControlStore((state) => state.setIsRightPanelActive);
     const setIsEditTaskActive = useProjectControlStore((state) => state.setIsEditTaskActive);

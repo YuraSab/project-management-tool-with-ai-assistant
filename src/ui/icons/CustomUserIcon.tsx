@@ -13,25 +13,23 @@ interface UserIconProps {
     customStyles?: React.CSSProperties
 }
 
-const CustomUserIcon: React.FC<UserIconProps> = ({ title = '', backgroundColor, customStyles, total, size=36, fontSize = 18, onClick }) => {
-    const highlightColor = useProfileStore((state) => state.profile.highlightColor);
+const CustomUserIcon: React.FC<UserIconProps> = ({ title = '', backgroundColor, customStyles, total, size= 32, fontSize = 18, onClick }) => {
+    const highlightColor = useProfileStore((state) => state.profile?.highlightColor);
     const activeColor = backgroundColor ?? highlightColor;
     const cssBackgroundColor = `var(--color-${activeColor})`;
-    return(
-        <div className={styles.iconWrapper} title={title}>
-            <div 
-                className={`${styles.iconBlock} ${total && styles.smallerText}`}
-                style={{ 
-                    width: 'var(--user-icon-size, 30px)',
-                    height: 'var(--user-icon-size, 30px)',
-                    fontSize: fontSize, 
-                    backgroundColor: cssBackgroundColor,
-                    ...customStyles
-                }} 
-                onClick={() => onClick && onClick((prev) => !prev)}
-            >
-                { total ? title : title[0] }
-            </div>
+    return (
+        <div
+            className={`${styles.iconBlock} ${total && styles.smallerText}`}
+            style={{
+                width: `var(--user-icon-size, ${size}px)`,
+                height: `var(--user-icon-size, ${size}px)`,
+                fontSize: fontSize,
+                backgroundColor: cssBackgroundColor,
+                ...customStyles
+        }}
+            onClick={() => onClick && onClick((prev) => !prev)}
+        >
+            { total ? title : title[0] }
         </div>
     );
 };

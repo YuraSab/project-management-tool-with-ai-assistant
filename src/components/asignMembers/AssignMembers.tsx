@@ -14,7 +14,7 @@ interface AssignMembersProps {
 }
 
 const AssignMembers = ({ assignedMembers, onSelectMembersActive, maxIcons, iconSize, uniqueText }: AssignMembersProps) => {
-    const highlightColor = useProfileStore((state) => state.profile.highlightColor);
+    const highlightColor = useProfileStore((state) => state.profile?.highlightColor);
     const colorTheme = highlightColor ?? HighlightColor.Purple;
     const colorVariables = getColorThemeVariables(colorTheme);
     return (

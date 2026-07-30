@@ -124,7 +124,7 @@ ul {
 }
 
 .iconBtn:hover {
-    background-color: var(--disabled-backgroud);
+    background-color: var(--disabled-background);
     color: var(--color-text-primary);
 }
 

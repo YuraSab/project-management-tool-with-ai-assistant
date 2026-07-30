@@ -6,7 +6,7 @@ import KanbanBoard from "../../components/kanban/kanbanBoard/KanbanbBoard";
 import RightPanelProject from "../../components/rightPanel/rightPanelProject/RightPanelProject";
 import {useProject} from "../../hooks/project/useProject";
 import {useAuthStore} from "../../store/authStore.ts";
-import React, {useEffect, useMemo} from "react";
+import {useEffect, useMemo} from "react";
 import Error from "../../components/error/Error.tsx";
 import FAB from "../../ui/FAB/FAB.tsx";
 import {useProfileStore} from "../../store/profileStore.ts";
@@ -23,7 +23,7 @@ const Project = () => {
     const user = useAuthStore((state) => state.user);
     const setSelectedProject = useProjectControlStore((state) => state.setSelectedProject);
     const isAIChatOpened  = useAIChatStore((state) => state.isAIChatOpened);
-    const theme = useProfileStore((state) => state.profile.theme);
+    const theme = useProfileStore((state) => state.profile?.theme);
     const {
         selectedTask,
         isRightPanelActive, setIsLeftPanelActive,

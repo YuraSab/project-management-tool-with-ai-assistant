@@ -1,4 +1,3 @@
-import React from 'react';
 import styles from './TaskInfo.module.css';
 import {Pencil} from "lucide-react";
 import StatusText from "../../ui/statusText/StatusText.tsx";

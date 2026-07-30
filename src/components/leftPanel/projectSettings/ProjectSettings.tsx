@@ -9,7 +9,7 @@ import FormSelect from "../../../ui/select/FormSelect";
 import {Project, ProjectStatus} from "../../../types/project";
 import AssignMembers from "../../asignMembers/AssignMembers.tsx";
 import CustomButton from "../../../ui/button/CustomButton";
-import {UserProfile} from "../../../types/user.ts";
+import {Theme, UserProfile} from "../../../types/user.ts";
 import {useProjectUpdate} from "../../../hooks/project/useProjectUpdate.ts";
 import {useProjectDelete} from "../../../hooks/project/useProjectDelete.ts";
 import Title from "../../../ui/title/Title.tsx";
@@ -101,7 +101,7 @@ const ProjectSettings: React.FC = () => {
     };
 
     return(
-        <div className={`${styles.settingsPanel} ${profile.theme === "black" ? styles.dark : styles.light}`} >
+        <div className={`${styles.settingsPanel} ${profile?.theme === Theme.Black ? styles.dark : styles.light}`} >
             <Title text={'ID:'}/>
             <DisabledField children={project?.id ?? ''} copyText={project?.id} toastValue={'Copied project ID'}/>
             <Title text={'Name:'}/>

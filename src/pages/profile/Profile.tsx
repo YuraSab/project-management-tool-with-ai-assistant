@@ -1,4 +1,4 @@
-import React, {useCallback, useMemo} from 'react';
+import {useCallback, useMemo} from 'react';
 import {useProfileStore} from "../../store/profileStore.ts";
 import CustomUserIcon from "../../ui/icons/CustomUserIcon.tsx";
 import Title from "../../ui/title/Title.tsx";

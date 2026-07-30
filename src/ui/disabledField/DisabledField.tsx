@@ -1,4 +1,3 @@
-import React from 'react';
 import styles from './DisabledField.module.css';
 import CopyIcon from "../copyIcon/CopyIcon.tsx";
 

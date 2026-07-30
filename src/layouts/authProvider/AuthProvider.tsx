@@ -1,8 +1,8 @@
-import React, {ReactNode, useEffect} from "react";
+import { ReactNode, useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../firebase";
 import { useAuthStore } from "../../store/authStore";
-import {useShallow} from "zustand/react/shallow";
+import { useShallow } from "zustand/react/shallow";
 
 interface AuthProviderProps {
     children: ReactNode
@@ -17,7 +17,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         isUserLoading: state.isUserLoading, setIsUserLoading: state.setIsUserLoading
     })));
 
-    useEffect(() => {    // firebase & zustand data sync
+    useEffect(() => { // firebase & zustand data sync
         const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
             if (firebaseUser) {
                 setLogin({
@@ -36,7 +36,5 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     if (isUserLoading)
         return <div>Loading...</div>; // todo - add real loader
 
-    return (
-        <> {children} </>
-    );
+    return children;
 };

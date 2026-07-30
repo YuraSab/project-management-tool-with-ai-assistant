@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import {useEffect, useRef, useState} from 'react';
 import styles from './AIChat.module.css';
 import {useProfileStore} from "../../store/profileStore.ts";
 import {Send, Trash2, X} from "lucide-react";
@@ -13,6 +13,7 @@ import {useShallow} from "zustand/react/shallow";
 import {parseAIActions} from "../../utils/parseAIActions.ts";
 import {getGeminiResponse} from "../../services/aiService.ts";
 import {switchRightPanelView} from "../../utils/panelManager.ts";
+import {Theme} from "../../types/user.ts";
 
 const AIChat = () => {
     const profile = useProfileStore((state) => state.profile);
@@ -21,7 +22,7 @@ const AIChat = () => {
         messages: state.messages, addMessage: state.addMessage, clearChat: state.clearChat
     })));
 
-    const {data: projectTasks} = useTasks(selectedProject?.id || '', profile.uid || '');
+    const {data: projectTasks} = useTasks(selectedProject?.id || '', profile?.uid || '');
     const {data: projectUsers} = useProjectUsers(selectedProject?.assignedMembers || []);
 
     const [inputValue, setInputValue] = useState('');
@@ -75,8 +76,8 @@ const AIChat = () => {
     };
 
     return (
-        <div className={styles.container} style={{backgroundColor: profile.theme === 'black' ? '#1e1e1e' : '#ffffff'}}>
-            <div className={styles.header} style={{borderBottom: `1px solid ${profile.highlightColor}44`}}>
+        <div className={styles.container} style={{backgroundColor: profile?.theme === Theme.Black ? '#1e1e1e' : '#ffffff'}}>
+            <div className={styles.header} style={{borderBottom: `1px solid ${profile?.highlightColor}44`}}>
                 <div className={styles.title}>
                     <GeminiIcon size={24}/>
                     <span>Gemini Assistant</span>
@@ -108,14 +109,14 @@ const AIChat = () => {
                     onChange={(e) => setInputValue(e.target.value)}
                     onKeyDown={(e) => e.key === 'Enter' && handleSend()}
                     className={styles.input}
-                    style={{border: `1px solid ${profile.highlightColor}44`}}
+                    style={{border: `1px solid ${profile?.highlightColor}44`}}
                     disabled={isLoading}
                 />
                 <button
                     className={styles.sendBtn}
                     onClick={handleSend}
                     style={{
-                        backgroundColor: profile.highlightColor,
+                        backgroundColor: profile?.highlightColor,
                         opacity: (isLoading || !inputValue.trim()) ? 0.6 : 1
                     }}
                     disabled={isLoading || !inputValue.trim()}

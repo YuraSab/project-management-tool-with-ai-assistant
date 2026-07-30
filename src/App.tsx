@@ -1,12 +1,12 @@
+import {useEffect} from "react";
 import Header from './components/header/header/Header';
 import RouteLayout from './layouts/routeLayout/RouteLayout';
-import styles from './App.module.css';
-import './global.css';
 import {useAuthStore} from "./store/authStore.ts";
 import {useProfileStore} from "./store/profileStore.ts";
 import {ToastContainer} from "./ui/toast/ToastContainer.tsx";
 import {Theme} from "./types/user.ts";
-import {useEffect} from "react";
+import styles from './App.module.css';
+import './global.css';
 
 function App() {
     const user = useAuthStore((state) => state.user);
@@ -15,6 +15,7 @@ function App() {
     useEffect(() => {
         const root = document.body;
         const currentTheme = profile?.theme ?? Theme.White;
+        root.classList.remove('light', 'dark');
         if (currentTheme === Theme.White) {
             root.classList.add('light');
             root.classList.remove('dark');
@@ -26,12 +27,10 @@ function App() {
 
     return (
         <div className={styles.structure}>
-            {user && profile && (
-                <Header/>
-            )}
+            {user && profile && <Header/>}
             <main>
                 <RouteLayout/>
-                <ToastContainer/> {/* 🌟 The toaster lives here permanently now */}
+                <ToastContainer/>
             </main>
         </div>
     );

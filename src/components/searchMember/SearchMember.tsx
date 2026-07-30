@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import styles from "./SearchMember.module.css";
 import CustomUserIcon from "../../ui/icons/CustomUserIcon";
 import { UserPlus, Check } from "lucide-react"; // 👈 Додали іконку Check
@@ -20,9 +20,9 @@ const SearchMember = () => {
     const { mutate: updateUser } = useUpdateUser();
 
     // Передаємо тільки profile.uid
-    const { data: searchMembers, isPending, isError } = useSearchUsers(debounceTerm, profile.uid);
+    const { data: searchMembers, isPending, isError } = useSearchUsers(debounceTerm, profile?.uid || '');
 
-    const colorVariables = getColorThemeVariables(profile.highlightColor ?? HighlightColor.Purple);
+    const colorVariables = getColorThemeVariables(profile?.highlightColor ?? HighlightColor.Purple);
 
     useEffect(() => {
         const timerId = setTimeout(() => {
@@ -32,7 +32,8 @@ const SearchMember = () => {
     }, [searchTerm]);
 
     const handleReserveUser = useCallback((userId: string) => {
-        if (profile.reservedMembers.includes(userId)) return;
+        if (!profile || profile.reservedMembers.includes(userId))
+            return;
 
         const reservedMembers = [...profile.reservedMembers, userId];
         updateUser({
@@ -63,7 +64,7 @@ const SearchMember = () => {
                 <ul className={styles.resultsList}>
                     {searchMembers.map((m) => {
                         // 🌟 Перевіряємо, чи користувач вже доданий у контакти
-                        const isAlreadyAdded = profile.reservedMembers.includes(m.uid);
+                        const isAlreadyAdded = profile?.reservedMembers.includes(m.uid);
 
                         return (
                             <li key={m.uid} className={styles.searchResultCard}>

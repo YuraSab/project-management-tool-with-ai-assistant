@@ -1,17 +1,15 @@
+import React from "react";
 import {Route, Routes} from 'react-router-dom';
+import ProtectedRoute from '../../hooks/route/ProtectedRoute';
 import Login from '../../pages/login/Login';
 import Register from '../../pages/register/Register';
 import People from '../../pages/people/People';
-import Projects from '../../pages/projects/Projects';
-import ProtectedRoute from '../../hooks/route/ProtectedRoute.tsx';
 import Project from '../../pages/project/Project';
+import Projects from '../../pages/projects/Projects';
 import CreateProject from '../../pages/createProject/CreateProject';
 import CreateUser from '../../pages/createUser/CreateUser';
-import EditUser from '../../pages/editUser/EditUser';
-import Personalisation from '../../pages/personalisation/Personalisation';
-import React from "react";
-import {Role} from "../../types/user.ts";
-import Profile from "../../pages/profile/Profile.tsx";
+import Profile from "../../pages/profile/Profile";
+import {Role} from "../../types/user";
 
 const ALLOWED_ROLES = {
     ALL: [Role.Admin, Role.Manager, Role.Member],
@@ -28,7 +26,6 @@ const RouteLayout = () => (
             <Route path="/projects" element={<Projects/>}/>
             <Route path="/projects/:projectId" element={<Project/>}/>
             <Route path="/people" element={<People/>}/>
-            <Route path="/personalisation" element={<Personalisation/>}/>
             <Route path="/projects/create" element={<CreateProject/>}/>
             <Route path="/profile" element={<Profile/>}/>
         </Route>
@@ -36,7 +33,6 @@ const RouteLayout = () => (
         </Route>
         <Route element={<ProtectedRoute allowedRoles={ALLOWED_ROLES.ONLY_ADMINS}/>}>
             <Route path="/create/user" element={<CreateUser/>}/>
-            <Route path="/edit/user/:userId" element={<EditUser/>}/>
         </Route>
     </Routes>
 );

@@ -1,11 +1,8 @@
 :root {
-    /* ☀️ Базові змінні для світлої теми за замовчуванням */
     --color-bg: #ffffff;
     --color-text-primary: #000000;
     --color-text-secondary: #4b5563;
     --color-border: #e5e7eb;
-
-    /* Решта твоїх глобальних змінних */
     --bg-main: #f9f9fb;
     --bg-card: #ffffff;
     --color-text-main: #1A202C;
@@ -13,101 +10,78 @@
     --border-default: 1px solid #E2E8F0;
     --container-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
 
-
-
     /* ==========================================================================
        🎨 GLOBAL COLOR SYSTEM (THEMES)
        ========================================================================== */
-    /* 🟣 1. PURPLE (Нативний) */
+    /* 🟣 1. PURPLE */
     --color-purple: #800080;
     --color-purple-dark: #660066;
     --color-purple-light: #f3e8ff;
     --color-purple-disabled: #4a004a;
-
-    /* 🟢 2. GREEN (Нативний — твій оригінальний глибокий зелений) */
+    /* 🟢 2. GREEN */
     --color-green: #008000;
     --color-green-dark: #006400;
-    --color-green-light: #dcfce7; /* Твій оригінальний ніжний зелений */
+    --color-green-light: #dcfce7;
     --color-green-disabled: #004d00;
-
     /* 🌊 3. TEAL */
     --color-teal: #14b8a6;
     --color-teal-dark: #0d9488;
     --color-teal-light: #f0fdfa;
     --color-teal-disabled: #115e59;
-
     /* 🩶 4. SLATE */
     --color-slate: #475569;
     --color-slate-dark: #334155;
     --color-slate-light: #f8fafc;
     --color-slate-disabled: #1e293b;
-
     /* 🪻 5. VIOLET */
     --color-violet: #8b5cf6;
     --color-violet-dark: #7c3aed;
     --color-violet-light: #ede9fe;
     --color-violet-disabled: #4c1d95;
-
     /* 🔵 6. BLUE */
     --color-blue: #3b82f6;
     --color-blue-dark: #2563eb;
-    --color-blue-light: #dbeafe; /* Твій оригінальний світло-синій */
+    --color-blue-light: #dbeafe;
     --color-blue-disabled: #1e3a8a;
-
     /* 🟠 7. ORANGE */
     --color-orange: #f97316;
     --color-orange-dark: #ea580c;
-    --color-orange-light: #ffedd5; /* Твій оригінальний світло-помаранчевий */
+    --color-orange-light: #ffedd5;
     --color-orange-disabled: #7c2d12;
-
-    /* ⚪ 8. WHITE (Біла тема) */
+    /* ⚪ 8. WHITE */
     --color-white: #ffffff;
-    --color-white-dark: #f1f5f9;      /* Світло-сірий (Slate 100) — дуже приємний для ока */
-    --color-white-light: #f8fafc;      /* Ультра-світлий димчастий фон (Slate 50) */
-    --color-white-disabled: #cbd5e1;   /* Приглушений сірий для заблокованого стану */
-
-    /* ⚫ 9. BLACK (Чорна тема) */
-    --color-black: #1a1a1a;            /* Твій оригінальний глибокий матовий чорний */
-    --color-black-dark: #334155;      /* Графітово-сталевий (Slate 700) */
-    --color-black-light: #e2e8f0;      /* Попелястий світлий фон для контрасту (Slate 200) */
-    --color-black-disabled: #0f172a;   /* Темно-синій заблокований (Slate 900) */
+    --color-white-dark: #f1f5f9;
+    --color-white-light: #f8fafc;
+    --color-white-disabled: #cbd5e1;
+    /* ⚫ 9. BLACK */
+    --color-black: #1a1a1a;
+    --color-black-dark: #334155;
+    --color-black-light: #e2e8f0;
+    --color-black-disabled: #0f172a;
 }
 
-    .light {
-        --color-bg: #ffffff;                  /* Чистий світлий фон */
-        --color-text-primary: #000000;       /* Майже чорний колір для основного тексту */
-        --color-text-secondary: #4b5563;     /* М'який темно-сірий для підписів/лейблів */
-        --color-text-tertiary: #4b5563;
-        --color-border: #e5e7eb;             /* Світла рамка для інпутів тощо */
-        --disabled-backgroud: rgba(0,0,0,0.05);
-        /*--block-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);*/
-        --block-shadow: 0 4px 20px #e1e6f3;
-        --color-dividor: #f3f4f6;
-        --color-column: #f3f4f6;
-        --color-card: #ffffff;
-    }
-
-    .dark {
-        --color-bg: #000000;                  /* Чистий чорний фон */
-        --color-text-primary: #ffffff;       /* Чистий білий для основного тексту */
-        --color-text-secondary: #cbd5e1;     /* Виразний світло-сірий для підписів/Title */
-        --color-text-tertiary: #a1a1aa;
-        --color-border: #334155;             /* Темна рамка для інпутів */
-        --disabled-backgroud: rgba(255, 255, 255, 0.03);
-        --block-shadow: 0 4px 20px #4b5563;
-        --calendar-icon-filter: invert(1);
-        /*--color-dividor: rgb(255, 255, 255, 0.12);*/
-        /*--color-column: rgba(255, 255, 255, 0.04);*/
-
-        --color-dividor: rgb(255, 255, 255, 0.04);
-        --color-column: rgba(255, 255, 255, 0.10);
-        /*--color-card: rgb(255,255,255,0.08);*/
-        --color-card: #282828;
-    }
-
-body {
-    background-color: var(--color-bg);
-    color: var(--color-text-primary);
-    transition: background-color 0.2s ease, color 0.2s ease;
-    margin: 0;
+.light {
+    --color-bg: #ffffff;
+    --color-text-primary: #000000;
+    --color-text-secondary: #4b5563;
+    --color-text-tertiary: #4b5563;
+    --color-border: #e5e7eb;
+    --disabled-background: rgba(0,0,0,0.05);
+    --block-shadow: 0 4px 20px #e1e6f3;
+    --color-dividor: #f3f4f6;
+    --color-column: #f3f4f6;
+    --color-card: #ffffff;
+}
+.dark {
+    --color-bg: #000000;
+    --color-text-primary: #ffffff;
+    --color-text-secondary: #cbd5e1;
+    --color-text-tertiary: #a1a1aa;
+    --color-border: #334155;
+    --disabled-background: rgba(255, 255, 255, 0.03);
+    --block-shadow: 0 4px 20px #4b5563;
+    --calendar-icon-filter: invert(1);
+    --color-dividor: rgb(255, 255, 255, 0.04);
+    --color-column: rgba(255, 255, 255, 0.10);
+    --color-card: #282828;
 }

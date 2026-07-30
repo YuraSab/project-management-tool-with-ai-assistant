@@ -19,8 +19,7 @@ const ProjectCard = React.memo(({project}: ProjectCardProps) => {
         currentSelectedProjectId: state.selectedProject?.id, setSelectedProject: state.setSelectedProject,
         closePanels: state.closePanels, clearFiltersAndSorts: state.clearFiltersAndSorts,
     })));
-    const highlightColor = useProfileStore((state) => state.profile.highlightColor);
-
+    const highlightColor = useProfileStore((state) => state.profile?.highlightColor);
     const activeTheme = highlightColor ?? HighlightColor.Purple;
 
     const handleSelect = useCallback(() => {

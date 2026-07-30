@@ -12,7 +12,7 @@ const RightPanelProject = () => {
     const isAIChatOpened= useAIChatStore((state) => state.isAIChatOpened );
     const selectedTask = useProjectControlStore((state) => state.selectedTask);
     const isAddTaskActive = useProjectControlStore((state) => state.isAddTaskActive);
-    const theme = useProfileStore((state) => state.profile.theme);
+    const theme = useProfileStore((state) => state.profile?.theme);
     return(
         <div className={styles.main}
              style={{backgroundColor: theme === Theme.Black ? Theme.Black : "#f3f4f6"}}
