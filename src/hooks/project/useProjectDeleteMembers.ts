@@ -1,18 +1,15 @@
-import {useMutation, useQueryClient} from "@tanstack/react-query";
-import {deleteMembersFromProjectTasks} from "../../services/projectService.ts";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { deleteMembersFromProjectTasks } from "../../services/projectService";
+import { toast } from "../../utils/toaster";
 
 export const useProjectDeleteMembers = () => {
     const queryClient = useQueryClient();
     return useMutation({
-        // чи обов'язковор це має бути async/await
-        mutationFn: (args: { projectId: string, memberIds: string[] }) =>
-            deleteMembersFromProjectTasks(args),
+        mutationFn: (args: { projectId: string, memberIds: string[] }) => deleteMembersFromProjectTasks(args),
         onSuccess: (_, { projectId }) => {
-            // invalidate task of certain project
+            toast.success('Member deleted from project!');
             return queryClient.invalidateQueries({ queryKey: ['tasks', projectId] });
         },
-        onError: (error) => {
-            console.error("Помилка при видаленні мембера:", error);
-        }
+        onError: () => toast.error('Failed to delete member from project!')
     });
 };

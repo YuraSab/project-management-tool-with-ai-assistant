@@ -1,9 +1,9 @@
-import {useQueryClient} from "@tanstack/react-query";
-import {useNavigate} from "react-router-dom";
-import {useProfileStore} from "../../store/profileStore.ts";
-import {useAuthStore} from "../../store/authStore.ts";
-import {signOut} from "firebase/auth";
-import {auth} from "../../firebase.ts";
+import { useQueryClient } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
+import { logout } from "../../services/authService";
+import { useProfileStore } from "../../store/profileStore";
+import { useAuthStore } from "../../store/authStore";
+import { toast } from "../../utils/toaster";
 
 export const useLogout = () => {
     const queryClient = useQueryClient();
@@ -13,14 +13,15 @@ export const useLogout = () => {
 
     return async () => {
         try {
-            await signOut(auth);
+            await logout();
         } catch (e) {
             console.error("Logout error", e);
+            toast.error('Logout error!');
+        } finally {
+            setLogout();
+            setProfile(null);
+            queryClient.clear();
+            navigate('/login', { replace: true });
         }
-        setLogout();
-        setProfile(null);
-        queryClient.clear();
-        // localStorage.removeItem("auth-session-storage");
-        navigate('/login', {replace: true});
     };
 };

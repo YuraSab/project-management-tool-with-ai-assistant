@@ -1,12 +1,13 @@
-import {AIChatAction, AIChatActionType, useAIChatStore} from "../../store/aiChatStore.ts";
-import {CreateTaskPayload, UpdateTaskPayload} from "../../services/taskService.ts";
-import {useProjectControlStore} from "../../store/projectControlStore.ts";
-import {useCreateTask} from "../task/useCreateTask.ts";
-import {useUpdateTask} from "../task/useUpdateTask.ts";
-import {useDeleteTask} from "../task/useDeleteTask.ts";
-import {Sender} from "../../types/aiChat.ts";
-import {useShallow} from "zustand/react/shallow";
-import {useProfileStore} from "../../store/profileStore.ts";
+import { useShallow } from "zustand/react/shallow";
+import { CreateTaskPayload, UpdateTaskPayload } from "../../services/taskService";
+import { useCreateTask } from "../task/useCreateTask";
+import { useUpdateTask } from "../task/useUpdateTask";
+import { useDeleteTask } from "../task/useDeleteTask";
+import { AIChatAction, AIChatActionType, useAIChatStore } from "../../store/aiChatStore";
+import { useProfileStore } from "../../store/profileStore";
+import { useProjectControlStore } from "../../store/projectControlStore";
+import { Sender } from "../../types/aiChat";
+import {toast} from "../../utils/toaster";
 
 export const useAIChatActions = () => {
     const ownId = useProfileStore((state) => state.profile?.uid || '')
@@ -15,12 +16,15 @@ export const useAIChatActions = () => {
         addMessage: state.addMessage, updateMessageActions: state.updateMessageActions
     })));
 
-    const {mutate: createTask} = useCreateTask();
-    const {mutate: updateTask} = useUpdateTask(selectedProject?.id ?? '', ownId);
-    const {mutate: deleteTask} = useDeleteTask();
+    const {mutateAsync: createTask} = useCreateTask();
+    const {mutateAsync: updateTask} = useUpdateTask(selectedProject?.id ?? '', ownId);
+    const {mutateAsync: deleteTask} = useDeleteTask();
 
     const handleApply = async (messageId: string, actions: AIChatAction[]) => {
         try {
+            if (!selectedProject?.id)
+                return toast.error('Project not selected!');
+
             for (const action of actions) {
                 switch (action.type) {
                     case AIChatActionType.CREATE_TASK:
@@ -34,20 +38,20 @@ export const useAIChatActions = () => {
                         await updateTask(action.payload as UpdateTaskPayload);
                         break;
                     case AIChatActionType.DELETE_TASK:
-                        await deleteTask(action.payload.id);
+                        await deleteTask(action.payload.id!);
                         break;
                 }
             }
             updateMessageActions(messageId, []);
             addMessage({
                 role: Sender.model,
-                text: "✅ Зміни успішно застосовані до проекту!"
+                text: "✅ The changes have been successfully applied to the project!"
             });
         } catch (error) {
-            console.error("Помилка при застосуванні дій:", error);
+            console.error("Error applying actions: ", error);
             addMessage({
                 role: Sender.model,
-                text: "❌ Сталася помилка при застосуванні змін."
+                text: "❌ An error occurred while applying the changes."
             });
         }
     };
@@ -56,7 +60,7 @@ export const useAIChatActions = () => {
         updateMessageActions(messageId, []);
         addMessage({
             role: Sender.model,
-            text: "🗑️ Запропоновані зміни скасовано."
+            text: "🗑️ The proposed changes have been cancelled."
         });
     };
 

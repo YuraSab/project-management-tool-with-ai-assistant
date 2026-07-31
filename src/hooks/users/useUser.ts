@@ -1,5 +1,5 @@
-import {useQuery} from "@tanstack/react-query";
-import {getUser} from "../../services/userService.ts";
+import { useQuery } from "@tanstack/react-query";
+import { getUser } from "../../services/userService";
 
 export const useUser = (userId: string, options?: { enabled?: boolean }) => {
     return useQuery({

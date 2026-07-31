@@ -1,10 +1,10 @@
 import {Navigate, Outlet} from "react-router-dom";
-import {useAuthStore} from "../../store/authStore.ts";
-import {useProfileStore} from "../../store/profileStore.ts";
-import {Role} from "../../types/user.ts";
+import {useAuthStore} from "../../store/authStore";
+import {useProfileStore} from "../../store/profileStore";
+import {Role} from "../../types/user";
 
 interface ProtectedRouteProps {
-    allowedRoles?: Role[];
+    allowedRoles?: Role[]
 }
 
 const ProtectedRoute = ({ allowedRoles }: ProtectedRouteProps) => {
