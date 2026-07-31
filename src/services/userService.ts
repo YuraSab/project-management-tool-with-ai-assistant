@@ -1,12 +1,12 @@
-import {collection, doc, getDoc, getDocs, query, setDoc, where, documentId, updateDoc, orderBy, limit} from "firebase/firestore";
-import {db} from "../firebase.ts";
-import {UserProfile} from "../types/user.ts";
+import { collection, doc, getDoc, getDocs, query, setDoc, where, documentId, updateDoc, orderBy, limit } from "firebase/firestore";
+import { db } from "../firebase";
+import { UserProfile } from "../types/user";
 
 export const createUser = async ({ user }: Partial<UserProfile> & { id: string }): Promise<void> => {
     const userRef = doc(db, 'users', user.uid);
     const profile = {
         uid: user.uid,
-        email: user.email,  // todo - всюди при реєстрації потрібно зробити email .toLowerCase()
+        email: user.email,
         displayName: user.displayName || "User",
         photoURL: user.photoURL || null,
         role: user.role || "member",
@@ -16,8 +16,10 @@ export const createUser = async ({ user }: Partial<UserProfile> & { id: string }
 };
 
 export const getUser = async (userId: string): Promise<UserProfile | null> => {
+    if (!userId) return null;
     const userRef = doc(db, 'users', userId);
     const userSnap = await getDoc(userRef);
+    if (!userSnap.exists()) return null;
     return {
         uid: userSnap.id,
         ...userSnap.data()
@@ -25,7 +27,7 @@ export const getUser = async (userId: string): Promise<UserProfile | null> => {
 };
 
 export const getUsersByIds = async (usersIds: string[]): Promise<UserProfile[]> => {
-    if (usersIds.length < 1) return [];
+    if (!usersIds || usersIds.length === 1) return [];
     const usersRef = collection(db, 'users');
     const usersQuery = query(usersRef, where(documentId(), 'in', usersIds ));
     const usersSnap = await getDocs(usersQuery);
@@ -36,11 +38,11 @@ export const getUsersByIds = async (usersIds: string[]): Promise<UserProfile[]> 
 };
 
 export const searchUsersByEmail = async (searchTerm: string): Promise<UserProfile[]> => {
-    if (searchTerm === '') return [];
-    const strStart = searchTerm.toLowerCase();
-    // Створюємо верхню межу для пошуку.
-    // Додавання символу '\uf8ff' (останній символ Unicode) дозволяє знайти всі рядки,
-    // що починаються з strSearch.
+    // Create an upper bound for the search.
+    const strStart = searchTerm.trim().toLowerCase();
+    if (!strStart) return [];
+    // Adding the character '\uf8ff' (the last Unicode character) allows finding all strings
+    // that start with strSearch
     const strEnd = strStart + '\uf8ff';
     const usersRef = collection(db ,'users');
     const usersQuery = query(

@@ -7,7 +7,6 @@ import People from '../../pages/people/People';
 import Project from '../../pages/project/Project';
 import Projects from '../../pages/projects/Projects';
 import CreateProject from '../../pages/createProject/CreateProject';
-import CreateUser from '../../pages/createUser/CreateUser';
 import Profile from "../../pages/profile/Profile";
 import {Role} from "../../types/user";
 
@@ -32,7 +31,6 @@ const RouteLayout = () => (
         <Route element={<ProtectedRoute allowedRoles={ALLOWED_ROLES.NON_MEMBERS}/>}>
         </Route>
         <Route element={<ProtectedRoute allowedRoles={ALLOWED_ROLES.ONLY_ADMINS}/>}>
-            <Route path="/create/user" element={<CreateUser/>}/>
         </Route>
     </Routes>
 );

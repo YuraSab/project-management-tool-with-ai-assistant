@@ -1,6 +1,6 @@
-import {Task} from "../types/task.ts";
-import {collection, getDocs, query, where, doc, updateDoc, addDoc, deleteDoc} from "firebase/firestore";
-import {db} from "../firebase.ts";
+import { collection, getDocs, query, where, doc, updateDoc, addDoc, deleteDoc } from "firebase/firestore";
+import { db } from "../firebase";
+import { Task } from "../types/task";
 
 export type CreateTaskPayload = Omit<Task, 'id'>;
 export type UpdateTaskPayload = Partial<Task> & { id: string };
@@ -43,7 +43,7 @@ export const updateTasks__TEST = async (): Promise<void> => {
         console.log("🚀 Start Migration...");
         const tasksRef = collection(db, 'tasks');
         const tasksSnap = await getDocs(tasksRef);
-        let updatedCount = 0;
+        // let updatedCount = 0;
 
         console.log(`📊 Усього тасок у базі: ${tasksSnap.docs.length}`);
         tasksSnap.docs.forEach((taskDoc) => {
@@ -51,12 +51,13 @@ export const updateTasks__TEST = async (): Promise<void> => {
             console.log(`ID: [${taskDoc.id}] | Title: "${data.title}" | updatedAt:`, data.updatedAt);
         });
 
-        const now = new Date().toISOString(); // Поточний час для ініціалізації дат
+        // const now = new Date().toISOString(); // Поточний час для ініціалізації дат
         // const targetCreatorId = 'nmt7XA4CQUQtSQlItj0B35Qitkx2';
 
-        for (const taskDoc of tasksSnap.docs) {
-            const data = taskDoc.data();
-            const taskRef = doc(db, 'tasks', taskDoc.id);
+        // for (const taskDoc of tasksSnap.docs) {
+            // const data = taskDoc.data();
+            // const taskRef = doc(db, 'tasks', taskDoc.id);
+            // ---- Category ----
             // if (data.type === undefined || data.category === undefined) {
             //     await updateDoc(taskRef, {
             //         type: data.type ?? 'none',
@@ -70,18 +71,19 @@ export const updateTasks__TEST = async (): Promise<void> => {
             //     updatedCount++
             // }
 
-            const updates: Record<string, any> = {};
-            if (data.updatedAt === undefined) {
-                updates.updatedAt = now;
-            }
-            // Якщо для цієї таски немає поля updatedAt, оновлюємо її
-            if (Object.keys(updates).length > 0) {
-                await updateDoc(taskRef, updates);
-                updatedCount++;
-                console.log(`📝 Added updatedAt to task [${taskDoc.id}]:`, updates.updatedAt);
-            }
-        }
-        console.log(`⚙️ Updated tasks: ${updatedCount}`);
+            // ---- updatedAt ----
+            // const updates: Record<string, any> = {};
+            // if (data.updatedAt === undefined) {
+            //     updates.updatedAt = now;
+            // }
+            // // Якщо для цієї таски немає поля updatedAt, оновлюємо її
+            // if (Object.keys(updates).length > 0) {
+            //     await updateDoc(taskRef, updates);
+            //     updatedCount++;
+            //     console.log(`📝 Added updatedAt to task [${taskDoc.id}]:`, updates.updatedAt);
+            // }
+        // }
+        // console.log(`⚙️ Updated tasks: ${updatedCount}`);
     } catch (error) {
         console.error("❌ Migration error:", error);
     }

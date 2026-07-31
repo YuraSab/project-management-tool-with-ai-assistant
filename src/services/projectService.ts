@@ -1,17 +1,13 @@
-import {Project} from "../types/project.ts";
-import {collection, doc, getDoc, getDocs, query, updateDoc, deleteDoc, where, addDoc, writeBatch, arrayRemove} from "firebase/firestore";
-import {db} from "../firebase.ts";
+import { collection, doc, getDoc, getDocs, query, updateDoc, deleteDoc, where, addDoc, writeBatch, arrayRemove } from "firebase/firestore";
+import { db } from "../firebase";
+import { Project } from "../types/project";
 
 export const getProjects = async (userId: string): Promise<Project[]> => {
     if (!userId) return [];
 
-    // 1. Створюємо посилання на колекцію
     const projectsRef = collection(db, 'projects');
-    // 2. Створюємо запит: вибрати проекти, де в масиві assignedMembers є наш userId
     const projectsQuery = query(projectsRef, where('assignedMembers', 'array-contains', userId));
-    // 3. Виконуємо запит
     const projectsSnap = await getDocs(projectsQuery);
-
     return projectsSnap.docs.map(doc => ({
         id: doc.id,
         ...doc.data()
@@ -23,7 +19,7 @@ export const getProject = async (projectId: string): Promise<Project | null> => 
 
     const projectRef = doc(db, 'projects', projectId);
     const projectSnap = await getDoc(projectRef);
-    if (!projectSnap.exists()) throw new Error("Project not found");
+    if (!projectSnap.exists()) throw new Error("Project not found!");
 
     return {
         id: projectSnap.id,
@@ -65,14 +61,10 @@ export const deleteMembersFromProjectTasks = async ({ projectId, memberIds }: { 
     const batch = writeBatch(db);
     taskSnap.docs.forEach(((taskDoc) => {
         const taskRef = doc(db, 'tasks', taskDoc.id);
-        // For each task, iterate through all removed members
-        memberIds.forEach((taskId) => {
-            batch.update(taskRef, {
-                // removes userId from the array without affecting other users
-                assignedMembers: arrayRemove(taskId)
-            });
+        batch.update(taskRef, {
+            assignedMembers: arrayRemove(...memberIds)
         });
     }));
-    // 3. Фіксуємо зміни в базі
+    // Apply changes in DB
     await batch.commit();
 };

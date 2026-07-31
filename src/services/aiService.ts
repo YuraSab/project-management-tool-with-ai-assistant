@@ -1,6 +1,6 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { Project } from "../types/project";
-import { UserProfile } from "../types/user.ts";
+import { UserProfile } from "../types/user";
 import { Task, TASK_CATEGORIES, TASK_TYPES } from "../types/task";
 import { Sender } from "../types/aiChat";
 
