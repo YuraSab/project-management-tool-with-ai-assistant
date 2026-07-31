@@ -1,11 +1,11 @@
-import {create} from "zustand";
-import {Task} from "../types/task.ts";
-import {Sender} from "../types/aiChat.ts";
+import { create } from "zustand";
+import { Task } from "../types/task";
+import { Sender } from "../types/aiChat";
 
 const INITIAL_MESSAGE: AIChatMessage = {
     id: '1',
     role: Sender.model,
-    text: 'Привіт! Я твій AI-помічник. Чим можу допомогти з проектом?',
+    text: 'Hi! I’m your AI assistant. How can I help with the project?',
     timestamp: Date.now(),
 };
 
