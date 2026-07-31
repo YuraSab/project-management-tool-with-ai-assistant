@@ -1,8 +1,8 @@
-import {GoogleGenerativeAI} from "@google/generative-ai";
-import {Project} from "../types/project.ts";
-import {UserProfile} from "../types/user.ts";
-import {Task, TASK_CATEGORIES, TASK_TYPES} from "../types/task.ts";
-import {Sender} from "../types/aiChat.ts";
+import { GoogleGenerativeAI } from "@google/generative-ai";
+import { Project } from "../types/project";
+import { UserProfile } from "../types/user.ts";
+import { Task, TASK_CATEGORIES, TASK_TYPES } from "../types/task";
+import { Sender } from "../types/aiChat";
 
 const getAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API_KEY);
 
@@ -35,7 +35,7 @@ export const getGeminiResponse = async (
                     : 'Немає створених тасок'
             }
         - Учасники команди: ${context.members.map(m => `${m.displayName} (ID: ${m.uid})`).join(', ')}
-    
+        
         ОБ'ЄКТ TASK МАЄ ТАКУ СТРУКТУРУ (TypeScript):
         {
             "title": string,             // Коротка назва (ОБОВ'ЯЗКОВО)
@@ -49,7 +49,7 @@ export const getGeminiResponse = async (
             "startDate": "YYYY-MM-DD",   // Дата початку
             "endDate": "YYYY-MM-DD"      // Дата дедлайну
         }
-    
+        
         СУВОРІ ПРАВИЛА ВАЛІДАЦІЇ ДАНИХ (ВАЖЛИВО):
         1. STATUS: Використовуй ТІЛЬКИ значення нижнім регістром: "todo", "in_progress", "done".
         2. PRIORITY: Використовуй ТІЛЬКИ значення нижнім регістром: "low", "medium", "high", "none".

@@ -1,7 +1,7 @@
-import {AIChatAction} from "../store/aiChatStore.ts";
+import { AIChatAction } from "../store/aiChatStore.ts";
 
 export const parseAIActions = (text: string) => {
-    const actionRegex = /ACTION:\s*(\{.*?\})(?=\s*ACTION:|\s*$)/g;
+    const actionRegex = /ACTION:\s*(\{.*?})(?=\s*ACTION:|\s*$)/gs;
     const actions: AIChatAction[] = [];
     let match;
 

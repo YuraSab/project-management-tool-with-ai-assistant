@@ -1,24 +1,24 @@
-import {useEffect, useRef, useState} from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { Send, Trash2, X } from "lucide-react";
+import { useShallow } from "zustand/react/shallow";
 import styles from './AIChat.module.css';
-import {useProfileStore} from "../../store/profileStore.ts";
-import {Send, Trash2, X} from "lucide-react";
-import GeminiIcon from "../../ui/icons/GeminiIcon.tsx";
-import {useAIChatStore} from "../../store/aiChatStore.ts";
-import {useProjectControlStore} from "../../store/projectControlStore.ts";
-import {useProjectUsers} from "../../hooks/project/useProjectUsers.ts";
-import {useTasks} from "../../hooks/task/useTasks.ts";
-import Messages from "./Messages.tsx";
-import {Sender} from "../../types/aiChat.ts";
-import {useShallow} from "zustand/react/shallow";
-import {parseAIActions} from "../../utils/parseAIActions.ts";
-import {getGeminiResponse} from "../../services/aiService.ts";
-import {switchRightPanelView} from "../../utils/panelManager.ts";
-import {Theme} from "../../types/user.ts";
+import Messages from "./Messages";
+import GeminiIcon from "../../ui/icons/GeminiIcon";
+import { useProfileStore } from "../../store/profileStore";
+import { useAIChatStore } from "../../store/aiChatStore";
+import { useProjectControlStore } from "../../store/projectControlStore";
+import { useProjectUsers } from "../../hooks/project/useProjectUsers";
+import { useTasks } from "../../hooks/task/useTasks";
+import { Sender } from "../../types/aiChat";
+import { Theme } from "../../types/user";
+import { parseAIActions } from "../../utils/parseAIActions";
+import { getGeminiResponse } from "../../services/aiService";
+import { switchRightPanelView } from "../../utils/panelManager";
 
 const AIChat = () => {
     const profile = useProfileStore((state) => state.profile);
     const selectedProject = useProjectControlStore((state) => state.selectedProject)
-    const {messages, addMessage, clearChat} = useAIChatStore(useShallow((state) => ({
+    const { messages, addMessage, clearChat } = useAIChatStore(useShallow((state) => ({
         messages: state.messages, addMessage: state.addMessage, clearChat: state.clearChat
     })));
 
@@ -28,10 +28,10 @@ const AIChat = () => {
     const [inputValue, setInputValue] = useState('');
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
-    const messagesEndRef = useRef<HTMLDivElement | null>(null);
+    const messagesEndRef = useRef<HTMLDivElement>(null!);
 
     useEffect(() => {
-            messagesEndRef.current?.scrollIntoView({behavior: "smooth"} as ScrollIntoViewOptions);
+            messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
     }, [messages]);
 
     const handleSend = async () => {
@@ -53,8 +53,8 @@ const AIChat = () => {
                 }));
             const context = {
                 project: selectedProject,
-                tasks: projectTasks,
-                members: projectUsers
+                tasks: projectTasks || [],
+                members: projectUsers || []
             };
 
             const aiRawResponse = await getGeminiResponse(userText, context, historyForGemini);

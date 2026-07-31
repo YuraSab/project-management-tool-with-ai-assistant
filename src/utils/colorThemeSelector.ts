@@ -1,13 +1,13 @@
-import {ColorPalette} from "../types/user.ts";
-import React from "react";
+import { CSSProperties } from "react";
+import { ColorPalette } from "../types/user";
 
 type ColorShade = 'default' | 'dark' | 'light' | 'disabled';
 
-export interface ThemeVariables extends React.CSSProperties {
+export interface ThemeVariables extends CSSProperties {
     [key: `--${string}`]: string | number | undefined
 }
 
-// * Повертає ОДНУ конкретну CSS-змінну у вигляді рядка.
+// Returns ONE certain CSS-variable as string
 export const getColor = (
     color: ColorPalette,
     shade: ColorShade = 'default'
@@ -17,7 +17,7 @@ export const getColor = (
     return `var(--color-${color}-${shade})`;
 };
 
-// * Повертає набір локальних змінних тільки для складних інтерактивних компонентів (кнопки, картки).
+// Returns set of local variables for complex interactive components (buttons, cards etc.)
 export const getColorThemeVariables = (color: ColorPalette): ThemeVariables => {
     return {
         '--local-color': `var(--color-${color})`,

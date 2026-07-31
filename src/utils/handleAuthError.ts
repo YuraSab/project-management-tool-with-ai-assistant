@@ -1,4 +1,4 @@
-import {FirebaseError} from "firebase/app";
+import { FirebaseError } from "firebase/app";
 
 export const handleAuthError = (error: unknown) => {
     if (error instanceof FirebaseError) {
