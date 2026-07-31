@@ -145,7 +145,7 @@ const TaskEdit = () => {
                 <FormDateInput name={"endDate"} value={formatDateForInput(selectedTask?.createdAt)} onChange={handleChange} disabled={true}/>
                 <div className={styles.buttonBlock}>
                     <CustomButton children={"Save changes"} disabled={isPendingUpdate || isPendingDelete} type={'submit'}/>
-                    <CustomButton children={"Delete task"} onClick={handleDelete} customStyles={{backgroundColor: "#D10000"}} disabled={isPendingUpdate || isPendingDelete}/>
+                    <CustomButton children={"Delete task"} onClick={handleDelete} style={{backgroundColor: "#D10000"}} disabled={isPendingUpdate || isPendingDelete}/>
                 </div>
             </div>
         </CustomForm>

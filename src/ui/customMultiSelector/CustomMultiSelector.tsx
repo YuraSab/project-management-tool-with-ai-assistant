@@ -1,8 +1,8 @@
-import {HighlightColor} from "../../types/user.ts";
-import {Check} from "lucide-react";
-import {useProfileStore} from "../../store/profileStore.ts";
+import { Check } from "lucide-react";
+import { HighlightColor } from "../../types/user";
+import { useProfileStore } from "../../store/profileStore";
+import { getColorThemeVariables } from "../../utils/colorThemeSelector";
 import styles from './CustomMultySelect.module.css';
-import {getColorThemeVariables} from "../../utils/colorThemeSelector.ts";
 
 interface CustomMultiSelectorProps {
     options: string[],
@@ -10,12 +10,10 @@ interface CustomMultiSelectorProps {
     onChange: (value: string) => void,
 }
 
-const getBlockClassKey = (color: HighlightColor) => `_block__${color}`;
-const getRowClassKey = (color: HighlightColor) => `_assignedMembers_button__${color}`;
-
 const CustomMultiSelector = ({ options, selectedOptions, onChange }: CustomMultiSelectorProps) => {
     const profile = useProfileStore((state) => state.profile);
     const highlightColor = profile?.highlightColor ?? HighlightColor.Purple;
+
     return (
         <div
             className={`${styles.block} hideScrollbar`}

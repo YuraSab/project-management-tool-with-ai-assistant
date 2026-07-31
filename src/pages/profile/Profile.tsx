@@ -98,7 +98,7 @@ const Profile = () => {
                     />
                 ))}
             </div>
-            <CustomButton children={'Save changes'} customStyles={{ marginTop: 8 }} disabled={!hasChangedForm} type={'submit'}/>
+            <CustomButton children={'Save changes'} style={{ marginTop: 8 }} disabled={!hasChangedForm} type={'submit'}/>
         </CustomForm>
     );
 };

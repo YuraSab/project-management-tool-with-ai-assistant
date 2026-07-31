@@ -126,7 +126,7 @@ const ProjectSettings: React.FC = () => {
             <div className={styles.buttonBlock}>
                 <CustomButton children={"Save changes"} onClick={() => handleUpdateProject()} disabled={editProjectMutation.isPending}/>
                 {profile?.role === "admin" && (
-                    <CustomButton children={"Delete project"} onClick={() => handleDeleteProject()} customStyles={{backgroundColor: "#D10000"}}/>
+                    <CustomButton children={"Delete project"} onClick={() => handleDeleteProject()} style={{backgroundColor: "#D10000"}}/>
                 )}
             </div>
         </div>

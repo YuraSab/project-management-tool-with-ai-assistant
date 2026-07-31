@@ -11,7 +11,7 @@
     z-index: 0;
     width: var(--user-icon-size, 36px);
     height: var(--user-icon-size, 36px);
-    font-size: var(--user-icon-font-size, 16px);
+    font-size: 16px;
     transition: all 0.2s ease;
 }
 

@@ -1,5 +1,5 @@
+import { SortOption } from "../../types/task.ts";
 import styles from "./FormSelect.module.css";
-import {SortOption} from "../../types/task.ts";
 
 export const sortOptions: SortOption[] = [
     "Start date dec", "Start date inc",

@@ -5,10 +5,11 @@ interface CustomFormProps extends ComponentPropsWithoutRef<'form'>{
     children: React.ReactNode,
     disabled?: boolean,
     isDrawer?: boolean,
-    className?: string,
 }
 
-const CustomForm = ({ onSubmit, children, disabled, isDrawer = false, className = '', style, ...props }: CustomFormProps) => {
+const CustomForm = (
+    { onSubmit, children, disabled, isDrawer = false, className = '', style, ...props }: CustomFormProps
+) => {
     const handleSubmit = useCallback((e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (onSubmit)

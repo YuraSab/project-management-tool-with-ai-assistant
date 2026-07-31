@@ -2,10 +2,12 @@ import { ProjectStatus } from "../../types/project";
 import { TaskPriority, TaskStatus } from "../../types/task";
 import styles from "./StatusText.module.css";
 
-// todo - divide for status and priority
+export type StatusType = TaskStatus | ProjectStatus | TaskPriority;
+
 interface StatusTextProps {
-    status: TaskStatus | ProjectStatus | TaskPriority
+    status: StatusType
 }
+
 const statusLabels: { [key in TaskStatus | ProjectStatus | TaskPriority ]: string } = {
     todo: "Todo",
     in_progress: "In progress",
@@ -17,6 +19,7 @@ const statusLabels: { [key in TaskStatus | ProjectStatus | TaskPriority ]: strin
     high: "High",
     none: "None",
 }
+
 const statusClasses: { [key in TaskStatus | ProjectStatus | TaskPriority]: string } = {
     todo: styles.blue,
     planned: styles.blue,
@@ -29,12 +32,13 @@ const statusClasses: { [key in TaskStatus | ProjectStatus | TaskPriority]: strin
     none: styles.gray,
 }
 
-const StatusText = ({ status }: StatusTextProps) => {
-    return(
-        <span className={`${styles.textBlock} ${statusClasses[status]}`}>
+const StatusText = ({ status, ...props }: StatusTextProps) => (
+    <span
+        className={`${styles.textBlock} ${statusClasses[status]}`}
+        {...props}
+    >
             {statusLabels[status]}
-        </span>
-    )
-}
+    </span>
+);
 
 export default StatusText;

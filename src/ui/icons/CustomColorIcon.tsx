@@ -1,6 +1,6 @@
-import {Check} from "lucide-react";
+import { Check } from "lucide-react";
+import { ColorPalette, Theme } from "../../types/user";
 import styles from "./CustomColorIcon.module.css";
-import {ColorPalette, Theme} from "../../types/user.ts";
 
 interface CustomColorIconProps<T extends ColorPalette> {
     currentColor: T,

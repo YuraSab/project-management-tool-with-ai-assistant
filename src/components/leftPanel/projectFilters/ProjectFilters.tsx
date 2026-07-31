@@ -158,7 +158,7 @@ const ProjectFilters: React.FC = () => {
             <Title text={'Utilities'}/>
             <NoStatusCheckBox text={'Task counter'} checked={showTaskCounter} onChange={setShowTaskCounter} customStyles={{ marginTop: 8 }}/>
             <NoStatusCheckBox text={'AI Chat'} checked={showAIChat} onChange={setShowAIChat} customStyles={{ marginTop: 8 }}/>
-            <CustomButton children={"Clear filters"} onClick={handleClearFilters} customStyles={{ margin: '12px 0' }}/>
+            <CustomButton children={"Clear filters"} onClick={handleClearFilters} style={{ margin: '12px 0' }}/>
         </div>
     );
 };

@@ -1,25 +1,29 @@
-import styles from './BlurWrapper.module.css';
-import {ReactNode, MouseEvent, KeyboardEvent} from "react";
+import {ReactNode, MouseEvent, useEffect} from "react";
 import {X} from "lucide-react";
+import styles from './BlurWrapper.module.css';
 
 interface BlurWrapperProps {
     closeEvent?: () => void,
     children: ReactNode,
 }
 
-const BlurWrapper = ({closeEvent, children}: BlurWrapperProps) => {
-    const handleClose = () => closeEvent?.();
-    const handleKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
-        if (e.key === 'Enter' || e.key === ' ')
-            handleClose();
-    };
+const BlurWrapper = ({ closeEvent, children }: BlurWrapperProps) => {
     const handleContentClick = (e: MouseEvent<HTMLDivElement>) => e.stopPropagation();
+
+    useEffect(() => {
+        if (!closeEvent) return;
+        const handleKeyDown = (e: KeyboardEvent) => {
+            if (e.key === 'Escape')
+                closeEvent();
+        };
+
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, [closeEvent]);
 
     return (
         <div
             className={styles.overlay}
-            onClick={handleClose}
-            onKeyDown={handleKeyDown}
             aria-label="Close overlay"
             role={'button'}
         >
@@ -28,13 +32,17 @@ const BlurWrapper = ({closeEvent, children}: BlurWrapperProps) => {
                 onClick={handleContentClick}
                 role="dialog"
             >
-                <X
-                    onClick={handleClose}
-                    className={styles.x}
-                    size={30}
-                    color={'black'}
-                    tabIndex={0}
-                />
+                <button
+                    type={"button"}
+                    onClick={() => closeEvent?.()}
+                >
+                    <X
+                        className={styles.x}
+                        size={30}
+                        color={'black'}
+                    />
+                </button>
+
                 {children}
             </div>
         </div>

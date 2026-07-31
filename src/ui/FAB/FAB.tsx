@@ -1,33 +1,35 @@
-import React, {HTMLAttributes} from 'react';
+import React, { ButtonHTMLAttributes } from 'react';
+import { useProfileStore } from "../../store/profileStore";
+import { HighlightColor, Theme } from "../../types/user";
+import { getColorThemeVariables } from "../../utils/colorThemeSelector";
 import styles from './Fab.module.css';
-import {useProfileStore} from "../../store/profileStore.ts";
-import {HighlightColor} from "../../types/user.ts";
-import {getColorThemeVariables} from "../../utils/colorThemeSelector.ts";
 
-interface FabProps extends HTMLAttributes<HTMLDivElement> {
-    type?: 'filled' | 'hollow',
-    customStyles?: React.CSSProperties,
-    className?: string,
+interface FabProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+    format?: 'filled' | 'hollow',
 }
 
-const Fab = ({ children, type = 'filled', customStyles, className = '', onClick, ...rest }: FabProps) => {
-    const { theme, highlightColor } = useProfileStore((state) => state.profile);
-    const activeColor = highlightColor ?? HighlightColor.Purple;
+const Fab = (
+    { children, format = 'filled', className = '', style, onClick, ...props }: FabProps
+) => {
+    const profile = useProfileStore((state) => state.profile);
+    const activeColor = profile?.highlightColor ?? HighlightColor.Purple;
+    const activeTheme = profile?.theme ?? Theme.White;
     const colorVariables = getColorThemeVariables(activeColor);
 
     return (
-        <div
+        <button
             onClick={onClick}
-            className={`${styles.fab} ${styles[type]} ${className}`}
+            type={'button'}
+            className={`${styles.fab} ${styles[format]} ${className}`}
             style={{
                 ...colorVariables,
-                ...customStyles,
-                '--local-theme-color': theme,
+                '--local-theme-color': activeTheme,
+                ...style
             }}
-            {...rest}
+            {...props}
         >
             {children}
-        </div>
+        </button>
     );
 };
 

@@ -1,11 +1,12 @@
+import { useProfileStore } from "../../store/profileStore";
+import { HighlightColor } from "../../types/user";
+import { getColor } from "../../utils/colorThemeSelector";
 import styles from "./NoStatusText.module.css";
-import {useProfileStore} from "../../store/profileStore.ts";
-import {HighlightColor} from "../../types/user.ts";
-import {getColor} from "../../utils/colorThemeSelector.ts";
 
 interface NoStatusTextProps {
     text: string
 }
+
 const NoStatusText = ({ text }: NoStatusTextProps) => {
     const profile = useProfileStore((state) => state.profile);
     const highlightColor = profile?.highlightColor ?? HighlightColor.Purple;

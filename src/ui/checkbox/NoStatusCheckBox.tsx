@@ -6,23 +6,22 @@ interface CheckBoxStatusProps extends Omit<React.CustomComponentPropsWithRef<'in
     checked: boolean,
     onChange: (checked: boolean) => void,
     name?: string,
-    customStyles?: React.CSSProperties,
 }
 
-const NoStatusCheckBox = ({ text, checked, onChange, customStyles, name = "status checkbox", ...props }: CheckBoxStatusProps) => {
-    return(
-        <div>
-            <input
-                type={"checkbox"}
-                checked={checked}
-                onChange={(e) => onChange(e.target.checked)}
-                name={name}
-                style={{ marginRight: 4, ...customStyles }}
-                {...props}
-            />
-            <NoStatusText text={text}/>
-        </div>
-    )
-}
+const NoStatusCheckBox = (
+    { text, checked, onChange, style, name = "status checkbox", ...props }: CheckBoxStatusProps
+) => (
+    <div>
+        <input
+            type={"checkbox"}
+            checked={checked}
+            onChange={(e) => onChange(e.target.checked)}
+            name={name}
+            style={{ marginRight: 4, ...style }}
+            {...props}
+        />
+        <NoStatusText text={text}/>
+    </div>
+);
 
 export default NoStatusCheckBox;

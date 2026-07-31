@@ -1,15 +1,15 @@
 import React from "react";
-import {HighlightColor} from "../../types/user";
+import { HighlightColor } from "../../types/user";
+import { useProfileStore } from "../../store/profileStore";
+import { getColorThemeVariables } from "../../utils/colorThemeSelector";
 import styles from "./SelectorBlock.module.css";
-import {useProfileStore} from "../../store/profileStore.ts";
-import {getColorThemeVariables} from "../../utils/colorThemeSelector.ts";
 
 interface SelectorBlockProps {
     onSelectorActive: () => void,
     children: React.ReactNode,
 }
 
-const SelectorBlock = ({onSelectorActive, children}: SelectorBlockProps) => {
+const SelectorBlock = ({ onSelectorActive, children }: SelectorBlockProps) => {
     const profile = useProfileStore((state) => state.profile);
     const highlightColor: HighlightColor = profile?.highlightColor ?? HighlightColor.Purple;
     return (

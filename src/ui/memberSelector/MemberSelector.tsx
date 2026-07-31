@@ -1,9 +1,9 @@
-import {HighlightColor, UserProfile} from "../../types/user.ts";
-import CustomUserIcon from "../icons/CustomUserIcon.tsx";
 import {Check} from "lucide-react";
+import { HighlightColor, UserProfile } from "../../types/user.ts";
+import { useProfileStore } from "../../store/profileStore.ts";
+import { getColorThemeVariables } from "../../utils/colorThemeSelector.ts";
+import CustomUserIcon from "../icons/CustomUserIcon.tsx";
 import styles from './MemberSelector.module.css';
-import {useProfileStore} from "../../store/profileStore.ts";
-import {getColorThemeVariables} from "../../utils/colorThemeSelector.ts";
 
 interface MemberSelectorProps {
     membersMap: Map<string, UserProfile>,
@@ -12,7 +12,7 @@ interface MemberSelectorProps {
 }
 
 
-const MemberSelector = ({membersMap, selectedMembersIds, clickAction}: MemberSelectorProps) => {
+const MemberSelector = ({ membersMap, selectedMembersIds, clickAction }: MemberSelectorProps) => {
     const highlightColor = useProfileStore((state) => state.profile?.highlightColor);
     const colorVariables = getColorThemeVariables(highlightColor ?? HighlightColor.Purple);
     const members = [...membersMap.values()];

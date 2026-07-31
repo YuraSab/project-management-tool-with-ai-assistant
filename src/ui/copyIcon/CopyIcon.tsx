@@ -1,28 +1,28 @@
 import React from 'react';
-import {copyText} from "../../utils/copy.ts";
-import {Copy} from "lucide-react";
+import { Copy } from "lucide-react";
+import { copyText } from "../../utils/copy.ts";
+import { toast } from "../../utils/toaster.ts";
 import styles from './CopyIcon.module.css';
-import {toast} from "../../utils/toaster.ts";
 
-interface CopyIcon {
+interface CopyIconProps {
     copyValue: string,
     toastValue?: string,
     size?: number,
-    customStyles: React.CSSProperties,
 }
 
-const CopyIcon = ({ copyValue, toastValue, size = 19, customStyles }: CopyIcon) => {
-    const handleCopy = () => {
-        copyText(copyValue);
+const CopyIcon = ({ copyValue, toastValue, size = 19, style }: CopyIconProps) => {
+    const handleCopy = async () => {
+        await copyText(copyValue);
         toast.info(toastValue ?? 'Copied!');
     };
 
     return (
         <Copy
-            size={size}
+            role={'button'}
             onClick={handleCopy}
+            size={size}
             className={styles.copyIcon}
-            style={{ ...customStyles }}
+            style={style}
         />
     );
 };

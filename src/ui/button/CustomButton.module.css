@@ -10,28 +10,20 @@
   display: flex;
   justify-content: center;
   align-items: center;
-
-
-  /* 🌟 Ініціалізуємо змінні для IDE, щоб не було червоних помилок */
   --local-color: transparent;
   --local-dark: transparent;
   --local-light: transparent;
   --local-disabled: transparent;
-
-  /* 🌟 Застосовуємо наші динамічні кольори */
   background-color: var(--local-color);
 }
 
-
-/* 🌟 Ефект наведення для активної кнопки (використовує темніший відтінок) */
 .customSubmitButton:not(:disabled):hover {
   background-color: var(--local-dark);
 }
 
-/* 🌟 Стилі для заблокованої кнопки */
 .customSubmitButton:disabled {
   background-color: var(--local-disabled);
-  color: var(--local-light); /* М'який пастельний колір тексту в disabled стані */
+  color: var(--local-light);
   cursor: not-allowed;
   transform: none;
 }

@@ -67,14 +67,14 @@ const Project = () => {
                 <RightPanelProject/>
             )}
             <div className={`${styles.fabGroup} ${isRightPanelActive ? styles.panelOpen : ''} ${isAIChatOpened ? styles.aiChatOpen : ''}`}>
-                <FAB customStyles={{ position: "static" }} onClick={() => setIsLeftPanelActive(true)} className={styles.projectSettingsIcon}>
+                <FAB style={{ position: "static" }} onClick={() => setIsLeftPanelActive(true)} className={styles.projectSettingsIcon}>
                     <Settings size={32} color={theme}/>
                 </FAB>
-                <FAB customStyles={{ position: "static" }} onClick={() => switchRightPanelView(isAddTaskActive ? 'closeAll' : 'addTask')}>
+                <FAB style={{ position: "static" }} onClick={() => switchRightPanelView(isAddTaskActive ? 'closeAll' : 'addTask')}>
                     <Plus size={36} color={theme}/>
                 </FAB>
                 {showAIChat && (
-                    <FAB customStyles={{ position: "static" }} onClick={() => switchRightPanelView(isAIChatOpened ? 'closeAll' : 'aiChat')} type={'hollow'}>
+                    <FAB style={{ position: "static" }} onClick={() => switchRightPanelView(isAIChatOpened ? 'closeAll' : 'aiChat')} format={'hollow'}>
                         <GeminiIcon size={32}/>
                     </FAB>
                 )}

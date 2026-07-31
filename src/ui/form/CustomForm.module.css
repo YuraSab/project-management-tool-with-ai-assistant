@@ -2,7 +2,6 @@
     display: flex;
     flex-direction: column;
     max-width: 500px;
-    /*margin: 0 auto;*/
     padding: 24px;
     border: 1px solid #e5e7eb;
     border-radius: 12px;
@@ -26,7 +25,6 @@
         border: none;
         border-radius: 0;
         box-shadow: none;
-        /*background-color: transparent;*/
         padding: 12px 16px 40px 16px;
         margin: 0;
         height: auto !important;
@@ -37,11 +35,11 @@
 @media (max-width: 550px) {
     .customForm {
         max-width: 100%;
-        border: none !important;        /* Забираємо рамку повністю */
-        border-radius: 0;               /* Забираємо закруглення */
-        box-shadow: none !important;    /* Забираємо тінь блоку */
-        background-color: transparent;  /* Форма зливається з загальним фоном */
-        padding: 12px 16px;             /* Легкі бічні відступи */
+        border: none !important;
+        border-radius: 0;
+        box-shadow: none !important;
+        background-color: transparent;
+        padding: 12px 16px;
         margin: 0;
     }
 }

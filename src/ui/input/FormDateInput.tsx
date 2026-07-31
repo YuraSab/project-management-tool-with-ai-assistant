@@ -1,23 +1,21 @@
-import styles from "./Input.module.css";
 import React from "react";
+import styles from "./Input.module.css";
 
-interface FormDateInputProps {
+interface FormDateInputProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'type'> {
     name: string, 
     value: string,
     onChange: (event: React.ChangeEvent<HTMLInputElement>) => void,
-    required?: boolean,
 }
 
-const FormDateInput = ({ name, value , onChange, required = false, ...props }: FormDateInputProps) => {
-    return <input 
+const FormDateInput = ({ name, value , onChange, ...props }: FormDateInputProps) => (
+    <input
         name={name} 
         value={value} 
         onChange={onChange} 
-        required={required}
-        type="date" 
+        type="date"
         className={styles.customInput}
         {...props}
     />
-}
+);
 
 export default FormDateInput;

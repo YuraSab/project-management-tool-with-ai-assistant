@@ -11,9 +11,7 @@
     align-items: center;
     flex-direction: column;
     box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-
     transition: transform 0.1s ease;
-
     --local-color: transparent;
     --local-dark: transparent;
     --local-light: transparent;

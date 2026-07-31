@@ -1,5 +1,5 @@
+import CopyIcon from "../copyIcon/CopyIcon";
 import styles from './DisabledField.module.css';
-import CopyIcon from "../copyIcon/CopyIcon.tsx";
 
 interface DisabledFieldProps {
     children: string,
@@ -7,7 +7,7 @@ interface DisabledFieldProps {
     toastValue?: string,
 }
 
-const DisabledField = ({copyText, toastValue, children}: DisabledFieldProps) => (
+const DisabledField = ({ copyText, toastValue, children }: DisabledFieldProps) => (
     <div className={styles.displayInputLike}>
         <span>{children}</span>
         {copyText && (

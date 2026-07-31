@@ -1,10 +1,10 @@
 import React from "react";
+import { ColorPalette } from "../../types/user.ts";
+import { useProfileStore} from "../../store/profileStore.ts";
 import styles from "./CustomUserIcon.module.css";
-import {ColorPalette} from "../../types/user.ts";
-import {useProfileStore} from "../../store/profileStore.ts";
 
 interface UserIconProps {
-    title: string,
+    title?: string,
     backgroundColor?: ColorPalette,
     total?: boolean,
     size?: number,
@@ -13,7 +13,9 @@ interface UserIconProps {
     customStyles?: React.CSSProperties
 }
 
-const CustomUserIcon: React.FC<UserIconProps> = ({ title = '', backgroundColor, customStyles, total, size= 32, fontSize = 18, onClick }) => {
+const CustomUserIcon: React.FC<UserIconProps> = ({
+    title = 'U', backgroundColor, customStyles, total, size= 32, fontSize = 18, onClick
+}) => {
     const highlightColor = useProfileStore((state) => state.profile?.highlightColor);
     const activeColor = backgroundColor ?? highlightColor;
     const cssBackgroundColor = `var(--color-${activeColor})`;
@@ -29,7 +31,7 @@ const CustomUserIcon: React.FC<UserIconProps> = ({ title = '', backgroundColor, 
         }}
             onClick={() => onClick && onClick((prev) => !prev)}
         >
-            { total ? title : title[0] }
+            {title[0]}
         </div>
     );
 };
