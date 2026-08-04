@@ -8,6 +8,7 @@ interface CopyIconProps {
     copyValue: string,
     toastValue?: string,
     size?: number,
+    style?: React.CSSProperties
 }
 
 const CopyIcon = ({ copyValue, toastValue, size = 19, style }: CopyIconProps) => {

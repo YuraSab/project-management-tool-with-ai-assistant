@@ -9,7 +9,6 @@ interface AuthState {
     setLogin: (user: AuthUser) => void;
     setLogout: () => void;
     setIsUserLoading: (value: boolean) => void;
-    setIsHeaderModalActive: (value: boolean) => void;
 }
 
 export const useAuthStore = create<AuthState>()(
@@ -20,7 +19,6 @@ export const useAuthStore = create<AuthState>()(
             setLogin: (user) => set({
                 user: user,
                 isUserLoading: false,
-                isHeaderModalActive: false
             }),
             setLogout: () => {
                 useProfileStore.getState?.().setProfile(null);
@@ -30,7 +28,6 @@ export const useAuthStore = create<AuthState>()(
                 });
             },
             setIsUserLoading: (value) => set({ isUserLoading: value }),
-            setIsHeaderModalActive: (value) => set({ isHeaderModalActive: value }),
         }),
         {
             name: "auth-session-storage",

@@ -43,6 +43,7 @@ const SORT_STRATEGIES: Record<Exclude<SortOption, 'none'>, SortComparator> = {
 
 export const getSortedTasks = (tasks: Task[], sortValue: SortOption): Task[] => {
     if (!tasks || tasks.length === 0) return [];
+    if (sortValue === "none") return tasks;
     const comparator = SORT_STRATEGIES[sortValue];
     if (!comparator) return tasks;
     return [...tasks].sort(comparator);

@@ -1,7 +1,7 @@
-import {useMutation, useQueryClient} from "@tanstack/react-query";
-import { updateTask } from "../../services/taskService";
-import { toast } from "../../utils/toaster";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Task } from "../../types/task";
+import { toast } from "../../utils/toaster";
+import { updateTask } from "../../services/taskService";
 
 interface MutationContext {
     previousTasks?: Task[];
@@ -27,7 +27,7 @@ export const useUpdateTask = (projectId: string, userId: string) => {
             // Save the context with previous tasks in case of a rollback
             return { previousTasks };
         },
-        onError: (err, updatedTask, context) => {
+        onError: (_err, _updatedTask, context) => {
             if (context?.previousTasks)
                 queryClient.setQueryData(queryKey, context.previousTasks);
             toast.error('Failed to update task');

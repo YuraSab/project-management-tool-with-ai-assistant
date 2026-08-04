@@ -1,7 +1,7 @@
 import { Pencil } from "lucide-react";
 import { Task } from "../../types/task";
 import { useProjectUsers } from "../../hooks/project/useProjectUsers";
-import StatusText from "../../ui/statusText/StatusText";
+import StatusText, { StatusType } from "../../ui/statusText/StatusText";
 import UserIconCollection from "../usersIconsCollection/UsersIconsCollection";
 import styles from './TaskInfo.module.css';
 
@@ -36,9 +36,9 @@ const UpdateTaskInfo = ({payload, title}: UpdateTaskInfoProps) => {
                         return null;
                     return (
                         <div key={key} className={styles.detailRow}>
-                            <span className={styles.fieldName}>{TaskFieldsLabels[key] || key}:</span>
+                            <span className={styles.fieldName}>{TaskFieldsLabels[key as keyof typeof TaskFieldsLabels] || key}:</span>
                             {(key === 'status' || key === 'priority') ? (
-                                <StatusText status={value}/>
+                                value && <StatusText status={value as StatusType}/>
                             ) : key === 'assignedMembers' ? (
                                 <UserIconCollection
                                     users={assignedMembersProfiles || []}

@@ -1,5 +1,4 @@
 import type { Timestamp } from "firebase/firestore";
-import {TaskCategory} from "./task.ts";
 
 export enum ProjectStatus {
     Planned = "planned",

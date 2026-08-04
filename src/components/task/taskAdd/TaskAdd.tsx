@@ -20,7 +20,7 @@ import styles from "./TaskAdd.module.css";
 import {toast} from "../../../utils/toaster.ts";
 
 type FormData = Pick<Task, 'title'| 'description'| 'status' | 'priority'> & {
-    startDate: string, endDate: string, type: TaskType | '', category: TaskCategory | ''
+    startDate: string, endDate: string, type: TaskType, category: TaskCategory
 };
 
 const INITIAL_TASK: FormData = {
@@ -119,9 +119,9 @@ const TaskAdd = React.memo(() => {
                 <Title text={'Priority:'}/>
                 <FormSelect<TaskPriority> name="priority" value={formData.priority} onChange={handleChange} options={TASK_PRIORITIES}/>
                 <Title text={'Type'}/>
-                <FormSelect<TaskType | ''> name="type" value={formData.type} onChange={handleChange} options={TASK_TYPES}/>
+                <FormSelect<TaskType> name="type" value={formData.type} onChange={handleChange} options={TASK_TYPES}/>
                 <Title text={'Category'}/>
-                <FormSelect<TaskCategory | ''> name="category" value={formData.category} onChange={handleChange} options={TASK_CATEGORIES}/>
+                <FormSelect<TaskCategory> name="category" value={formData.category} onChange={handleChange} options={TASK_CATEGORIES}/>
                 <Title text={'Start date:'}/>
                 <FormDateInput name={"startDate"} value={formData.startDate} onChange={handleChange}/>
                 <Title text={'End date:'}/>

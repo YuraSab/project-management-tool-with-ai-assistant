@@ -12,7 +12,7 @@ import FAB from "../../ui/FAB/FAB";
 import GeminiIcon from "../../ui/icons/GeminiIcon";
 import LeftPanelProject from "../../components/leftPanel/projectSidebar/ProjectSidebar";
 import RightPanelProject from "../../components/rightPanel/rightPanelProject/RightPanelProject";
-import KanbanBoard from "../../components/kanban/kanbanBoard/KanbanbBoard";
+import KanbanBoard from "../../components/kanban/kanbanBoard/KanbanBoard.tsx";
 import Error from "../../components/error/Error";
 import styles from './Project.module.css';
 
@@ -63,7 +63,7 @@ const Project = () => {
                     <AlignJustify size={28}/>
                 </div>
             )}
-            <KanbanBoard projectId={projectId}/>
+            <KanbanBoard projectId={projectId || ''}/>
             {isRightPanelActive && <RightPanelProject/>}
             <div className={`${styles.fabGroup} ${isRightPanelActive ? styles.panelOpen : ''} ${isAIChatOpened ? styles.aiChatOpen : ''}`}>
                 <FAB style={{ position: "static" }} onClick={() => setIsLeftPanelActive(true)} className={styles.projectSettingsIcon}>

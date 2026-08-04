@@ -1,7 +1,7 @@
 import React from "react";
 import NoStatusText from "../noStatusText/NoStatusText.tsx";
 
-interface CheckBoxStatusProps extends Omit<React.CustomComponentPropsWithRef<'input'>, 'onChange'> {
+interface CheckBoxStatusProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChange'> {
     text: string,
     checked: boolean,
     onChange: (checked: boolean) => void,
@@ -13,7 +13,7 @@ const NoStatusCheckBox = (
 ) => (
     <div style={{ marginTop: 4 }}>
         <input
-            type={"checkbox"}
+            type="checkbox"
             checked={checked}
             onChange={(e) => onChange(e.target.checked)}
             name={name}

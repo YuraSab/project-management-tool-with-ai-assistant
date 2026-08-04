@@ -25,7 +25,7 @@ const Fab = (
                 ...colorVariables,
                 '--local-theme-color': activeTheme,
                 ...style
-            }}
+            } as React.CSSProperties}
             {...props}
         >
             {children}

@@ -17,8 +17,8 @@ const UserIconCollection = ({ users, size = 34, maxIcons = 4, fontSize, align = 
         <div className={styles.iconsBlock} style={{justifyContent: align}}>
             {hiddenUsers > 0 && (
                 hiddenUsers < 9
-                    ? <CustomUserIcon title={`+${hiddenUsers}`} totaly size={size} fontSize={fontSize}/>
-                    : <CustomUserIcon title={"9+"} totaly size={size} fontSize={fontSize}/>
+                    ? <CustomUserIcon title={`+${hiddenUsers}`} total size={size} fontSize={fontSize}/>
+                    : <CustomUserIcon title={"9+"} total size={size} fontSize={fontSize}/>
             )}
             {visibleUsers?.map((u) => (
                 <CustomUserIcon

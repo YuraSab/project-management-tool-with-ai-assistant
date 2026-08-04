@@ -1,10 +1,10 @@
+import { Task } from "../types/task";
 import { useProjectControlStore } from "../store/projectControlStore";
 import { useAIChatStore } from "../store/aiChatStore";
-import { Task } from "../types/task";
 
 export type PanelView = "addTask" | "editTask" | "aiChat" | "closeAll";
 
-export const switchRightPanelView = (view: PanelView, task?: Task) => {
+export const switchRightPanelView = (view: PanelView, task?: Task | null) => {
     const projectStore = useProjectControlStore.getState?.();
     const chatStore = useAIChatStore.getState?.();
 
@@ -20,7 +20,7 @@ export const switchRightPanelView = (view: PanelView, task?: Task) => {
             projectStore.setIsRightPanelActive(true);
             projectStore.setIsAddTaskActive(false);
             projectStore.setIsEditTaskActive(true);
-            projectStore.setSelectedTask(task);
+            projectStore.setSelectedTask(task ?? null);
             chatStore.setIsAIChatOpened(false);
             break;
         case "aiChat":

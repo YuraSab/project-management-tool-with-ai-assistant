@@ -19,7 +19,7 @@ interface ProjectControlState {
     setSelectedProject: (project: Project | null) => void;
     // ---- TASK ----
     selectedTask: Task | null;
-    setSelectedTask: (task: Task) => void;
+    setSelectedTask: (task: Task | null) => void;
     // ---- PANELS ----
     isRightPanelActive: boolean;
     setIsRightPanelActive: (value: boolean) => void;

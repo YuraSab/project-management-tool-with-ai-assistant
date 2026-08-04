@@ -1,7 +1,7 @@
 import { Plus } from "lucide-react";
 import { Task } from "../../types/task";
 import { useProjectUsers } from "../../hooks/project/useProjectUsers";
-import StatusText from "../../ui/statusText/StatusText";
+import StatusText, { StatusType } from "../../ui/statusText/StatusText";
 import UserIconCollection from "../usersIconsCollection/UsersIconsCollection";
 import styles from './TaskInfo.module.css';
 
@@ -22,7 +22,7 @@ const TaskFieldsLabels: Record<keyof Omit<Task, 'id' | 'projectId' | 'createdAt'
     category: 'Category'
 };
 
-const CreateTaskInfo = ({payload, title}: CreateTaskInfoProps) => {
+const CreateTaskInfo = ({ payload, title }: CreateTaskInfoProps) => {
     const { data: assignedMembersProfiles } = useProjectUsers(payload.assignedMembers || []);
     return (
         <div className={styles.actionDetails}>
@@ -35,15 +35,13 @@ const CreateTaskInfo = ({payload, title}: CreateTaskInfoProps) => {
                     if (key === 'projectId') return null;
                     return (
                         <div key={key} className={styles.detailRow}>
-                            <span className={styles.fieldName}>{TaskFieldsLabels[key] || key}:</span>
+                            <span className={styles.fieldName}>{TaskFieldsLabels[key as keyof typeof TaskFieldsLabels] || key}:</span>
                             {
                                 (key === 'status' || key === 'priority')
-                                    ? <StatusText status={value}/>
-                                    : (
-                                        key === 'assignedMembers'
-                                            ? <UserIconCollection users={assignedMembersProfiles || []} size={20} maxIcons={3} fontSize={12} align={'start'}/>
-                                            : <span className={styles.fieldValue}>{String(value)}</span>
-                                    )
+                                    ? value && <StatusText status={value as StatusType}/>
+                                    : key === 'assignedMembers'
+                                        ? <UserIconCollection users={assignedMembersProfiles || []} size={20} maxIcons={3} fontSize={12} align={'start'}/>
+                                        : <span className={styles.fieldValue}>{String(value)}</span>
                             }
                         </div>
                     )

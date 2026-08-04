@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Send, Trash2, X } from "lucide-react";
 import { useShallow } from "zustand/react/shallow";
 import { Sender } from "../../types/aiChat";
@@ -83,7 +83,7 @@ const AIChat = () => {
             style={{
                  backgroundColor: profile?.theme === Theme.Black ? '#1e1e1e' : '#ffffff',
                  '--local-color': `var(--color-${highlightColor})`,
-            }}
+            } as React.CSSProperties}
         >
             <div className={styles.header} style={{borderBottom: `1px solid ${profile?.highlightColor}44`}}>
                 <div className={styles.title}>

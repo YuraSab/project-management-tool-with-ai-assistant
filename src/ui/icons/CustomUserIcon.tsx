@@ -10,11 +10,11 @@ interface UserIconProps {
     size?: number,
     fontSize?: number,
     onClick?: React.Dispatch<React.SetStateAction<boolean>>,
-    customStyles?: React.CSSProperties
+    style?: React.CSSProperties
 }
 
 const CustomUserIcon: React.FC<UserIconProps> = ({
-    title = 'U', backgroundColor, customStyles, total, size= 32, fontSize = 18, onClick
+    title = 'U', backgroundColor, style, total, size= 32, fontSize = 18, onClick
 }) => {
     const highlightColor = useProfileStore((state) => state.profile?.highlightColor);
     const activeColor = backgroundColor ?? highlightColor;
@@ -27,7 +27,7 @@ const CustomUserIcon: React.FC<UserIconProps> = ({
                 height: `var(--user-icon-size, ${size}px)`,
                 fontSize: fontSize,
                 backgroundColor: cssBackgroundColor,
-                ...customStyles
+                ...style
         }}
             onClick={() => onClick && onClick((prev) => !prev)}
         >

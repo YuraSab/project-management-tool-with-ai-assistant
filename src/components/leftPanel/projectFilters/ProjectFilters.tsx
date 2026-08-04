@@ -2,7 +2,15 @@ import React, {useCallback, useEffect, useMemo, useState} from "react"
 import { useParams } from "react-router-dom"
 import { useShallow } from "zustand/react/shallow";
 import { UserProfile } from "../../../types/user";
-import {  TASK_CATEGORIES, TASK_PRIORITIES, TASK_STATUSES, TASK_TYPES, TaskPriority, TaskStatus } from "../../../types/task"
+import {
+    TASK_CATEGORIES,
+    TASK_PRIORITIES,
+    TASK_STATUSES,
+    TASK_TYPES, TaskCategory,
+    TaskPriority,
+    TaskStatus,
+    TaskType
+} from "../../../types/task"
 import { toast } from "../../../utils/toaster";
 import { useProject } from "../../../hooks/project/useProject"
 import { useProjectUsers } from "../../../hooks/project/useProjectUsers"
@@ -118,7 +126,7 @@ const ProjectFilters: React.FC = () => {
                     />
                 ))}
             </div>
-            <NoStatusCheckBox text={'No priority'} checked={showNoPriorityTasks} onChange={setShowNoPriorityTasks} customStyles={{ marginTop: 14 }}/>
+            <NoStatusCheckBox text={'No priority'} checked={showNoPriorityTasks} onChange={setShowNoPriorityTasks} style={{ marginTop: 14 }}/>
             <Title text={'Assigned members'}/>
             <AssignMembersFilter
                 projectAssignedMembers={projectMembers || []}
@@ -129,16 +137,16 @@ const ProjectFilters: React.FC = () => {
             {addMembersActive && (
                 <MemberSelector membersMap={projectMembersMap} selectedMembersIds={localAssignedMembersIds || []} clickAction={handleMemberClick}/>
             )}
-            <NoStatusCheckBox text={'Unassigned'} checked={showUnassignedTasks} onChange={setShowUnassignedTasks} customStyles={{ marginTop: 14 }}/>
+            <NoStatusCheckBox text={'Unassigned'} checked={showUnassignedTasks} onChange={setShowUnassignedTasks} style={{ marginTop: 14 }}/>
             <Title text={'Types'}/>
             <SelectorBlock children={'Types'} onSelectorActive={() => setTaskTypesActive((prev) => !prev)}/>
             {taskTypesActive && (
-                <CustomMultiSelector options={TASK_TYPES} selectedOptions={typesFilter} onChange={setTypesFilter}/>
+                <CustomMultiSelector options={TASK_TYPES} selectedOptions={typesFilter} onChange={(value) => setTypesFilter(value as TaskType)}/>
             )}
             <Title text={'Categories'}/>
             <SelectorBlock children={'Categories'} onSelectorActive={() => setTaskCategoriesActive((prev) => !prev)}/>
             {taskCategoriesActive && (
-                <CustomMultiSelector options={TASK_CATEGORIES} selectedOptions={categoriesFilter} onChange={setCategoriesFilter}/>
+                <CustomMultiSelector options={TASK_CATEGORIES} selectedOptions={categoriesFilter} onChange={(value) => setCategoriesFilter(value as TaskCategory)}/>
             )}
             <Title text={'From'}/>
             <DateInput value={startDateFilter} onChange={setStartDateFilter}/>
@@ -149,8 +157,8 @@ const ProjectFilters: React.FC = () => {
             <Title text={'Search'}/>
             <TextInput name={'search'} value={searchTermFilter} onChange={setSearchTermFilter}/>
             <Title text={'Utilities'}/>
-            <NoStatusCheckBox text={'Task counter'} checked={showTaskCounter} onChange={setShowTaskCounter} customStyles={{ marginTop: 8 }}/>
-            <NoStatusCheckBox text={'AI Chat'} checked={showAIChat} onChange={setShowAIChat} customStyles={{ marginTop: 8 }}/>
+            <NoStatusCheckBox text={'Task counter'} checked={showTaskCounter} onChange={setShowTaskCounter} style={{ marginTop: 8 }}/>
+            <NoStatusCheckBox text={'AI Chat'} checked={showAIChat} onChange={setShowAIChat} style={{ marginTop: 8 }}/>
             <CustomButton children={"Clear filters"} onClick={handleClearFilters} style={{ margin: '12px 0' }}/>
         </div>
     );

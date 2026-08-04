@@ -1,19 +1,19 @@
-import { collection, doc, getDoc, getDocs, query, setDoc, where, documentId, updateDoc, orderBy, limit } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs, query, where, documentId, updateDoc, orderBy, limit } from "firebase/firestore";
 import { db } from "../firebase";
 import { UserProfile } from "../types/user";
 
-export const createUser = async ({ user }: Partial<UserProfile> & { id: string }): Promise<void> => {
-    const userRef = doc(db, 'users', user.uid);
-    const profile = {
-        uid: user.uid,
-        email: user.email,
-        displayName: user.displayName || "User",
-        photoURL: user.photoURL || null,
-        role: user.role || "member",
-        createdAt: new Date().toISOString(),
-    };
-    return await setDoc(userRef, profile);
-};
+// export const createUser = async ( user: Partial<UserProfile> & { id: string }): Promise<void> => {
+//     const userRef = doc(db, 'users', user.id);
+//     const profile = {
+//         uid: user.id,
+//         email: user.email,
+//         displayName: user.displayName || "User",
+//         photoURL: user.photoURL || null,
+//         role: user.role || "member",
+//         createdAt: new Date().toISOString(),
+//     };
+//     return await setDoc(userRef, profile);
+// };
 
 export const getUser = async (userId: string): Promise<UserProfile | null> => {
     if (!userId) return null;

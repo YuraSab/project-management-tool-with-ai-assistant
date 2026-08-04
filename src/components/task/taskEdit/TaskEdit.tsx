@@ -26,7 +26,7 @@ import AssignMembers from "../../asignMembers/AssignMembers";
 import styles from "./TaskEdit.module.css";
 
 type FormData = Omit<Task, "id" | "projectId" | "creatorId" | "assignedMembers" | 'startDate' | 'endDate'> & {
-    startDate: string, endDate: string, type: TaskType | '', category: TaskCategory | ''
+    startDate: string, endDate: string, type: TaskType, category: TaskCategory
 };
 const getInitialFormData = (task: Task | null): FormData => ({
     title: task?.title ?? '', description: task?.description ?? '',
@@ -41,7 +41,6 @@ const TaskEdit = () => {
     const ownId = useProfileStore((state) => state.profile?.uid);
     const selectedTask = useProjectControlStore((state) => state.selectedTask);
     const setIsRightPanelActive = useProjectControlStore((state) => state.setIsRightPanelActive);
-    const setIsEditTaskActive = useProjectControlStore((state) => state.setIsEditTaskActive);
 
     const {data: project} = useProject(projectId || "");
     const {data: projectMembers} = useProjectUsers(project?.assignedMembers || []);
@@ -54,7 +53,9 @@ const TaskEdit = () => {
     const [localAssignedMembersMap, setLocalAssignedMembersMap] = useState<Map<string, UserProfile>>(new Map());
     const [addMembersActive, setAddMembersActive] = useState<boolean>(false);
 
-    const projectMembersMap = useMemo(() => new Map([...(projectMembers || []).map(m => [m.uid, m])]), [projectMembers]);
+    const projectMembersMap = useMemo((
+        () => new Map<string, UserProfile>((projectMembers || []).map(m => [m.uid, m]))
+    ), [projectMembers]);
     const localAssignedMembersIds = useMemo(() => [...localAssignedMembersMap.keys()], [localAssignedMembersMap]);
     const localAssignedMembers = useMemo(() => [...localAssignedMembersMap.values()], [localAssignedMembersMap]);
 
@@ -110,7 +111,7 @@ const TaskEdit = () => {
 
     return (
         <CustomForm onSubmit={handleUpdate} style={{height: "calc(100vh - 130px)"}} disabled={isPendingUpdate || isPendingDelete} isDrawer={true}>
-            <RightPanelHeader taskTitle={selectedTask?.title || ""} setIsEditTaskActive={setIsEditTaskActive} setIsRightPanelActive={setIsRightPanelActive}/>
+            <RightPanelHeader taskTitle={selectedTask?.title || ""}/>
             <div className={styles.rightPanelChildEdit}>
                 <Title text={'Title'}/>
                 <FormTextInput name={"title"} value={formData.title} onChange={handleChange} required/>
@@ -130,9 +131,9 @@ const TaskEdit = () => {
                     <CustomUserIcon title={taskCreator ? taskCreator.displayName : "User"} backgroundColor={taskCreator?.iconColor}/>
                 </>)}
                 <Title text={'Type'}/>
-                <FormSelect<TaskType | ''> name="type" value={formData.type || ''} onChange={handleChange} options={TASK_TYPES}/>
+                <FormSelect<TaskType> name="type" value={formData.type} onChange={handleChange} options={TASK_TYPES}/>
                 <Title text={'Category'}/>
-                <FormSelect<TaskCategory | ''> name="category" value={formData.category || ''} onChange={handleChange}  options={TASK_CATEGORIES}/>
+                <FormSelect<TaskCategory> name="category" value={formData.category} onChange={handleChange}  options={TASK_CATEGORIES}/>
                 <Title text={'Status'}/>
                 <FormSelect<TaskStatus> name={"status"} value={formData.status} onChange={handleChange} options={TASK_STATUSES}/>
                 <Title text={'Priority'}/>

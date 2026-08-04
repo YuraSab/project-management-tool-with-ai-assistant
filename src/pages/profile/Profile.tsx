@@ -75,11 +75,11 @@ const Profile = () => {
                 <Title text='Avatar' style={{ paddingTop: 0 }}/>
                 <LogOut onClick={logout}/>
             </div>
-            <CustomUserIcon backgroundColor={iconColor} title={displayName.trim() ? displayName.trim()[0] : 'U'} customStyles={{ marginTop: 4 }}/>
+            <CustomUserIcon backgroundColor={iconColor} title={displayName.trim() ? displayName.trim()[0] : 'U'} style={{ marginTop: 4 }}/>
             <Title text='ID'/>
-            <DisabledField children={uid} copyText={uid} toastValue={'User ID copied'}/>
+            <DisabledField children={uid || ''} copyText={uid || ''} toastValue={'User ID copied'}/>
             <Title text='Email'/>
-            <DisabledField children={email} copyText={email} toastValue={'User email copied'}/>
+            <DisabledField children={email || ''} copyText={email || ''} toastValue={'User email copied'}/>
             <Title text={'Role'}/>
             <DisabledField children={role}/>
             <Title text='Created at'/>

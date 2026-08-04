@@ -60,7 +60,7 @@ const KanbanBoard: React.FC<KanbanBoardProps> = ({ projectId }) => {
             isInitialLoad: filters.isInitialLoad,
             unassignedTasks: filters.unassignedTasks,
             types: filters.typesFilter, categories: filters.categoriesFilter,
-        } as TaskFilters;
+        } as unknown as TaskFilters;
 
         const processTasks = (status: TaskStatus) => {
             const filtered = getFilteredTasks(projectTasks, status, currentFilters);
