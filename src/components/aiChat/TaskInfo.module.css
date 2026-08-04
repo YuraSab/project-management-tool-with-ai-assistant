@@ -1,51 +1,61 @@
+.actionDetails {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    width: 100%;
+}
+
 .actionMainLine {
     display: flex;
     align-items: center;
     gap: 8px;
     font-size: 14px;
     margin-bottom: 4px;
+    color: var(--color-text-primary);
 }
 
 .detailsList {
-    margin-left: 22px; /* Відступ деталізації під іконкою */
-    border-left: 1px solid rgba(0,0,0,0.1);
+    margin-left: 22px;
+    border-left: 1px solid var(--color-border, rgba(0, 0, 0, 0.1));
     padding-left: 10px;
 }
 
 .detailRow {
     display: flex;
-    /*align-items: center;*/
+    align-items: center;
     gap: 6px;
     font-size: 12px;
     margin-bottom: 2px;
 }
 
 .fieldName {
-    color: #666;
+    color: var(--color-text-secondary, #666);
     font-weight: 500;
 }
 
+.fieldValue {
+    color: var(--color-text-primary);
+    word-break: break-word;
+}
 
 .iconWrapper {
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-shrink: 0; /* Це не дасть іконці стискатися/розтягуватися */
-    width: 24px;   /* Фіксована ширина контейнера для іконки */
+    flex-shrink: 0;
+    width: 24px;
     height: 24px;
-    margin-top: 4px; /* Щоб плюс був на рівні першого рядка заголовка */
+    margin-top: 4px;
 }
 
 .actionIcon {
-    /* Додатковий захист */
     min-width: 18px;
     min-height: 18px;
-    color: var(--highlight-color);
+    color: var(--local-color, var(--color-purple));
 }
 
-/* Контейнер, де лежить іконка + заголовок таски */
 .taskHeader {
     display: flex;
-    align-items: flex-start; /* Вирівнюємо по верхньому краю */
+    align-items: flex-start;
     gap: 8px;
 }

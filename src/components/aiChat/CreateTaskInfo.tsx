@@ -1,23 +1,25 @@
+import { Plus } from "lucide-react";
+import { Task } from "../../types/task";
+import { useProjectUsers } from "../../hooks/project/useProjectUsers";
+import StatusText from "../../ui/statusText/StatusText";
+import UserIconCollection from "../usersIconsCollection/UsersIconsCollection";
 import styles from './TaskInfo.module.css';
-import {Plus} from "lucide-react";
-import {Task} from "../../types/task.ts";
-import StatusText from "../../ui/statusText/StatusText.tsx";
-import UserIconCollection from "../usersIconsCollection/UsersIconsCollection.tsx";
-import {useProjectUsers} from "../../hooks/project/useProjectUsers.ts";
 
 interface CreateTaskInfoProps {
     title: string,
     payload: Partial<Task>,
 }
 
-const TaskFieldsLabels: Record<keyof Omit<Task, 'id' | 'projectId'>, string> = {
-    title: 'Назва',
-    description: 'Опис',
-    assignedMembers: 'Виконавці',
-    status: 'Статус',
-    priority: 'Пріоритет',
-    startDate: 'Дедлайн',
-    endDate: 'Дедлайн',
+const TaskFieldsLabels: Record<keyof Omit<Task, 'id' | 'projectId' | 'createdAt'| 'creatorId' | 'updatedAt'>, string> = {
+    title: 'Title',
+    description: 'Description',
+    assignedMembers: 'Assigned',
+    status: 'Status',
+    priority: 'Priority',
+    startDate: 'From',
+    endDate: 'To',
+    type: 'Type',
+    category: 'Category'
 };
 
 const CreateTaskInfo = ({payload, title}: CreateTaskInfoProps) => {
@@ -48,7 +50,7 @@ const CreateTaskInfo = ({payload, title}: CreateTaskInfoProps) => {
                 })}
             </div>
         </div>
-    )
+    );
 };
 
 export default CreateTaskInfo;

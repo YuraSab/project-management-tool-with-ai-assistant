@@ -1,6 +1,6 @@
+import { Trash2 } from "lucide-react";
+import { Task } from "../../types/task";
 import styles from './TaskInfo.module.css';
-import {Trash2} from "lucide-react";
-import {Task} from "../../types/task.ts";
 
 interface DeleteTaskInfoProps {
     title: string,

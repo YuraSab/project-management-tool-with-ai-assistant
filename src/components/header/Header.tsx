@@ -1,11 +1,11 @@
+import { useState}  from "react";
+import { Menu, X } from "lucide-react";
+import { HighlightColor, IconColor } from "../../types/user.ts";
+import { getColor } from "../../utils/colorThemeSelector.ts";
+import { useProfileStore } from "../../store/profileStore.ts";
+import CustomUserIcon from "../../ui/icons/CustomUserIcon.tsx";
+import CustomNavLink from "../../ui/link/CustomNavLink.tsx";
 import styles from "./Header.module.css";
-import CustomUserIcon from "../../../ui/icons/CustomUserIcon";
-import CustomNavLink from "../../../ui/link/CustomNavLink";
-import {useProfileStore} from "../../../store/profileStore.ts";
-import {getColor} from "../../../utils/colorThemeSelector.ts";
-import {HighlightColor, IconColor} from "../../../types/user.ts";
-import {useState} from "react";
-import {Menu, X} from "lucide-react";
 
 const Header = () => {
     const profile = useProfileStore((state) => state.profile);

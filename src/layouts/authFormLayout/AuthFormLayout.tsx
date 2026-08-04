@@ -1,26 +1,26 @@
 import React from "react";
 import styles from "./AuthFormLayout.module.css";
 
-interface AuthFormLayoutProps {
+interface AuthFormLayoutProps extends React.FormHTMLAttributes<HTMLFormElement>{
     onSubmit: () => void,
-    children: React.ReactNode,
-    customStyles?: React.CSSProperties,
 }
 
-const AuthFormLayout = ({onSubmit, children, customStyles}: AuthFormLayoutProps) => {
+const AuthFormLayout = ({ onSubmit, children, style, ...props }: AuthFormLayoutProps) => {
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        onSubmit();
+        if (onSubmit)
+            onSubmit();
     };
 
     return (
         <div
             className={styles.mainOverlay}
-            style={customStyles}
+            style={style}
         >
             <form
                 onSubmit={handleSubmit}
                 className={styles.formAuth}
+                {...props}
             >
                 {children}
             </form>

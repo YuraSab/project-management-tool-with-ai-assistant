@@ -1,9 +1,9 @@
 import React from "react";
-import {HighlightColor, UserProfile} from "../../types/user";
+import { HighlightColor, UserProfile } from "../../types/user";
+import { getColorThemeVariables } from "../../utils/colorThemeSelector";
+import { useProfileStore } from "../../store/profileStore";
 import UserIconCollection from "../usersIconsCollection/UsersIconsCollection";
 import styles from "./AsignMembers.module.css";
-import {useProfileStore} from "../../store/profileStore.ts";
-import {getColorThemeVariables} from "../../utils/colorThemeSelector.ts";
 
 interface AssignMembersProps {
     projectAssignedMembers: UserProfile[], // members on the project + reserved members
@@ -14,7 +14,7 @@ interface AssignMembersProps {
     iconSize?: number,
 }
 
-const AssignMembers = ({projectAssignedMembers, localAssignedMembersIds, onSelectMembersActive, maxIcons = 3, iconSize, uniqueText}: AssignMembersProps) => {
+const AssignMembersFilter = ({projectAssignedMembers, localAssignedMembersIds, onSelectMembersActive, maxIcons = 3, iconSize, uniqueText}: AssignMembersProps) => {
     const highlightColor = useProfileStore((state) => state.profile?.highlightColor);
     const colorTheme = highlightColor ?? HighlightColor.Purple;
     const colorVariables = getColorThemeVariables(colorTheme);
@@ -22,6 +22,7 @@ const AssignMembers = ({projectAssignedMembers, localAssignedMembersIds, onSelec
     return (
         <div className={styles.assignBlock}>
             <button
+                // className={styles.assignButton}
                 style={colorVariables}
                 onClick={onSelectMembersActive}
                 type="button"
@@ -39,4 +40,4 @@ const AssignMembers = ({projectAssignedMembers, localAssignedMembersIds, onSelec
     );
 };
 
-export default React.memo(AssignMembers);
+export default React.memo(AssignMembersFilter);

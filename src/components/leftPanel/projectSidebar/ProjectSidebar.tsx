@@ -1,11 +1,12 @@
-import {AlignJustify, Settings} from "lucide-react";
-import {useProjectControlStore} from "../../../store/projectControlStore";
+import React, { lazy, Suspense } from "react";
+import { AlignJustify, Settings } from "lucide-react";
+import { Role } from "../../../types/user";
+import { useProjectControlStore } from "../../../store/projectControlStore";
+import { useProfileStore } from "../../../store/profileStore";
 import styles from "./ProjectSidebar.module.css";
-import React, {lazy, Suspense} from "react";
-import {useProfileStore} from "../../../store/profileStore.ts";
 
-const LeftPanelInfoBlock = lazy(() => import("../projectFilters/ProjectFilters.tsx"));
-const LeftPanelSettings = lazy(() => import("../projectSettings/ProjectSettings.tsx"));
+const LeftPanelInfoBlock = lazy(() => import("../projectFilters/ProjectFilters"));
+const LeftPanelSettings = lazy(() => import("../projectSettings/ProjectSettings"));
 
 const ProjectSidebar: React.FC = () => {
     const profile = useProfileStore((state) => state.profile);
@@ -23,7 +24,7 @@ const ProjectSidebar: React.FC = () => {
                 >
                     <AlignJustify size={28}/>
                 </button>
-                {profile?.role !== "member" && (
+                {profile?.role !== Role.Member && (
                     <button
                         className={styles.iconBtn}
                         onClick={setIsProjectSettingsActive}

@@ -1,7 +1,7 @@
 import { ReactNode, useEffect } from 'react';
-import { useUser } from "../../hooks/users/useUser.ts";
-import { useAuthStore } from "../../store/authStore.ts";
-import { useProfileStore } from "../../store/profileStore.ts";
+import { useUser } from "../../hooks/users/useUser";
+import { useAuthStore } from "../../store/authStore";
+import { useProfileStore } from "../../store/profileStore";
 
 interface ProfileProviderProps {
     children: ReactNode,

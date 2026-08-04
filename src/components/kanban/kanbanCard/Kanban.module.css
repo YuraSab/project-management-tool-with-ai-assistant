@@ -1,10 +1,8 @@
 .cardMain {
-    /*background-color: white;*/
-    /*color: black;*/
+    width: 100%;
     border-radius: 12px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     padding: 1rem;
-    width: 100%;
     margin-bottom: 10px;
     background-color: var(--color-card);
     color: var(--color-text-primary)
@@ -15,7 +13,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
-    -webkit-line-clamp: 1; /* максимум 1 рядок */
+    -webkit-line-clamp: 1; /* max 1 row */
     -webkit-box-orient: vertical;
     margin-bottom: 6px;
 }
@@ -25,7 +23,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
-    -webkit-line-clamp: 3; /* максимум 2 рядки */
+    -webkit-line-clamp: 3; /* max 3 rows */
     -webkit-box-orient: vertical;
     white-space: pre-line;
     color: var(--color-text-tertiary);

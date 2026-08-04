@@ -15,7 +15,7 @@
     align-items: center;
     justify-content: space-between;
     margin-bottom: 20px;
-    flex-shrink: 0; /* Навігація не зникає і не стискається */
+    flex-shrink: 0;
 }
 
 .contentArea {
@@ -54,7 +54,7 @@
         top: 0;
         left: 0;
         height: 100vh;
-        z-index: 1001; /* Понад Kanban і FAB */
+        z-index: 1001; /* Over Kanban and FAB */
         box-shadow: 4px 0 16px rgba(0, 0, 0, 0.4);
     }
 }

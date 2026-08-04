@@ -1,9 +1,9 @@
-import React, {HTMLAttributes} from 'react';
-import {Ban, GlobeOff, LucideProps, SearchAlert, ServerCrash} from 'lucide-react';
+import React, { HTMLAttributes } from 'react';
+import { Ban, GlobeOff, LucideProps, SearchAlert, ServerCrash } from 'lucide-react';
+import { HighlightColor } from "../../types/user";
+import { getColor } from "../../utils/colorThemeSelector";
+import { useProfileStore } from "../../store/profileStore";
 import styles from './Error.module.css';
-import {useProfileStore} from "../../store/profileStore.ts";
-import {getColor} from "../../utils/colorThemeSelector.ts";
-import {HighlightColor} from "../../types/user.ts";
 
 type ErrorType = 'not_found' | 'server_crash' | 'no_access' | 'network_problems';
 
@@ -19,7 +19,7 @@ const ERROR_OPTIONS: Record<ErrorType, ErrorConfig> = {
     },
     server_crash: {
         Icon: ServerCrash,
-        defaultText: 'Something wend wrong!',
+        defaultText: 'Something went wrong!',
     },
     no_access: {
         Icon: Ban,
@@ -43,10 +43,7 @@ const Error = ({ type, text, style, ...rest }: ErrorProps) => {
     return (
         <div
             className={styles.block}
-            style={{
-                color: color,
-                ...style
-            }}
+            style={{ color: color, ...style }}
             {...rest}
         >
             <h2>{text ? text : defaultText}</h2>

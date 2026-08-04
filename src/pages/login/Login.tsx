@@ -1,23 +1,27 @@
-import React, { useCallback, useState } from "react"
-import { useNavigate } from "react-router-dom";
+import React, { useState } from "react"
+import { Link, useNavigate } from "react-router-dom";
+import { handleAuthError } from "../../utils/handleAuthError";
+import {toast} from "../../utils/toaster";
+import { login } from "../../services/authService";
 import FormPasswordInput from "../../ui/input/FormPasswordInput";
 import FormTextInput from "../../ui/input/FormTextInput";
+import CustomButton from "../../ui/button/CustomButton";
 import AuthFormLayout from "../../layouts/authFormLayout/AuthFormLayout";
-import { login } from "../../services/authService.ts";
-import {handleAuthError} from "../../utils/handleAuthError.ts";
 import styles from './Login.module.css';
-import CustomButton from "../../ui/button/CustomButton.tsx";
 
 const Login = () => {
     const navigate = useNavigate();
-    const [formData, setFormData] = useState({ email: "demo.user@example.com", password: "password123" });
+    const [formData, setFormData] = useState({
+        email: "demo.user@example.com",
+        password: "password123"
+    });
     const [showPassword, setShowPassword] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState(false);
 
-    const handleChange = useCallback((event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = event.target;
         setFormData((prev) => ({ ...prev, [name]: value }));
-    }, []);
+    };
 
     const handleSubmit = async () => {
         try {
@@ -26,7 +30,7 @@ const Login = () => {
             navigate('/');
         } catch (error) {
             const message = handleAuthError(error);
-            alert(message);
+            toast.error(`Login error:    ${message}`);
         } finally {
             setIsLoading(false);
         }
@@ -35,10 +39,19 @@ const Login = () => {
     return (
         <AuthFormLayout onSubmit={handleSubmit}>
             <h1 className={styles.caption}>Login</h1>
-            <FormTextInput name={"email"} value={formData.email} onChange={handleChange} required placeholder={"email"}/>
-            <FormPasswordInput name={"password"} value={formData.password} onChange={handleChange} required showPassword={showPassword} setShowPassword={setShowPassword} placeholder={"password"}/>
-            <CustomButton children={"Login"} disabled={isLoading} type={'submit'}/>
-            <p className={styles.link} onClick={() => navigate("/register")}>or, sign up</p>
+            <FormTextInput
+                name='email' required placeholder='email'
+                value={formData.email} onChange={handleChange}
+            />
+            <FormPasswordInput
+                name={'password'} required placeholder={"password"}
+                value={formData.password} onChange={handleChange}
+                showPassword={showPassword} setShowPassword={setShowPassword}
+            />
+            <CustomButton disabled={isLoading} type='submit'>
+                { isLoading ? 'Logging in...' : 'Login' }
+            </CustomButton>
+            <Link className={styles.link} to='/register'>or, sign up</Link>
         </AuthFormLayout>
     );
 };

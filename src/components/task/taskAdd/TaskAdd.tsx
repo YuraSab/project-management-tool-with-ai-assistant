@@ -1,32 +1,23 @@
-import React, {useCallback, useMemo, useState} from "react";
-import {
-    Task,
-    TASK_CATEGORIES,
-    TASK_PRIORITIES,
-    TASK_STATUSES,
-    TASK_TYPES,
-    TaskCategory,
-    TaskPriority,
-    TaskStatus,
-    TaskType
-} from "../../../types/task";
-import {useParams} from "react-router-dom";
+import React, { useCallback, useMemo, useState } from "react";
+import { useParams } from "react-router-dom";
+import { UserProfile } from "../../../types/user";
+import { Task, TASK_CATEGORIES, TASK_PRIORITIES, TASK_STATUSES, TASK_TYPES, TaskCategory, TaskPriority, TaskStatus, TaskType } from "../../../types/task";
+import { useProjectUsers } from "../../../hooks/project/useProjectUsers";
+import { useProject } from "../../../hooks/project/useProject";
+import { useCreateTask } from "../../../hooks/task/useCreateTask";
+import { useProfileStore } from "../../../store/profileStore";
 import CustomForm from "../../../ui/form/CustomForm";
+import Title from "../../../ui/title/Title";
 import FormTextInput from "../../../ui/input/FormTextInput";
-import FormTextarea from "../../../ui/textArea/FormTextarea";
-import RightPanelHeader from "../../rightPanel/rightPanelHeader/RightPanelHeader";
-import AssignMembers from "../../asignMembers/AssignMembers.tsx";
-import FormSelect from "../../../ui/select/FormSelect";
-import styles from "./TaskAdd.module.css";
 import FormDateInput from "../../../ui/input/FormDateInput";
-import {useProject} from "../../../hooks/project/useProject";
-import Title from "../../../ui/title/Title.tsx";
-import {useProjectUsers} from "../../../hooks/project/useProjectUsers.ts";
-import {useCreateTask} from "../../../hooks/task/useCreateTask.ts";
-import {UserProfile} from "../../../types/user.ts";
-import MemberSelector from "../../../ui/memberSelector/MemberSelector.tsx";
-import CustomButton from "../../../ui/button/CustomButton.tsx";
-import {useProfileStore} from "../../../store/profileStore.ts";
+import FormTextarea from "../../../ui/textArea/FormTextarea";
+import FormSelect from "../../../ui/select/FormSelect";
+import CustomButton from "../../../ui/button/CustomButton";
+import MemberSelector from "../../../ui/memberSelector/MemberSelector";
+import RightPanelHeader from "../../rightPanel/rightPanelHeader/RightPanelHeader";
+import AssignMembers from "../../asignMembers/AssignMembers";
+import styles from "./TaskAdd.module.css";
+import {toast} from "../../../utils/toaster.ts";
 
 type FormData = Pick<Task, 'title'| 'description'| 'status' | 'priority'> & {
     startDate: string, endDate: string, type: TaskType | '', category: TaskCategory | ''
@@ -40,7 +31,7 @@ const INITIAL_TASK: FormData = {
 };
 
 const TaskAdd = React.memo(() => {
-    const {projectId} = useParams();
+    const { projectId } = useParams();
 
     const profileId = useProfileStore((state) => state.profile?.uid);
     const { data: project} = useProject(projectId || "");
@@ -64,18 +55,22 @@ const TaskAdd = React.memo(() => {
     const handleAssignMember = useCallback((member: UserProfile) => {
         setAssignedMembersMap((prev) => {
             const newMap = new Map(prev);
-            return newMap.delete((member.uid)) ? newMap : newMap.set(member.uid, member);
+            if (newMap.has(member.uid))
+                newMap.delete(member.uid);
+            else
+                newMap.set(member.uid, member);
+            return newMap;
         });
     }, []);
 
     const handleChange = useCallback((event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const {name, value} = event.target;
-        setFormData((prev) => ({...prev, [name]: value}));
+        setFormData((prev) => ({ ...prev, [name]: value }));
     }, []);
 
     const handleSubmit = () => {
-        if (!projectId) return alert("No project found!");
-        if (!formData.title) return alert("Title is required!");
+        if (!projectId) return toast.error("No project found!");
+        if (!formData.title) return toast.warning("Title is required!");
         const taskData: Partial<Task> = {
             title: formData.title, description: formData.description,
             status: formData.status, priority: formData.priority,
@@ -85,7 +80,8 @@ const TaskAdd = React.memo(() => {
             endDate: formData.endDate ? new Date(formData.endDate) : null,
             createdAt: new Date(),
             updatedAt: new Date(),
-            type: formData.type ? formData.type : 'none', category: formData.category ? formData.category : 'none',
+            type: formData.type ? formData.type : 'none',
+            category: formData.category ? formData.category : 'none',
         };
         createTask(taskData as Task, {
             onSuccess: () => {

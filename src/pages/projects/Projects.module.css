@@ -1,35 +1,20 @@
 .main{
     min-height: calc(100vh - 100px);
-    /*max-height: calc(100vh - 100px);*/
-    /*align-self: center;*/
-    /*width: 100%;*/
-    /*max-width: 700px;*/
     padding: 30px 40px;
     display: flex;
     flex-direction: column;
     gap: 12px;
-    background-color: #f9f9fb;
-    /*background-color: orange;*/
-    color: black;
+    background-color: var(--color-bg);
+    color: var(--color-text-primary);
     box-sizing: border-box;
-    /* 🌟 Скроли дозволені ТІЛЬКИ вертикальні і тільки всередині цього компонента */
     overflow-y: auto;
     overflow-x: hidden;
-    /* Ховаємо скрол-бар за твоїм правилом, але тепер всередині CSS-модуля */
     scrollbar-width: none;  /* Firefox */
     -ms-overflow-style: none;  /* IE/Edge */
 }
 
 .main::-webkit-scrollbar {
     display: none;
-}
-
-.isDarkMode {
-    background-color: black
-}
-
-.isLightMode {
-    background-color: #f9f9fb
 }
 
 @media (max-width: 550px) {

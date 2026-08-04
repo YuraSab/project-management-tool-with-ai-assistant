@@ -1,11 +1,11 @@
-import {useAIChatStore} from "../../store/aiChatStore.ts";
+import { Sender } from "../../types/aiChat";
+import { useAIChatActions } from "../../hooks/aiChat/useAIChatActions";
+import { useAIChatStore } from "../../store/aiChatStore";
+import { useProfileStore } from "../../store/profileStore";
+import CustomUserIcon from "../../ui/icons/CustomUserIcon";
+import GeminiIcon from "../../ui/icons/GeminiIcon";
+import ActionCard from "./ActionCard";
 import styles from "./AIChat.module.css";
-import CustomUserIcon from "../../ui/icons/CustomUserIcon.tsx";
-import GeminiIcon from "../../ui/icons/GeminiIcon.tsx";
-import {useProfileStore} from "../../store/profileStore.ts";
-import ActionCard from "./ActionCard.tsx";
-import {Sender} from "../../types/aiChat.ts";
-import {useAIChatActions} from "../../hooks/aiChat/useAIChatActions.ts";
 
 const Messages = () => {
     const profile = useProfileStore((state) => state.profile);
@@ -25,7 +25,6 @@ const Messages = () => {
                     <div className={styles.messageContent}>
                         <div className={styles.messageBubble}>{m.text}</div>
                         {m.pendingActions && m.pendingActions.length > 0 && (
-                            // чи варто меморизувати ф-ї (useCallback)
                             <ActionCard
                                 actions={m.pendingActions}
                                 onApply={() => handleApply(m.id, m.pendingActions || [])}

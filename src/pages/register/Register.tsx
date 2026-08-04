@@ -1,12 +1,12 @@
-import React, { useCallback, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import AuthFormLayout from "../../layouts/authFormLayout/AuthFormLayout";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { handleAuthError } from "../../utils/handleAuthError";
+import { register } from "../../services/authService";
 import FormTextInput from "../../ui/input/FormTextInput";
 import FormPasswordInput from "../../ui/input/FormPasswordInput";
-import {register} from "../../services/authService.ts";
-import {handleAuthError} from "../../utils/handleAuthError.ts";
+import CustomButton from "../../ui/button/CustomButton";
+import AuthFormLayout from "../../layouts/authFormLayout/AuthFormLayout";
 import styles from './Register.module.css';
-import CustomButton from "../../ui/button/CustomButton.tsx";
 
 const INITIAL_FORM_DATA = {
     name: "",
@@ -23,10 +23,11 @@ const Register = () => {
     const [error, setError] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState(false);
 
-    const handleChange = useCallback((event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = event.target;
         setFormData((prev) => ({ ...prev, [name]: value }));
-    }, []);
+        if (error) setError(null);
+    };
 
     const handleSubmit = async () => {
         if ( !formData.name || !formData.email || !formData.password || !formData.repeatedPassword )
@@ -48,15 +49,33 @@ const Register = () => {
     return (
         <AuthFormLayout onSubmit={handleSubmit}>
             <h1 className={styles.caption}>Register</h1>
-            <FormTextInput name={"name"} value={formData.name} onChange={handleChange} placeholder="name" />
-            <FormTextInput name={"email"} value={formData.email} onChange={handleChange} placeholder="email" />
-            <FormPasswordInput  name={"password"} value={formData.password} onChange={handleChange} required showPassword={showPassword} setShowPassword={setShowPassword} placeholder={"password"} />
-            <FormPasswordInput  name={"repeatedPassword"} value={formData.repeatedPassword} onChange={handleChange} required showPassword={showPassword} setShowPassword={setShowPassword} placeholder={"password"} />
-            <CustomButton children={"Register"} disabled={isLoading} type={'submit'}/>
-            <p className={styles.link} onClick={() => navigate("/login")}>or, you already have account</p>
-            <h2 style={{color: 'red'}}>{error}</h2>
+            <FormTextInput
+                name="name" placeholder="name"
+                value={formData.name} onChange={handleChange}
+            />
+            <FormTextInput
+                name="email" placeholder="email"
+                value={formData.email} onChange={handleChange}
+            />
+            <FormPasswordInput
+                name="password" required placeholder="password"
+                value={formData.password} onChange={handleChange}
+                showPassword={showPassword} setShowPassword={setShowPassword}
+            />
+            <FormPasswordInput
+                name="repeatedPassword" required placeholder="password"
+                value={formData.repeatedPassword} onChange={handleChange}
+                showPassword={showPassword} setShowPassword={setShowPassword}
+            />
+            <CustomButton type='submit' disabled={isLoading}>
+                { isLoading ? 'Creating account...' : 'Register' }
+            </CustomButton>
+            <Link to='/login' className={styles.link}>
+                or, you already have account
+            </Link>
+            {error && <p style={{color: 'red'}}>{error}</p>}
         </AuthFormLayout>
     );
-}
+};
 
 export default Register;

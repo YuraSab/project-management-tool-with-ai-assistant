@@ -1,9 +1,9 @@
 import React from "react";
-import {HighlightColor, UserProfile} from "../../types/user";
+import { HighlightColor, UserProfile } from "../../types/user";
+import { getColorThemeVariables } from "../../utils/colorThemeSelector";
+import { useProfileStore } from "../../store/profileStore";
 import UserIconCollection from "../usersIconsCollection/UsersIconsCollection";
 import styles from "./AsignMembers.module.css";
-import {useProfileStore} from "../../store/profileStore.ts";
-import {getColorThemeVariables} from "../../utils/colorThemeSelector.ts";
 
 interface AssignMembersProps {
     assignedMembers: UserProfile[],

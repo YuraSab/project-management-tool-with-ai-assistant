@@ -1,23 +1,23 @@
-import {useNavigate, useParams} from "react-router-dom";
-import styles from "./ProjectSettings.module.css";
-import {useProjectUsers} from "../../../hooks/project/useProjectUsers";
 import React, {useCallback, useEffect, useMemo, useState} from "react";
-import FormTextInput from "../../../ui/input/FormTextInput";
-import FormTextarea from "../../../ui/textArea/FormTextarea";
-import FormDateInput from "../../../ui/input/FormDateInput";
-import FormSelect from "../../../ui/select/FormSelect";
+import {useNavigate, useParams} from "react-router-dom";
+import {Role, Theme, UserProfile} from "../../../types/user";
 import {Project, ProjectStatus} from "../../../types/project";
-import AssignMembers from "../../asignMembers/AssignMembers.tsx";
+import {formatDateForInput} from "../../../utils/dateFormat";
+import {useProject} from "../../../hooks/project/useProject";
+import {useProjectUsers} from "../../../hooks/project/useProjectUsers";
+import {useProjectUpdate} from "../../../hooks/project/useProjectUpdate";
+import {useProjectDelete} from "../../../hooks/project/useProjectDelete";
+import {useProfileStore} from "../../../store/profileStore";
+import Title from "../../../ui/title/Title";
+import FormTextInput from "../../../ui/input/FormTextInput";
+import FormDateInput from "../../../ui/input/FormDateInput";
+import DisabledField from "../../../ui/disabledField/DisabledField";
+import FormTextarea from "../../../ui/textArea/FormTextarea";
+import FormSelect from "../../../ui/select/FormSelect";
 import CustomButton from "../../../ui/button/CustomButton";
-import {Theme, UserProfile} from "../../../types/user.ts";
-import {useProjectUpdate} from "../../../hooks/project/useProjectUpdate.ts";
-import {useProjectDelete} from "../../../hooks/project/useProjectDelete.ts";
-import Title from "../../../ui/title/Title.tsx";
-import {useProfileStore} from "../../../store/profileStore.ts";
-import {formatDateForInput} from "../../../utils/dateFormat.ts";
-import {useProject} from "../../../hooks/project/useProject.ts";
-import MemberSelector from "../../../ui/memberSelector/MemberSelector.tsx";
-import DisabledField from "../../../ui/disabledField/DisabledField.tsx";
+import MemberSelector from "../../../ui/memberSelector/MemberSelector";
+import AssignMembers from "../../asignMembers/AssignMembers";
+import styles from "./ProjectSettings.module.css";
 
 type FormData = Pick<Project, 'title' | 'description' | 'status'> & { startDate: string, endDate: string };
 
@@ -44,9 +44,8 @@ const ProjectSettings: React.FC = () => {
     const [addMembersActive, setAddMembersActive] = useState<boolean>(false);
     const [localAssignedMembersMap, setLocalAssignedMembersMap] = useState<Map<string, UserProfile>>(new Map());
 
-    const totalMembersMap: Map<string, UserProfile> = useMemo(() => (
-        new Map([...(projectMembers || []), ...(reservedMembers || [])]
-            .map(m=> [m.uid, m]))
+    const totalMembersMap = useMemo<Map<string, UserProfile>>(() => (
+        new Map([...(projectMembers || []), ...(reservedMembers || [])].map(m => [m.uid, m]))
     ), [projectMembers, reservedMembers]);
 
     const localAssignedMembersIds: string[] = useMemo(() => ([...localAssignedMembersMap.keys()]), [localAssignedMembersMap]);
@@ -88,7 +87,7 @@ const ProjectSettings: React.FC = () => {
             id: project.id,
             assignedMembers: localAssignedMembersIds,
             startDate: formData.startDate ? new Date(formData.startDate) : null,
-            endDate: formData.startDate ? new Date(formData.endDate) : null,
+            endDate: formData.endDate ? new Date(formData.endDate) : null,
         });
         setAddMembersActive(false);
     };
@@ -124,9 +123,9 @@ const ProjectSettings: React.FC = () => {
                 <MemberSelector membersMap={totalMembersMap} selectedMembersIds={localAssignedMembersIds} clickAction={handleAssignMember} />
             )}
             <div className={styles.buttonBlock}>
-                <CustomButton children={"Save changes"} onClick={() => handleUpdateProject()} disabled={editProjectMutation.isPending}/>
-                {profile?.role === "admin" && (
-                    <CustomButton children={"Delete project"} onClick={() => handleDeleteProject()} style={{backgroundColor: "#D10000"}}/>
+                <CustomButton onClick={() => handleUpdateProject()} disabled={editProjectMutation.isPending}>Save changes</CustomButton>
+                {profile?.role === Role.Admin && (
+                    <CustomButton onClick={() => handleDeleteProject()} style={{backgroundColor: "#D10000"}}>Delete project</CustomButton>
                 )}
             </div>
         </div>

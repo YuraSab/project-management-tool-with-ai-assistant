@@ -6,7 +6,6 @@
     -ms-overflow-style: none;  /* Internet Explorer 10+ */
     display: flex;
     flex-direction: column;
-    /*gap: 10px;*/
 }
 
 .rightPanelChildEdit::-webkit-scrollbar {

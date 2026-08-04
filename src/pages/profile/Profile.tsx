@@ -1,60 +1,81 @@
-import {useCallback, useMemo} from 'react';
-import {useProfileStore} from "../../store/profileStore.ts";
-import CustomUserIcon from "../../ui/icons/CustomUserIcon.tsx";
-import Title from "../../ui/title/Title.tsx";
-import {formatDateForInput} from "../../utils/dateFormat.ts";
+import { useCallback, useMemo } from 'react';
+import { LogOut } from "lucide-react";
+import {
+    HighlightColor,
+    HighlightColorSet,
+    IconColor,
+    IconColorSet,
+    Role,
+    Theme,
+    ThemeSet,
+    UserProfile
+} from "../../types/user";
+import { formatDateForInput } from "../../utils/dateFormat";
+import { toast } from "../../utils/toaster";
+import { useLogout } from "../../hooks/auth/useLogout";
+import { useUser } from "../../hooks/users/useUser";
+import { useUpdateUser } from "../../hooks/users/useUpdateUser";
+import { useProfileStore } from "../../store/profileStore";
+import Title from "../../ui/title/Title";
+import FormTextInput from "../../ui/input/FormTextInput";
+import DisabledField from "../../ui/disabledField/DisabledField";
+import CustomButton from "../../ui/button/CustomButton";
+import CustomForm from "../../ui/form/CustomForm";
+import CustomUserIcon from "../../ui/icons/CustomUserIcon";
+import CustomColorIcon from "../../ui/icons/CustomColorIcon";
 import styles from './Profile.module.css';
-import CustomForm from "../../ui/form/CustomForm.tsx";
-import { HighlightColor,  HighlightColorSet,  IconColor,  IconColorSet,  Theme,  ThemeSet,  UserProfile
-} from "../../types/user.ts";
-import CustomColorIcon from "../../ui/icons/CustomColorIcon.tsx";
-import CustomButton from "../../ui/button/CustomButton.tsx";
-import DisabledField from "../../ui/disabledField/DisabledField.tsx";
-import {useUpdateUser} from "../../hooks/users/useUpdateUser.ts";
-import {toast} from "../../utils/toaster.ts";
-import {useUser} from "../../hooks/users/useUser.ts";
-import FormTextInput from "../../ui/input/FormTextInput.tsx";
-import {LogOut} from "lucide-react";
-import {useLogout} from "../../hooks/auth/useLogout.ts";
 
 const Profile = () => {
     const logout = useLogout();
     const profile = useProfileStore((state) => state.profile);
-    const { uid, email, role, displayName, createdAt, theme, iconColor, highlightColor } = profile;
     const editProfile = useProfileStore((state) => state.editProfile);
 
-    const { data: initialProfile } = useUser(uid || "");
-    const { mutate: updateUser } = useUpdateUser();
+    const {
+        uid = "",
+        email = "",
+        role = Role.Member,
+        displayName = "",
+        createdAt = "",
+        theme = Theme.White,
+        iconColor = IconColor.Purple,
+        highlightColor = HighlightColor.Purple
+    } = profile || {};
+
+    const { data: initialProfile } = useUser(uid);
+    const { mutate: updateUser, isPending } = useUpdateUser();
 
     const hasChangedForm = useMemo(() => {
+        if (!initialProfile) return false;
         return !(
-            initialProfile?.displayName === displayName &&
-            initialProfile?.theme === theme &&
-            initialProfile?.iconColor === iconColor &&
-            initialProfile?.highlightColor === highlightColor
+            initialProfile.displayName === displayName &&
+            initialProfile.theme === theme &&
+            initialProfile.iconColor === iconColor &&
+            initialProfile.highlightColor === highlightColor
         )
     }, [initialProfile, displayName, theme, iconColor, highlightColor]);
 
     const handleUpdateProfile = useCallback(() => {
-        if (!hasChangedForm) return;
+        if (!hasChangedForm || !profile) return;
+        if (!displayName.trim()) return toast.warning('Display name cannot be empty!');
         const updatedProfileData: Partial<UserProfile> = {
-            displayName,
+            displayName: displayName,
             theme,
             iconColor,
             highlightColor,
         };
         updateUser({ uid, ...updatedProfileData });
         editProfile(updatedProfileData);
-        toast.success('Profile updated');
-    }, [uid, displayName, theme, iconColor, highlightColor, updateUser, editProfile, hasChangedForm]);
+    }, [uid, displayName, theme, iconColor, highlightColor, updateUser, editProfile, hasChangedForm, profile]);
+
+    if (!profile) return null; // todo loader
 
     return (
-        <CustomForm onSubmit={handleUpdateProfile} className={styles.mainBlock}>
+        <CustomForm onSubmit={handleUpdateProfile} className={styles.mainBlock} disabled={isPending}>
             <div  className={styles.logoutBlock}>
                 <Title text='Avatar' style={{ paddingTop: 0 }}/>
                 <LogOut onClick={logout}/>
             </div>
-            <CustomUserIcon backgroundColor={iconColor} title={displayName[0]} customStyles={{ marginTop: 4 }}/>
+            <CustomUserIcon backgroundColor={iconColor} title={displayName.trim() ? displayName.trim()[0] : 'U'} customStyles={{ marginTop: 4 }}/>
             <Title text='ID'/>
             <DisabledField children={uid} copyText={uid} toastValue={'User ID copied'}/>
             <Title text='Email'/>

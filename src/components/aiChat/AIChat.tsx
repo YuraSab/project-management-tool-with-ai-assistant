@@ -1,19 +1,19 @@
 import { useEffect, useRef, useState } from 'react';
 import { Send, Trash2, X } from "lucide-react";
 import { useShallow } from "zustand/react/shallow";
-import styles from './AIChat.module.css';
-import Messages from "./Messages";
-import GeminiIcon from "../../ui/icons/GeminiIcon";
-import { useProfileStore } from "../../store/profileStore";
-import { useAIChatStore } from "../../store/aiChatStore";
-import { useProjectControlStore } from "../../store/projectControlStore";
+import { Sender } from "../../types/aiChat";
+import {HighlightColor, Theme} from "../../types/user";
+import { parseAIActions } from "../../utils/parseAIActions";
+import { switchRightPanelView } from "../../utils/panelManager";
 import { useProjectUsers } from "../../hooks/project/useProjectUsers";
 import { useTasks } from "../../hooks/task/useTasks";
-import { Sender } from "../../types/aiChat";
-import { Theme } from "../../types/user";
-import { parseAIActions } from "../../utils/parseAIActions";
 import { getGeminiResponse } from "../../services/aiService";
-import { switchRightPanelView } from "../../utils/panelManager";
+import { useProjectControlStore } from "../../store/projectControlStore";
+import { useProfileStore } from "../../store/profileStore";
+import { useAIChatStore } from "../../store/aiChatStore";
+import GeminiIcon from "../../ui/icons/GeminiIcon";
+import Messages from "./Messages";
+import styles from './AIChat.module.css';
 
 const AIChat = () => {
     const profile = useProfileStore((state) => state.profile);
@@ -61,22 +61,30 @@ const AIChat = () => {
             const { cleanText, actions } = parseAIActions(aiRawResponse);
             addMessage({
                 role: Sender.model,
-                text: cleanText || "Дії підготовлено:",
+                text: cleanText || "Actions prepared by:",
                 pendingActions: actions
             });
         } catch (error) {
             console.error("AI Error:", error);
             addMessage({
                 role: Sender.model,
-                text: "Вибачте, сталася помилка при зверненні до сервісу."
+                text: "Sorry, an error occurred while accessing the service."
             });
         } finally {
-            setIsLoading(false)
+            setIsLoading(false);
         }
     };
 
+    const highlightColor = profile?.highlightColor ?? HighlightColor.Purple;
+
     return (
-        <div className={styles.container} style={{backgroundColor: profile?.theme === Theme.Black ? '#1e1e1e' : '#ffffff'}}>
+        <div
+            className={styles.container}
+            style={{
+                 backgroundColor: profile?.theme === Theme.Black ? '#1e1e1e' : '#ffffff',
+                 '--local-color': `var(--color-${highlightColor})`,
+            }}
+        >
             <div className={styles.header} style={{borderBottom: `1px solid ${profile?.highlightColor}44`}}>
                 <div className={styles.title}>
                     <GeminiIcon size={24}/>
@@ -104,7 +112,7 @@ const AIChat = () => {
             <div className={styles.inputArea}>
                 <input
                     type="text"
-                    placeholder={isLoading ? 'Зачекайте відповідь AI агента...' : 'Щось хочете змінити?'}
+                    placeholder={isLoading ? 'Please wait for the AI agent`s  response...' : 'Do you want to change anything?'}
                     value={inputValue}
                     onChange={(e) => setInputValue(e.target.value)}
                     onKeyDown={(e) => e.key === 'Enter' && handleSend()}

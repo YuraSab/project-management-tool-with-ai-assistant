@@ -1,27 +1,29 @@
-import {DragDropContext, DropResult} from "@hello-pangea/dnd";
-import styles from "./KanbanBoard.module.css";
-import {DroppableColumnBody} from "../drag/DroppableColumnBody";
-import KanbanDraggableCard from "../drag/KanbanDraggableCard";
-import {TASK_STATUSES, TaskFilters, TaskStatus} from "../../../types/task";
 import React, {memo, useCallback, useMemo} from "react";
-import KanbanCardSkeleton from "../kanbanCard/KanbanCardSkeleton.tsx";
-import {useTasks} from "../../../hooks/task/useTasks.ts";
-import {useUpdateTask} from "../../../hooks/task/useUpdateTask.ts";
-import {useProjectControlStore} from "../../../store/projectControlStore.ts";
-import {useShallow} from "zustand/react/shallow";
-import {getFilteredTasks, getSortedTasks} from "../../../utils/controlPanel.ts";
-import {switchRightPanelView} from "../../../utils/panelManager.ts";
-import {useProfileStore} from "../../../store/profileStore.ts";
+import { useShallow } from "zustand/react/shallow";
+import { DragDropContext, DropResult } from "@hello-pangea/dnd";
+import { TASK_STATUSES, TaskFilters, TaskStatus } from "../../../types/task";
+import { getFilteredTasks, getSortedTasks } from "../../../utils/controlPanel";
+import { switchRightPanelView } from "../../../utils/panelManager";
+import { useTasks } from "../../../hooks/task/useTasks";
+import { useUpdateTask } from "../../../hooks/task/useUpdateTask";
+import { useProfileStore } from "../../../store/profileStore";
+import { useProjectControlStore } from "../../../store/projectControlStore";
+import { DroppableColumnBody } from "../drag/DroppableColumnBody";
+import KanbanDraggableCard from "../drag/KanbanDraggableCard";
+import KanbanCardSkeleton from "../kanbanCard/KanbanCardSkeleton";
+import styles from "./KanbanBoard.module.css";
 
 interface KanbanBoardProps { projectId: string }
-const KanbanBoard: React.FC<KanbanBoardProps> = ({ projectId }) => {
-    const ownId = useProfileStore((state) => state.profile?.uid)
-    const { data: projectTasks, isPending } = useTasks(projectId || '', ownId || '');
 
+const KanbanBoard: React.FC<KanbanBoardProps> = ({ projectId }) => {
+    const ownId = useProfileStore((state) => state.profile?.uid);
+    const { data: projectTasks, isPending } = useTasks(projectId || '', ownId || '');
     const taskUpdateMutation = useUpdateTask(projectId, ownId || '');
+
     const filters = useProjectControlStore(useShallow(state => ({
         users: state.usersFilter,
-        status: state.statusFilter, priority: state.priorityFilter, noPriority: state.showNoPriorityTasks,
+        status: state.statusFilter, priority: state.priorityFilter,
+        noPriority: state.showNoPriorityTasks,
         start: state.startDateFilter, end: state.endDateFilter,
         sortValue: state.sortValue,
         searchTermFilter: state.searchTermFilter,
@@ -76,7 +78,7 @@ const KanbanBoard: React.FC<KanbanBoardProps> = ({ projectId }) => {
         return TASK_STATUSES.reduce((acc, status) => {
             acc[status] = {
                 total: filteredTasks[status].length,
-                own: filteredTasks[status].filter((t) => t.assignedMembers?.includes(ownId)).length,
+                own: filteredTasks[status].filter((t) => ownId && t.assignedMembers?.includes(ownId)).length,
             };
             return acc;
         }, {} as Record<TaskStatus, { total: number, own: number }>);
@@ -104,22 +106,20 @@ const KanbanBoard: React.FC<KanbanBoardProps> = ({ projectId }) => {
                             )}
                         </div>
                         <DroppableColumnBody droppableId={col.id}> {/* column body */}
-                            {/*<div className={styles.statusColumn}>*/}
-                                {isPending ? (
-                                    [...Array(3)].map((_, i) => (
-                                        <KanbanCardSkeleton key={i} isCompact={statuses.isLeftPanelActive && statuses.isRightPanelActive}/>
-                                    ))
-                                ) : (
-                                    col.tasks.map((task, index) => (
-                                        <KanbanDraggableCard
-                                            key={task.id}
-                                            task={task}
-                                            index={index}
-                                            handleOnTaskClick={() => switchRightPanelView('editTask', task)}
-                                        />
-                                    ))
-                                )}
-                            {/*</div>*/}
+                            {isPending ? (
+                                [...Array(3)].map((_, i) => (
+                                    <KanbanCardSkeleton key={i} isCompact={statuses.isLeftPanelActive && statuses.isRightPanelActive}/>
+                                ))
+                            ) : (
+                                col.tasks.map((task, index) => (
+                                    <KanbanDraggableCard
+                                        key={task.id}
+                                        task={task}
+                                        index={index}
+                                        handleOnTaskClick={() => switchRightPanelView('editTask', task)}
+                                    />
+                                ))
+                            )}
                         </DroppableColumnBody>
                     </div>
                 ))}
@@ -127,5 +127,7 @@ const KanbanBoard: React.FC<KanbanBoardProps> = ({ projectId }) => {
         </DragDropContext>
     );
 };
+
+KanbanBoard.displayName = "KanbanBoard";
 
 export default memo(KanbanBoard);

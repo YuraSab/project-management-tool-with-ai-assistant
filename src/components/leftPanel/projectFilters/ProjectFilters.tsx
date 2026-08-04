@@ -1,31 +1,24 @@
-import {useParams} from "react-router-dom"
-import {
-    TASK_CATEGORIES,
-    TASK_PRIORITIES,
-    TASK_STATUSES,
-    TASK_TYPES,
-    TaskPriority,
-    TaskStatus
-} from "../../../types/task"
-import CheckBoxStatus from "../../../ui/checkbox/CheckBoxStatus"
-import DateInput from "../../../ui/input/DateInput"
-import CustomSelect, {sortOptions} from "../../../ui/select/CustomSelect"
-import {useProjectControlStore} from "../../../store/projectControlStore"
-import styles from "./ProjectFilters.module.css";
 import React, {useCallback, useEffect, useMemo, useState} from "react"
-import {useProjectUsers} from "../../../hooks/project/useProjectUsers"
-import {useProject} from "../../../hooks/project/useProject"
-import {UserProfile} from "../../../types/user.ts";
-import {useShallow} from "zustand/react/shallow";
-import Title from "../../../ui/title/Title.tsx";
-import MemberSelector from "../../../ui/memberSelector/MemberSelector.tsx";
-import TextInput from "../../../ui/input/TextInput.tsx";
-import NoStatusCheckBox from "../../../ui/checkbox/NoStatusCheckBox.tsx";
-import AssignMembersFilter from "../../asignMembers/AssignMembersFilter.tsx";
-import CustomMultiSelector from "../../../ui/customMultiSelector/CustomMultiSelector.tsx";
-import SelectorBlock from "../../../ui/selectorBlock/SelectorBlock.tsx";
-import CustomButton from "../../../ui/button/CustomButton.tsx";
-import {toast} from "../../../utils/toaster.ts";
+import { useParams } from "react-router-dom"
+import { useShallow } from "zustand/react/shallow";
+import { UserProfile } from "../../../types/user";
+import {  TASK_CATEGORIES, TASK_PRIORITIES, TASK_STATUSES, TASK_TYPES, TaskPriority, TaskStatus } from "../../../types/task"
+import { toast } from "../../../utils/toaster";
+import { useProject } from "../../../hooks/project/useProject"
+import { useProjectUsers } from "../../../hooks/project/useProjectUsers"
+import { useProjectControlStore } from "../../../store/projectControlStore"
+import Title from "../../../ui/title/Title";
+import TextInput from "../../../ui/input/TextInput";
+import DateInput from "../../../ui/input/DateInput"
+import CustomSelect, { sortOptions } from "../../../ui/select/CustomSelect"
+import CustomMultiSelector from "../../../ui/customMultiSelector/CustomMultiSelector";
+import CheckBoxStatus from "../../../ui/checkbox/CheckBoxStatus"
+import NoStatusCheckBox from "../../../ui/checkbox/NoStatusCheckBox";
+import CustomButton from "../../../ui/button/CustomButton";
+import MemberSelector from "../../../ui/memberSelector/MemberSelector";
+import SelectorBlock from "../../../ui/selectorBlock/SelectorBlock";
+import AssignMembersFilter from "../../asignMembers/AssignMembersFilter";
+import styles from "./ProjectFilters.module.css";
 
 const ProjectFilters: React.FC = () => {
     const { projectId } = useParams();

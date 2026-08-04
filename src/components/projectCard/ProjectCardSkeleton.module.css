@@ -1,7 +1,7 @@
 .skeletonCard {
     flex-shrink: 0;
-    width: 100%; /* Картка має займати всю доступну ширину контейнера */
-    box-sizing: border-box; /* Щоб падінги не розширювали картку */
+    width: 100%;
+    box-sizing: border-box;
 
     /* Твої стилі */
     min-height: 84px;
@@ -16,13 +16,13 @@
 
 .skeleton {
     border: var(--border-default);
-    background-color: #e2e8f0;
+    /*background-color: #e2e8f0;*/
+    background-color: var(--disabled-background, #e2e8f0);
     border-radius: 4px;
     position: relative;
     overflow: hidden;
 }
 
-/* Анімація мерехтіння */
 .skeleton::after {
     content: "";
     position: absolute;
@@ -31,6 +31,12 @@
     bottom: 0;
     left: 0;
     transform: translateX(-100%);
+    /*background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.15) 50%,
+        rgba(255, 255, 255, 0) 100%
+    );*/
     background: linear-gradient(
             90deg,
             rgba(255, 255, 255, 0) 0%,

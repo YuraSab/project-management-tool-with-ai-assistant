@@ -1,15 +1,15 @@
-import { useCallback, useEffect, useState } from "react";
-import styles from "./SearchMember.module.css";
-import CustomUserIcon from "../../ui/icons/CustomUserIcon";
-import { UserPlus, Check } from "lucide-react"; // 👈 Додали іконку Check
-import { useUpdateUser } from "../../hooks/users/useUpdateUser.ts";
-import { useProfileStore } from "../../store/profileStore.ts";
-import { useSearchUsers } from "../../hooks/users/useSearchUsers.ts";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useShallow } from "zustand/react/shallow";
+import { UserPlus, Check } from "lucide-react";
+import { HighlightColor } from "../../types/user";
+import { getColorThemeVariables } from "../../utils/colorThemeSelector";
+import { toast } from "../../utils/toaster";
+import { useSearchUsers } from "../../hooks/users/useSearchUsers";
+import { useUpdateUser } from "../../hooks/users/useUpdateUser";
+import { useProfileStore } from "../../store/profileStore";
+import CustomUserIcon from "../../ui/icons/CustomUserIcon";
 import Error from "../error/Error.tsx";
-import {toast} from "../../utils/toaster.ts";
-import {getColorThemeVariables} from "../../utils/colorThemeSelector.ts";
-import {HighlightColor} from "../../types/user.ts";
+import styles from "./SearchMember.module.css";
 
 const SearchMember = () => {
     const [searchTerm, setSearchTerm] = useState<string>('');
@@ -17,24 +17,16 @@ const SearchMember = () => {
     const { profile, editProfile } = useProfileStore(useShallow((state) => ({
         profile: state.profile, editProfile: state.editProfile
     })));
+
+    const { data: searchMembers, isPending, isError } = useSearchUsers(debounceTerm, profile?.uid || '');
     const { mutate: updateUser } = useUpdateUser();
 
-    // Передаємо тільки profile.uid
-    const { data: searchMembers, isPending, isError } = useSearchUsers(debounceTerm, profile?.uid || '');
-
-    const colorVariables = getColorThemeVariables(profile?.highlightColor ?? HighlightColor.Purple);
-
-    useEffect(() => {
-        const timerId = setTimeout(() => {
-            setDebounceTerm(searchTerm);
-        }, 700);
-        return () => clearTimeout(timerId);
-    }, [searchTerm]);
+    const reservedMembersSet = useMemo(() => (
+        new Set(profile?.reservedMembers || [])
+    ), [profile?.reservedMembers]);
 
     const handleReserveUser = useCallback((userId: string) => {
-        if (!profile || profile.reservedMembers.includes(userId))
-            return;
-
+        if (!profile || profile?.reservedMembers?.includes(userId)) return;
         const reservedMembers = [...profile.reservedMembers, userId];
         updateUser({
             uid: profile.uid,
@@ -46,6 +38,15 @@ const SearchMember = () => {
         toast.success('Reserved member');
     }, [profile, updateUser, editProfile]);
 
+    const colorVariables = getColorThemeVariables(profile?.highlightColor ?? HighlightColor.Purple);
+
+    useEffect(() => {
+        const timerId = setTimeout(() => {
+            setDebounceTerm(searchTerm);
+        }, 700);
+        return () => clearTimeout(timerId);
+    }, [searchTerm]);
+
     return (
         <div className={styles.searchSection}>
             <input
@@ -56,32 +57,28 @@ const SearchMember = () => {
                 onChange={(e) => setSearchTerm(e.target.value)}
                 style={colorVariables}
             />
-
-            {isPending && debounceTerm.trim() !== "" && <p style={{ color: '#6b7280', fontSize: '14px' }}>Searching...</p>}
-            {isError && <Error type={'server_crash'} style={{ padding: 10 }} />}
-
+            {isPending && debounceTerm.trim() !== "" && (
+                <p style={styles.searchingText}>Searching...</p>
+            )}
+            {isError && <Error type={'server_crash'} style={{padding: 10 }} />}
             {searchMembers && searchMembers.length > 0 && (
                 <ul className={styles.resultsList}>
                     {searchMembers.map((m) => {
-                        // 🌟 Перевіряємо, чи користувач вже доданий у контакти
-                        const isAlreadyAdded = profile?.reservedMembers.includes(m.uid);
-
+                        const isAlreadyAdded = reservedMembersSet.has(m.uid);
+                        const avatarTitle = m.displayName?.charAt(0) || m.email?.charAt(0).toUpperCase() || "U";
                         return (
                             <li key={m.uid} className={styles.searchResultCard}>
                                 <div className={styles.userInfo}>
-                                    {/* 🔥 Безпечний рендер першої літери (захист від undefined) */}
                                     <CustomUserIcon
-                                        title={m.displayName ? m.displayName[0] : m.email[0].toUpperCase()}
+                                        title={avatarTitle}
                                         backgroundColor={m.iconColor}
                                     />
                                     <h3 className={styles.userEmail}>{m.email}</h3>
                                 </div>
-
-                                {/* 🌟 Динамічна зміна іконки залежно від статусу */}
                                 {isAlreadyAdded ? (
                                     <Check
                                         size={24}
-                                        style={{ color: '#10b981', marginRight: 2 }} // Зелена галочка для доданих
+                                        style={{ color: '#10b981', marginRight: 2 }}
                                     />
                                 ) : (
                                     <UserPlus
@@ -95,7 +92,6 @@ const SearchMember = () => {
                     })}
                 </ul>
             )}
-
             {debounceTerm.trim() !== '' && !isPending && (!searchMembers || searchMembers.length === 0) && (
                 <Error type={'not_found'} style={{ padding: 10 }} />
             )}

@@ -1,5 +1,5 @@
 import {useEffect} from "react";
-import Header from './components/header/header/Header';
+import Header from './components/header/Header.tsx';
 import RouteLayout from './layouts/routeLayout/RouteLayout';
 import {useAuthStore} from "./store/authStore.ts";
 import {useProfileStore} from "./store/profileStore.ts";

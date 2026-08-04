@@ -1,17 +1,16 @@
 .wrapper {
-    min-height: calc(100vh - 100px); /* розміри .main */
-    height: calc(100vh - 100px); /* висота на час завантаження */
+    min-height: calc(100vh - 100px);
+    height: calc(100vh - 100px);
     padding: 30px 36px;
     background-color: #f9f9fb;
-    /* це прибирає скроли */
     overflow: hidden;
-    position: relative; /* щоб контент всередині не "розпирав" body */
+    position: relative;
 }
 
 .container {
     display: flex;
     flex-direction: column;
     gap: 12px;
-    width: 100%; /* контейнер не має бути ширшим за wrapper */
-    height: 100%; /* обмежую висоту */
+    width: 100%;
+    height: 100%;
 }

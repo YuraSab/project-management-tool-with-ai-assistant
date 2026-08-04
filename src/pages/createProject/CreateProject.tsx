@@ -1,20 +1,21 @@
-import React, {useCallback, useMemo, useState} from "react";
-import {Project, ProjectStatus} from "../../types/project";
+import React, { useCallback, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { Project, ProjectStatus, ProjectStatuses } from "../../types/project";
+import { UserProfile } from "../../types/user";
+import { toast } from "../../utils/toaster";
+import { useProjectUsers } from "../../hooks/project/useProjectUsers";
+import { useCreateProject } from "../../hooks/project/useCreateProject";
+import { useProfileStore } from "../../store/profileStore";
+import Title from "../../ui/title/Title";
 import CustomForm from "../../ui/form/CustomForm";
-import {useNavigate} from "react-router-dom";
-import {useProfileStore} from "../../store/profileStore.ts";
-import {UserProfile} from "../../types/user.ts";
-import {useCreateProject} from "../../hooks/project/useCreateProject.ts";
-import Title from "../../ui/title/Title.tsx";
-import FormTextInput from "../../ui/input/FormTextInput.tsx";
-import FormTextarea from "../../ui/textArea/FormTextarea.tsx";
-import FormDateInput from "../../ui/input/FormDateInput.tsx";
-import FormSelect from "../../ui/select/FormSelect.tsx";
-import AssignMembers from "../../components/asignMembers/AssignMembers.tsx";
-import {useProjectUsers} from "../../hooks/project/useProjectUsers.ts";
+import FormTextInput from "../../ui/input/FormTextInput";
+import FormDateInput from "../../ui/input/FormDateInput";
+import FormTextarea from "../../ui/textArea/FormTextarea";
+import FormSelect from "../../ui/select/FormSelect";
+import CustomButton from "../../ui/button/CustomButton";
+import MemberSelector from "../../ui/memberSelector/MemberSelector";
+import AssignMembers from "../../components/asignMembers/AssignMembers";
 import styles from './CreateProject.module.css';
-import MemberSelector from "../../ui/memberSelector/MemberSelector.tsx";
-import CustomButton from "../../ui/button/CustomButton.tsx";
 
 type FormData = Pick<Project, 'title' | 'description' | 'status'> & { startDate: string, endDate: string };
 
@@ -36,44 +37,42 @@ const CreateProject = () => {
     const [assignedMembersMap, setAssignedMembersMap] = useState<Map<string, UserProfile>>(new Map());
     const [addMembersActive, setAddMembersActive] = useState<boolean>(false);
 
-    const reservedMembersMap: Map<string, UserProfile> =  useMemo(() => (
-        new Map([...reservedMembers || []]
-            .map(m => [m.uid, m]))
-    ) , [reservedMembers]);
+    const reservedMembersMap = new Map((reservedMembers ?? []).map(m => [m.uid, m]));
+    const assignedMembers = [...assignedMembersMap.values()];
+    const assignedMembersIds = [...assignedMembersMap.keys()];
 
-    const assignedMembersIds: string[] = useMemo(() => (
-        [...assignedMembersMap.keys() || []]
-    ), [assignedMembersMap]);
-
-    const assignedMembers: UserProfile[] = useMemo(() => (
-        [...assignedMembersMap.values() || []]
-    ), [assignedMembersMap]);
-
-    const handleFilterMember = useCallback((member: UserProfile) => {
+    const handleToggleMember = useCallback((member: UserProfile) => {
         setAssignedMembersMap((prev) => {
-            const newPrev = new Map(prev);
-            return newPrev.delete(member.uid) ? newPrev : newPrev.set(member.uid, member);
+            const next = new Map(prev);
+            if (next.has(member.uid))
+                next.delete(member.uid);
+            else
+                next.set(member.uid, member);
+            return next;
         });
     }, []);
 
-    const handleChange = useCallback((event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-        const {name, value} = event.target;
-        setFormData((prev) => ({...prev, [name]: value}));
-    }, []);
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+        const { name, value } = event.target;
+        setFormData((prev) => ({ ...prev, [name]: value }));
+    };
 
     const handleCreate = () => {
         if (!profile)
-            return alert("No profile found!");
+            return toast.error("No profile found!");
         if (!formData.title.trim())
-            return alert("Please fill all the required fields!");
+            return toast.error("Please fill all the required fields!");
         createProject({
             ...formData,
             assignedMembers: [...assignedMembersIds, profile.uid],
             startDate: formData.startDate ? new Date(formData.startDate) : null,
             endDate: formData.endDate ? new Date(formData.endDate) : null,
         }, {
-            onSuccess: () => navigate("/projects"),
-            onError: () => alert('Failed to create project. Please try again.')
+            onSuccess: () => {
+                navigate("/projects");
+                toast.success('Project created!');
+            },
+            onError: () => toast.error('Failed to create project!')
         });
     };
 
@@ -89,17 +88,21 @@ const CreateProject = () => {
             <FormDateInput name={"endDate"} value={formData.endDate} onChange={handleChange}/>
             <Title text={'Members'}/>
             <AssignMembers
-                assignedMembers={assignedMembers}
+                assignedMembers={assignedMembers} maxIcons={6} iconSize={28}
                 onSelectMembersActive={() => setAddMembersActive(!addMembersActive)}
-                maxIcons={6} iconSize={28}
             />
             {addMembersActive && (
-                <MemberSelector membersMap={reservedMembersMap} selectedMembersIds={assignedMembersIds} clickAction={handleFilterMember} />
+                <MemberSelector membersMap={reservedMembersMap} selectedMembersIds={assignedMembersIds} clickAction={handleToggleMember} />
             )}
             <Title text={'Status'}/>
-            <FormSelect<ProjectStatus> name={"status"} value={formData.status} onChange={handleChange} options={[ProjectStatus.Planned, ProjectStatus.InProgress, ProjectStatus.Completed]}/>
+            <FormSelect<ProjectStatus>
+                name={"status"} options={[...ProjectStatuses]}
+                value={formData.status} onChange={handleChange}
+            />
             <div className={styles.buttonBlock}>
-                <CustomButton children={"Create Project"} disabled={isPending} type={'submit'}/>
+                <CustomButton type={'submit'} disabled={isPending}>
+                    { isPending ? 'Creating...' : 'Create Project' }
+                </CustomButton>
             </div>
         </CustomForm>
     );
