@@ -11,13 +11,13 @@ interface CheckBoxStatusProps extends Omit<React.CustomComponentPropsWithRef<'in
 const NoStatusCheckBox = (
     { text, checked, onChange, style, name = "status checkbox", ...props }: CheckBoxStatusProps
 ) => (
-    <div>
+    <div style={{ marginTop: 4 }}>
         <input
             type={"checkbox"}
             checked={checked}
             onChange={(e) => onChange(e.target.checked)}
             name={name}
-            style={{ marginRight: 4, ...style }}
+            style={{ marginRight: 4, ...style}}
             {...props}
         />
         <NoStatusText text={text}/>

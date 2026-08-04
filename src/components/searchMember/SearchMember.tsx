@@ -26,8 +26,12 @@ const SearchMember = () => {
     ), [profile?.reservedMembers]);
 
     const handleReserveUser = useCallback((userId: string) => {
-        if (!profile || profile?.reservedMembers?.includes(userId)) return;
-        const reservedMembers = [...profile.reservedMembers, userId];
+        if (!profile)
+            return toast.error('No profile found!');
+        const currentReserved = profile?.reservedMembers || [];
+        if (currentReserved.includes(userId))
+            return toast.warning('Member already reserved!');
+        const reservedMembers = [...currentReserved, userId];
         updateUser({
             uid: profile.uid,
             reservedMembers: reservedMembers
@@ -58,7 +62,7 @@ const SearchMember = () => {
                 style={colorVariables}
             />
             {isPending && debounceTerm.trim() !== "" && (
-                <p style={styles.searchingText}>Searching...</p>
+                <p className={styles.searchingText}>Searching...</p>
             )}
             {isError && <Error type={'server_crash'} style={{padding: 10 }} />}
             {searchMembers && searchMembers.length > 0 && (

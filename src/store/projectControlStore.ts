@@ -92,7 +92,6 @@ export const useProjectControlStore = create<ProjectControlState>((set) => ({
         isRightPanelActive: false,
         isAddTaskActive: false,
         isEditTaskActive: false,
-        showAIChat: false,
     }),
     // ---- FILTERS ----
     statusFilter: [...TASK_STATUSES],

@@ -68,11 +68,7 @@ const CreateProject = () => {
             startDate: formData.startDate ? new Date(formData.startDate) : null,
             endDate: formData.endDate ? new Date(formData.endDate) : null,
         }, {
-            onSuccess: () => {
-                navigate("/projects");
-                toast.success('Project created!');
-            },
-            onError: () => toast.error('Failed to create project!')
+            onSuccess: () => navigate("/projects")
         });
     };
 
