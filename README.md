@@ -2,9 +2,10 @@
 
 > An intelligent, full-stack project management platform with an integrated AI Assistant that automates project workflows using natural language commands.
 
-🌐 **Live Application:** [Click here to open ProjectFlow](https://your-app-name.vercel.app)
+🌐 **Live Application:** [Click here to open ProjectFlow](https://project-management-tool-with-ai-ass-two.vercel.app)
 
-> 🔗 **URL:** `https://your-app-name.vercel.app`
+> 🔗 **URL:** `https://project-management-tool-with-ai-ass-two.vercel.app`
+
 ---
 
 ## 🔑 Demo Access
