@@ -27,7 +27,7 @@ export const getUser = async (userId: string): Promise<UserProfile | null> => {
 };
 
 export const getUsersByIds = async (usersIds: string[]): Promise<UserProfile[]> => {
-    if (!usersIds || usersIds.length === 1) return [];
+    if (!usersIds || usersIds.length === 0) return [];
     const usersRef = collection(db, 'users');
     const usersQuery = query(usersRef, where(documentId(), 'in', usersIds ));
     const usersSnap = await getDocs(usersQuery);

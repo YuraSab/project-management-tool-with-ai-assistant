@@ -40,7 +40,6 @@ const TaskEdit = () => {
 
     const ownId = useProfileStore((state) => state.profile?.uid);
     const selectedTask = useProjectControlStore((state) => state.selectedTask);
-    const setIsRightPanelActive = useProjectControlStore((state) => state.setIsRightPanelActive);
 
     const {data: project} = useProject(projectId || "");
     const {data: projectMembers} = useProjectUsers(project?.assignedMembers || []);
@@ -101,8 +100,11 @@ const TaskEdit = () => {
 
     useEffect(() => {
         if (!selectedTask) return;
+        setAddMembersActive(false);
         setFormData(getInitialFormData(selectedTask));
-    }, [selectedTask]);
+        if (!selectedTask.assignedMembers || selectedTask.assignedMembers.length === 0)
+            setLocalAssignedMembersMap(new Map());
+    }, [selectedTask?.id, selectedTask]);
 
     useEffect(() => {
         if (taskAssignedMembers && taskAssignedMembers.length > 0)
