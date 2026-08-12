@@ -51,9 +51,14 @@
     align-items: center;
     border-radius: 12px;
     border: 1px dashed var(--color-border);
-    transition: background-color 0.2s ease, border-color 0.2s ease;
+    transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
     box-sizing: border-box;
     height: 70px;
+}
+
+.searchResultCard:hover {
+    transform: translateY(-1px);
+    border-color: var(--color-text-secondary);
 }
 
 .userInfo {
