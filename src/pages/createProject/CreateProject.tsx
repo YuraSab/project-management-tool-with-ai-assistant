@@ -6,14 +6,7 @@ import { toast } from "../../utils/toaster";
 import { useProjectUsers } from "../../hooks/project/useProjectUsers";
 import { useCreateProject } from "../../hooks/project/useCreateProject";
 import { useProfileStore } from "../../store/profileStore";
-import Title from "../../ui/title/Title";
-import CustomForm from "../../ui/form/CustomForm";
-import FormTextInput from "../../ui/input/FormTextInput";
-import FormDateInput from "../../ui/input/FormDateInput";
-import FormTextarea from "../../ui/textArea/FormTextarea";
-import FormSelect from "../../ui/select/FormSelect";
-import CustomButton from "../../ui/button/CustomButton";
-import MemberSelector from "../../ui/memberSelector/MemberSelector";
+import { Title, CustomForm, FormTextInput, FormDateInput, FormTextarea, FormSelect, CustomButton, MemberSelector } from '../../ui';
 import AssignMembers from "../../components/asignMembers/AssignMembers";
 import styles from './CreateProject.module.css';
 

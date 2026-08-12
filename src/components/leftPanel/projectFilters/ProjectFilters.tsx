@@ -2,29 +2,13 @@ import React, {useCallback, useEffect, useMemo, useState} from "react"
 import { useParams } from "react-router-dom"
 import { useShallow } from "zustand/react/shallow";
 import { UserProfile } from "../../../types/user";
-import {
-    TASK_CATEGORIES,
-    TASK_PRIORITIES,
-    TASK_STATUSES,
-    TASK_TYPES, TaskCategory,
-    TaskPriority,
-    TaskStatus,
-    TaskType
-} from "../../../types/task"
+import { TASK_CATEGORIES, TASK_PRIORITIES, TASK_STATUSES, TASK_TYPES, TaskCategory, TaskPriority, TaskStatus, TaskType } from "../../../types/task"
 import { toast } from "../../../utils/toaster";
 import { useProject } from "../../../hooks/project/useProject"
 import { useProjectUsers } from "../../../hooks/project/useProjectUsers"
 import { useProjectControlStore } from "../../../store/projectControlStore"
-import Title from "../../../ui/title/Title";
-import TextInput from "../../../ui/input/TextInput";
-import DateInput from "../../../ui/input/DateInput"
-import CustomSelect, { sortOptions } from "../../../ui/select/CustomSelect"
-import CustomMultiSelector from "../../../ui/customMultiSelector/CustomMultiSelector";
-import CheckBoxStatus from "../../../ui/checkbox/CheckBoxStatus"
-import NoStatusCheckBox from "../../../ui/checkbox/NoStatusCheckBox";
-import CustomButton from "../../../ui/button/CustomButton";
-import MemberSelector from "../../../ui/memberSelector/MemberSelector";
-import SelectorBlock from "../../../ui/selectorBlock/SelectorBlock";
+import { Title, TextInput, DateInput, CustomSelect, CustomMultiSelector, CheckBoxStatus, NoStatusCheckBox, CustomButton, MemberSelector, SelectorBlock } from '../../../ui';
+import { sortOptions } from "../../../ui/select/CustomSelect.tsx";
 import AssignMembersFilter from "../../asignMembers/AssignMembersFilter";
 import styles from "./ProjectFilters.module.css";
 

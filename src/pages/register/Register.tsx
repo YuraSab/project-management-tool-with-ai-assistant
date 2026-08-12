@@ -2,9 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { handleAuthError } from "../../utils/handleAuthError";
 import { register } from "../../services/authService";
-import FormTextInput from "../../ui/input/FormTextInput";
-import FormPasswordInput from "../../ui/input/FormPasswordInput";
-import CustomButton from "../../ui/button/CustomButton";
+import { FormTextInput, FormPasswordInput, CustomButton } from '../../ui';
 import AuthFormLayout from "../../layouts/authFormLayout/AuthFormLayout";
 import styles from './Register.module.css';
 

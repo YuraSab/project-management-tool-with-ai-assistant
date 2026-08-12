@@ -69,3 +69,5 @@ export const ToastContainer = () => {
         document.body
     );
 };
+
+export default ToastContainer;

@@ -1,10 +1,10 @@
-import {useEffect} from "react";
-import Header from './components/header/Header.tsx';
+import { useEffect } from "react";
+import Header from './components/header/Header';
 import RouteLayout from './layouts/routeLayout/RouteLayout';
-import {useAuthStore} from "./store/authStore.ts";
-import {useProfileStore} from "./store/profileStore.ts";
-import {ToastContainer} from "./ui/toast/ToastContainer.tsx";
-import {Theme} from "./types/user.ts";
+import { useAuthStore } from "./store/authStore";
+import { useProfileStore } from "./store/profileStore";
+import { ToastContainer } from "./ui";
+import { Theme } from "./types/user.ts";
 import styles from './App.module.css';
 import './global.css';
 

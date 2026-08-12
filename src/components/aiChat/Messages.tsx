@@ -2,8 +2,7 @@ import { Sender } from "../../types/aiChat";
 import { useAIChatActions } from "../../hooks/aiChat/useAIChatActions";
 import { useAIChatStore } from "../../store/aiChatStore";
 import { useProfileStore } from "../../store/profileStore";
-import CustomUserIcon from "../../ui/icons/CustomUserIcon";
-import GeminiIcon from "../../ui/icons/GeminiIcon";
+import { CustomUserIcon, GeminiIcon } from '../../ui';
 import ActionCard from "./ActionCard";
 import styles from "./AIChat.module.css";
 

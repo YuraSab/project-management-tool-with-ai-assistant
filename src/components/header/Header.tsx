@@ -3,8 +3,7 @@ import { Menu, X } from "lucide-react";
 import { HighlightColor, IconColor } from "../../types/user.ts";
 import { getColor } from "../../utils/colorThemeSelector.ts";
 import { useProfileStore } from "../../store/profileStore.ts";
-import CustomUserIcon from "../../ui/icons/CustomUserIcon.tsx";
-import CustomNavLink from "../../ui/link/CustomNavLink.tsx";
+import { CustomUserIcon, CustomNavLink } from '../../ui';
 import styles from "./Header.module.css";
 
 const Header = () => {

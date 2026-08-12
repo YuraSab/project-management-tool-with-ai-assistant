@@ -1,7 +1,8 @@
 import { Pencil } from "lucide-react";
 import { Task } from "../../types/task";
 import { useProjectUsers } from "../../hooks/project/useProjectUsers";
-import StatusText, { StatusType } from "../../ui/statusText/StatusText";
+import { StatusType } from "../../ui/statusText/StatusText";
+import { StatusText } from "../../ui";
 import UserIconCollection from "../usersIconsCollection/UsersIconsCollection";
 import styles from './TaskInfo.module.css';
 

@@ -7,7 +7,7 @@ import { toast } from "../../utils/toaster";
 import { useSearchUsers } from "../../hooks/users/useSearchUsers";
 import { useUpdateUser } from "../../hooks/users/useUpdateUser";
 import { useProfileStore } from "../../store/profileStore";
-import CustomUserIcon from "../../ui/icons/CustomUserIcon";
+import { CustomUserIcon } from "../../ui";
 import Error from "../error/Error.tsx";
 import styles from "./SearchMember.module.css";
 
