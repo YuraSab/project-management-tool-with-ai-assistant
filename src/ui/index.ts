@@ -18,7 +18,7 @@ export { default as NoStatusCheckBox } from "./checkbox/NoStatusCheckBox";
 export { default as CustomButton } from "./button/CustomButton";
 // ---- WRAPPERS ----
 export { default as BlurWrapper } from "./blurWrapper/BlurWrapper";
-export { default as FAB } from "./FAB/Fab";
+export { default as FAB } from "./FAB/FAB";
 // ---- ICONS ----
 export { default as CopyIcon } from "./copyIcon/CopyIcon";
 export { default as CustomColorIcon } from "./icons/CustomColorIcon";
