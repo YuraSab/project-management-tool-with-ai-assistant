@@ -27,7 +27,8 @@
 .customSelect:focus,
 .customSelect:focus-visible {
     outline: none !important;
-    box-shadow: 0 0 0 3px var(--disabled-background) !important;
+    /*box-shadow: 0 0 0 3px var(--disabled-background) !important;*/
+    border-color: var(--color-text-secondary);
     color: var(--color-text-primary);
 }
 
