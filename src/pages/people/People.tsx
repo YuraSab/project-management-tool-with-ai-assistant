@@ -4,8 +4,7 @@ import { toast } from "../../utils/toaster";
 import { useUpdateUser } from "../../hooks/users/useUpdateUser";
 import { useProjectUsers } from "../../hooks/project/useProjectUsers";
 import { useProfileStore } from "../../store/profileStore";
-import CustomUserIcon from "../../ui/icons/CustomUserIcon";
-import CopyIcon from "../../ui/copyIcon/CopyIcon";
+import { CustomUserIcon, CopyIcon } from '../../ui';
 import SearchMember from "../../components/searchMember/SearchMember";
 import styles from "./People.module.css";
 

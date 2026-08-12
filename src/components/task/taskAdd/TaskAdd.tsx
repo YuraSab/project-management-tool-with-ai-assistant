@@ -6,18 +6,11 @@ import { useProjectUsers } from "../../../hooks/project/useProjectUsers";
 import { useProject } from "../../../hooks/project/useProject";
 import { useCreateTask } from "../../../hooks/task/useCreateTask";
 import { useProfileStore } from "../../../store/profileStore";
-import CustomForm from "../../../ui/form/CustomForm";
-import Title from "../../../ui/title/Title";
-import FormTextInput from "../../../ui/input/FormTextInput";
-import FormDateInput from "../../../ui/input/FormDateInput";
-import FormTextarea from "../../../ui/textArea/FormTextarea";
-import FormSelect from "../../../ui/select/FormSelect";
-import CustomButton from "../../../ui/button/CustomButton";
-import MemberSelector from "../../../ui/memberSelector/MemberSelector";
+import { CustomForm, Title, FormTextInput, FormDateInput, FormTextarea, FormSelect, CustomButton, MemberSelector } from '../../../ui';
 import RightPanelHeader from "../../rightPanel/rightPanelHeader/RightPanelHeader";
 import AssignMembers from "../../asignMembers/AssignMembers";
 import styles from "./TaskAdd.module.css";
-import {toast} from "../../../utils/toaster.ts";
+import { toast } from "../../../utils/toaster.ts";
 
 type FormData = Pick<Task, 'title'| 'description'| 'status' | 'priority'> & {
     startDate: string, endDate: string, type: TaskType, category: TaskCategory

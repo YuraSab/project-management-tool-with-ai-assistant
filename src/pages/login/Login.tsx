@@ -3,9 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { handleAuthError } from "../../utils/handleAuthError";
 import {toast} from "../../utils/toaster";
 import { login } from "../../services/authService";
-import FormPasswordInput from "../../ui/input/FormPasswordInput";
-import FormTextInput from "../../ui/input/FormTextInput";
-import CustomButton from "../../ui/button/CustomButton";
+import { FormPasswordInput, FormTextInput, CustomButton } from '../../ui';
 import AuthFormLayout from "../../layouts/authFormLayout/AuthFormLayout";
 import styles from './Login.module.css';
 

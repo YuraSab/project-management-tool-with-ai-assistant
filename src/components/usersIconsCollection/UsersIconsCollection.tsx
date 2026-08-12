@@ -1,5 +1,5 @@
 import { UserProfile } from "../../types/user";
-import CustomUserIcon from "../../ui/icons/CustomUserIcon";
+import { CustomUserIcon } from "../../ui";
 import styles from "./UserIconCollection.module.css";
 
 interface UserIconCollectionProps {

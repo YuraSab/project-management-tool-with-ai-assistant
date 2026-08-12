@@ -11,7 +11,6 @@ interface MemberSelectorProps {
     clickAction: (member: UserProfile) => void,
 }
 
-
 const MemberSelector = ({ membersMap, selectedMembersIds, clickAction }: MemberSelectorProps) => {
     const highlightColor = useProfileStore((state) => state.profile?.highlightColor);
     const colorVariables = getColorThemeVariables(highlightColor ?? HighlightColor.Purple);

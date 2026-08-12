@@ -11,7 +11,7 @@ import { getGeminiResponse } from "../../services/aiService";
 import { useProjectControlStore } from "../../store/projectControlStore";
 import { useProfileStore } from "../../store/profileStore";
 import { useAIChatStore } from "../../store/aiChatStore";
-import GeminiIcon from "../../ui/icons/GeminiIcon";
+import { GeminiIcon } from "../../ui";
 import Messages from "./Messages";
 import styles from './AIChat.module.css';
 

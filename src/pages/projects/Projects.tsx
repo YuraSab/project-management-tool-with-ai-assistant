@@ -1,11 +1,11 @@
 import { useNavigate } from "react-router-dom";
 import { Plus } from "lucide-react";
 import { useUserProjects } from "../../hooks/users/useUserProjects";
-import { useAuthStore } from "../../store/authStore.ts";
-import { useProfileStore } from "../../store/profileStore.ts";
-import FAB from "../../ui/FAB/FAB.tsx";
-import ProjectCard from "../../components/projectCard/ProjectCard.tsx";
-import ProjectsSkeleton from "../../components/projectCard/ProjectsSkeleton.tsx";
+import { useAuthStore } from "../../store/authStore";
+import { useProfileStore } from "../../store/profileStore";
+import { FAB } from "../../ui";
+import ProjectCard from "../../components/projectCard/ProjectCard";
+import ProjectsSkeleton from "../../components/projectCard/ProjectsSkeleton";
 import Error from "../../components/error/Error";
 import styles from "./Projects.module.css";
 

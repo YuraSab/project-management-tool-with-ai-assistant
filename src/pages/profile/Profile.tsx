@@ -1,28 +1,13 @@
 import { useCallback, useMemo } from 'react';
 import { LogOut } from "lucide-react";
-import {
-    HighlightColor,
-    HighlightColorSet,
-    IconColor,
-    IconColorSet,
-    Role,
-    Theme,
-    ThemeSet,
-    UserProfile
-} from "../../types/user";
+import { HighlightColor, HighlightColorSet, IconColor, IconColorSet, Role, Theme, ThemeSet, UserProfile } from "../../types/user";
 import { formatDateForInput } from "../../utils/dateFormat";
 import { toast } from "../../utils/toaster";
 import { useLogout } from "../../hooks/auth/useLogout";
 import { useUser } from "../../hooks/users/useUser";
 import { useUpdateUser } from "../../hooks/users/useUpdateUser";
 import { useProfileStore } from "../../store/profileStore";
-import Title from "../../ui/title/Title";
-import FormTextInput from "../../ui/input/FormTextInput";
-import DisabledField from "../../ui/disabledField/DisabledField";
-import CustomButton from "../../ui/button/CustomButton";
-import CustomForm from "../../ui/form/CustomForm";
-import CustomUserIcon from "../../ui/icons/CustomUserIcon";
-import CustomColorIcon from "../../ui/icons/CustomColorIcon";
+import { Title, FormTextInput, DisabledField, CustomButton, CustomForm, CustomUserIcon, CustomColorIcon } from '../../ui';
 import styles from './Profile.module.css';
 
 const Profile = () => {
