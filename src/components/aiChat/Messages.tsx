@@ -4,6 +4,7 @@ import { useAIChatStore } from "../../store/aiChatStore";
 import { useProfileStore } from "../../store/profileStore";
 import { CustomUserIcon, GeminiIcon } from '../../ui';
 import ActionCard from "./ActionCard";
+import ProjectSummaryCard from "./ProjectSummaryCard";
 import styles from "./AIChat.module.css";
 
 const Messages = () => {
@@ -23,6 +24,9 @@ const Messages = () => {
                     </div>
                     <div className={styles.messageContent}>
                         <div className={styles.messageBubble}>{m.text}</div>
+                        {m.summary && (
+                            <ProjectSummaryCard summary={m.summary} />
+                        )}
                         {m.pendingActions && m.pendingActions.length > 0 && (
                             <ActionCard
                                 actions={m.pendingActions}

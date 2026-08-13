@@ -20,9 +20,13 @@ To explore pre-configured projects, tasks, and team members without registering,
 ## ✨ Features Showcase
 
 ### 1. 🤖 AI Assistant Workflow
-Execute complex project actions, update task statuses, and decompose workflows via natural language chat.
+* **Natural Language Control:** Execute complex project actions, update task statuses, and decompose workflows via natural language chat.
 
 ![AI Assistant Demo](./assets/gifs/11.gif)
+
+* **Visual Project Analytics:** Generate real-time project summaries, interactive task status charts, and recommendations directly in the chat interface.
+
+![AI Analytics Demo](./assets/gifs/14.gif)
 
 ---
 

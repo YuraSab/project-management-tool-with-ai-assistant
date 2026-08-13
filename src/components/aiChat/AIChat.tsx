@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Send, Trash2, X } from "lucide-react";
 import { useShallow } from "zustand/react/shallow";
 import { Sender } from "../../types/aiChat";
-import {HighlightColor, Theme} from "../../types/user";
+import { HighlightColor, Theme } from "../../types/user";
 import { parseAIActions } from "../../utils/parseAIActions";
 import { switchRightPanelView } from "../../utils/panelManager";
 import { useProjectUsers } from "../../hooks/project/useProjectUsers";
@@ -58,11 +58,12 @@ const AIChat = () => {
             };
 
             const aiRawResponse = await getGeminiResponse(userText, context, historyForGemini);
-            const { cleanText, actions } = parseAIActions(aiRawResponse);
+            const { cleanText, actions, summary } = parseAIActions(aiRawResponse);
             addMessage({
                 role: Sender.model,
                 text: cleanText || "Actions prepared by:",
-                pendingActions: actions
+                pendingActions: actions,
+                summary: summary
             });
         } catch (error) {
             console.error("AI Error:", error);
