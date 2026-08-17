@@ -1,13 +1,5 @@
 import React from 'react';
-import {
-    AlertTriangle,
-    BarChart3,
-    CheckCircle2,
-    Clock,
-    HelpCircle,
-    Lightbulb,
-    Sparkles
-} from 'lucide-react';
+import { BarChart3, CheckCircle2, Clock, HelpCircle, Lightbulb, Sparkles } from 'lucide-react';
 import { ProjectSummary } from '../../store/aiChatStore';
 import styles from './ProjectSummaryCard.module.css';
 
@@ -122,23 +114,18 @@ const ProjectSummaryCard: React.FC<ProjectSummaryCardProps> = ({ summary }) => {
             </div>
 
             {/* Attention Tasks */}
-            {summary.attentionTasks && summary.attentionTasks.length > 0 && (
-                <div className={styles.attentionSection}>
-                    <div className={styles.sectionHeader}>
-                        <AlertTriangle size={15} className={styles.warningIcon} />
-                        <span>Tasks Requiring Attention</span>
-                    </div>
-                    <ul className={styles.bulletList}>
-                        {summary.attentionTasks.map((task) => (
-                            <li key={task.id} className={styles.bulletItem}>
-                                <span className={styles.bulletDot}>📌</span>
-                                <div>
-                                    <strong>{task.title}</strong>
-                                    {task.reason && <p className={styles.bulletSubtext}>{task.reason}</p>}
-                                </div>
-                            </li>
+            {summary.attentionTasks && summary.attentionTasks.filter(Boolean).length > 0 && (
+                <div className="rounded-xl border border-amber-200 bg-amber-50/50 p-4">
+                    <h4 className="flex items-center gap-2 font-medium text-amber-900">
+                        ⚠️ Tasks Requiring Attention
+                    </h4>
+                    <div className="mt-2 flex flex-col gap-1.5">
+                        {summary.attentionTasks.filter(Boolean).map((task, index) => (
+                            <div key={index} className="flex items-center gap-2 text-sm text-amber-800">
+                                📌 <span>{task}</span>
+                            </div>
                         ))}
-                    </ul>
+                    </div>
                 </div>
             )}
 

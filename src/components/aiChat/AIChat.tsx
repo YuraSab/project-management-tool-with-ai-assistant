@@ -3,7 +3,7 @@ import { Send, Trash2, X } from "lucide-react";
 import { useShallow } from "zustand/react/shallow";
 import { Sender } from "../../types/aiChat";
 import { HighlightColor, Theme } from "../../types/user";
-import { parseAIActions } from "../../utils/parseAIActions";
+import { parseAIResponse } from "../../utils/parseAIActions";
 import { switchRightPanelView } from "../../utils/panelManager";
 import { useProjectUsers } from "../../hooks/project/useProjectUsers";
 import { useTasks } from "../../hooks/task/useTasks";
@@ -40,17 +40,16 @@ const AIChat = () => {
         const userText = inputValue;
         setInputValue('');
         setIsLoading(true);
-        addMessage({role: Sender.user, text: userText});
+        addMessage({ role: Sender.user, text: userText });
 
         try {
             const historyForGemini = messages
-                .filter((m, index) => (
-                    !(index === 0 && m.role === Sender.model)
-                ))
+                .filter((m, index) => !(index === 0 && m.role === Sender.model))
                 .map(m => ({
                     role: m.role,
-                    parts: [{text: m.text}]
+                    parts: [{ text: m.text }]
                 }));
+
             const context = {
                 project: selectedProject,
                 tasks: projectTasks || [],
@@ -58,11 +57,12 @@ const AIChat = () => {
             };
 
             const aiRawResponse = await getGeminiResponse(userText, context, historyForGemini);
-            const { cleanText, actions, summary } = parseAIActions(aiRawResponse);
+            const { cleanText, actions, summary } = parseAIResponse(aiRawResponse);
+
             addMessage({
                 role: Sender.model,
-                text: cleanText || "Actions prepared by:",
-                pendingActions: actions,
+                text: cleanText,
+                pendingActions: actions.length > 0 ? actions : undefined,
                 summary: summary
             });
         } catch (error) {

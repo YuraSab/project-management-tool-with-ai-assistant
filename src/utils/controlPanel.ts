@@ -14,7 +14,7 @@ export const getFilteredTasks = (tasks: Task[], status: TaskStatus, filters: Tas
             (task.priority === 'none' && filters.noPriority)
         ) &&
         (filters.isInitialLoad || (
-            (task.assignedMembers.length === 0 && filters.unassignedTasks) ||
+            ((task.assignedMembers?.length ?? 0) === 0 && filters.unassignedTasks) ||
             (filters.users?.some(u => task.assignedMembers?.includes(u.uid)))
         )) &&
         (!filters.types || (task.type && filters.types.includes(task.type))) &&

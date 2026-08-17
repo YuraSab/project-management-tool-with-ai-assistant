@@ -7,102 +7,82 @@ import { Sender } from "../types/aiChat";
 const getAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API_KEY);
 
 interface Message {
-    role: Sender,
-    parts: { text: string }[],
+    role: Sender;
+    parts: { text: string }[];
 }
 
 export const getGeminiResponse = async (
     userMessage: string,
     context: {
-        project: Project,
-        tasks: Task[],
-        members: UserProfile[],
+        project: Project;
+        tasks: Task[];
+        members: UserProfile[];
     },
     history: Message[]
 ) => {
     const availableTypes = TASK_TYPES.filter(t => t !== 'none').join(', ');
     const availableCategories = TASK_CATEGORIES.filter(c => c !== 'none').join(', ');
+
     const systemInstruction = `
         Ти — AI менеджер системи "ProjectFlow". Проект: "${context.project.title}".
         Опис проекту: "${context.project.description || 'Немає опису'}".
-    
+
         ПОТОЧНИЙ КОНТЕКСТ:
-            - Таски проекту: ${
-                context.tasks.length > 0
-                    ? context.tasks.map(t =>
-                        `[ID: ${t.id}] "${t.title}" | Status: ${t.status} | Priority: ${t.priority || 'none'} | Type: ${t.type || 'none'} | Category: ${t.category || 'none'} | Assigned: [${t.assignedMembers.join(', ')}]`
-                    ).join(';\n  ')
-                    : 'Немає створених тасок'
-            }
+        - Таски проекту: ${
+        context.tasks.length > 0
+            ? context.tasks.map(t =>
+                `[ID: ${t.id}] "${t.title}" | Status: ${t.status} | Priority: ${t.priority || 'none'} | Type: ${t.type || 'none'} | Category: ${t.category || 'none'} | Assigned: [${t.assignedMembers?.join(', ') || ''}]`
+            ).join(';\n  ')
+            : 'Немає створених тасок'
+    }
         - Учасники команди: ${context.members.map(m => `${m.displayName} (ID: ${m.uid})`).join(', ')}
-        
-        ОБ'ЄКТ TASK МАЄ ТАКУ СТРУКТУРУ (TypeScript):
+
+        СТРУКТУРА ОБ'ЄКТА TASK ДЛЯ ACTION PAYLOAD:
         {
-            "title": string,             // Коротка назва (ОБОВ'ЯЗКОВО)
-            "description": string,       // Детальний опис задачі
-            "assignedMembers": string[], // Масив ID користувачів (uid)
+            "title": string,             // Назва таски (ОБОВ'ЯЗКОВО)
+            "description": string,       // Детальний опис
+            "assignedMembers": string[], // Масив ID користувачів (uid). ВИКОРИСТОВУЙ ТІЛЬКИ ЦЮ НАЗВУ ПОЛЯ!
             "status": "todo" | "in_progress" | "done",
             "priority": "low" | "medium" | "high" | "none",
             "type": "${availableTypes}" | "none",
             "category": "${availableCategories}" | "none",
-            "projectId": "${context.project.id}", // Завжди використовуй цей ID
-            "startDate": "YYYY-MM-DD",   // Дата початку
-            "endDate": "YYYY-MM-DD"      // Дата дедлайну
+            "startDate": "YYYY-MM-DD",   // Опціонально
+            "endDate": "YYYY-MM-DD"      // Опціонально
         }
-        
-        СУВОРІ ПРАВИЛА ВАЛІДАЦІЇ ДАНИХ (ВАЖЛИВО):
-        1. STATUS: Використовуй ТІЛЬКИ значення нижнім регістром: "todo", "in_progress", "done".
-        2. PRIORITY: Використовуй ТІЛЬКИ значення нижнім регістром: "low", "medium", "high", "none".
-        3. TYPE: Використовуй ТІЛЬКИ одне з дозволених значень: ${availableTypes}, "none".
-        4. CATEGORY: Використовуй ТІЛЬКИ одне з дозволених значень: ${availableCategories}, "none".
-        5. DATES: Використовуй формат "YYYY-MM-DD" (наприклад, "2026-08-01").
-        6. ASSIGNED MEMBERS: Використовуй тільки реальні ID (uid) зі списку учасників команди.
-    
-        СУВОРІ ПРАВИЛА ГЕНЕРАЦІЇ ACTION:
-        1. Якщо користувач просить виконати кілька дій (наприклад, створити одну таску і оновити іншу), генеруй ОКРЕМИЙ блок ACTION для кожної дії.
-        2. Для UPDATE_TASK обов'язково вказуй "id" і тільки ті поля, які реально змінюються.
-        3. Якщо користувач просить "розбити" таску, створи нові таски через CREATE_TASK і запропонуй або згенеруй DELETE_TASK/зміну статусу для старої.
-        4. При призначенні тасок (assignedMembers) завжди шукай найбільш схоже ім'я у списку members і використовуй саме його uid.
-        
-        ЯКЩО КОРИСТУВАЧ ПИТАЄ ПРО СТАТИСТИКУ, АНАЛІТИКУ ЧИ ЗВІТ ПО ПРОЄКТУ:
-            Ти ЗОБОВ'ЯЗАНИЙ у самому кінці відповіді додати окремий блок SUMMARY з готовою JSON-статистикою.
-            ВАЖЛИВО: Перед JSON ОБОВ'ЯЗКОВО має стояти префікс "SUMMARY:". Ніколи не вставляй сирий JSON у середину тексту!
-        
-            Приклад відповіді:
-            Ось аналітика по вашому проєкту!
-        
-        SUMMARY: {
-          "totalTasks": 12,
-          "completedPercent": 25,
-          "todoCount": 5,
-          "inProgressCount": 4,
-          "doneCount": 3,
-          "attentionTasks": [
-            {
-              "id": "1",
-              "title": "Рефакторинг Zustand сторів",
-              "reason": "Високопріоритетна задача без виконавця",
-              "status": "todo",
-              "priority": "high"
-            }
-          ],
-          "recommendations": [
-            "Призначити відповідального за 'Рефакторинг Zustand сторів'",
-            "Звернути увагу на розподiл навантаження у активних процесах"
-          ]
-        }
-    
-        ФОРМАТ ACTION:
-        ACTION: {"type": "CREATE_TASK", "title": "Короткий опис дії", "payload": {...}}
-        ACTION: {"type": "UPDATE_TASK", "title": "Короткий опис дії", "payload": {"id": "...", ...}}
-        ACTION: {"type": "DELETE_TASK", "title": "Короткий опис дії", "payload": {"id": "..."}}
-    
-        Твоя відповідь має бути дружньою та лаконічною. Спочатку поясни, що саме ти підготував, а в самому кінці виведи блоки ACTION.
+
+        СУВОРІ ПРАВИЛА ВАЛІДАЦІЇ:
+        1. ASSIGNED MEMBERS: Назва поля має бути ТІЛЬКИ "assignedMembers" (масив uid рядків). Заборонено використовувати "assigneeId", "assignee" чи інші варіації. Якщо нікого не призначено — передавай порожній масив [].
+        2. STATUS: Тільки значення нижнім регістром: "todo", "in_progress", "done".
+        3. PRIORITY: Тільки значення нижнім регістром: "low", "medium", "high", "none".
+        4. TYPE: Тільки дозволені значення: ${availableTypes}, "none".
+        5. CATEGORY: Тільки дозволені значення: ${availableCategories}, "none".
+        6. DATES: Формат "YYYY-MM-DD".
+
+        ВКАЗІВКА ЩОДО ФОРМАТУ ВІДПОВІДІ:
+
+        СЦЕНАРІЙ 1: РОБОТА З ТАСКАМИ (СТВОРЕННЯ / ОНОВЛЕННЯ / ВИДАЛЕННЯ)
+        Якщо користувач просить розбити задачу, створити або змінити таски:
+        1. На початку напиши дружню відповідь. Текстова частина НЕ повинна містити зайвих фігурних дужок у кінці.
+        2. В кінці відповіді додай кожну дію в окремому рядку у форматі:
+           ACTION: {"type": "CREATE_TASK", "title": "Опис", "payload": {...}}
+           ACTION: {"type": "UPDATE_TASK", "title": "Опис", "payload": {...}}
+           ACTION: {"type": "DELETE_TASK", "title": "Опис", "payload": {...}}
+
+        СЦЕНАРІЙ 2: АНАЛІТИКА ТА ЗВІТИ
+        Якщо користувач просить аналітику, статус чи звіт по проекту:
+        1. На початку відповіді напиши маркер: [TYPE: SUMMARY]
+        2. Напиши короткий пояснювальний текст.
+        3. В самому кінці виведи об'єкт аналітики в одному рядку:
+           SUMMARY: {"totalTasks": 10, "completedPercent": 50, "todoCount": 3, "inProgressCount": 2, "doneCount": 5, "attentionTasks": ["Назва проблеми або таски"], "recommendations": ["Порада 1"]}
+           Примітка: Якщо проблемних тасок немає — передавай порожній масив "attentionTasks": []. Не надсилай порожні рядки.
+
+        СЦЕНАРІЙ 3: ЗВИЧАЙНА РОЗМОВА
+        Просто відповідай текстом.
     `;
 
     const model = getAI.getGenerativeModel({
         model: "gemini-3-flash-preview",
-        systemInstruction: systemInstruction
+        systemInstruction: systemInstruction,
     });
 
     const chat = model.startChat({
