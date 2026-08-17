@@ -114,15 +114,21 @@ const ProjectSummaryCard: React.FC<ProjectSummaryCardProps> = ({ summary }) => {
             </div>
 
             {/* Attention Tasks */}
-            {summary.attentionTasks && summary.attentionTasks.filter(Boolean).length > 0 && (
+            {summary.attentionTasks && summary.attentionTasks.filter(t => t?.title).length > 0 && (
                 <div className="rounded-xl border border-amber-200 bg-amber-50/50 p-4">
                     <h4 className="flex items-center gap-2 font-medium text-amber-900">
                         ⚠️ Tasks Requiring Attention
                     </h4>
                     <div className="mt-2 flex flex-col gap-1.5">
-                        {summary.attentionTasks.filter(Boolean).map((task, index) => (
-                            <div key={index} className="flex items-center gap-2 text-sm text-amber-800">
-                                📌 <span>{task}</span>
+                        {summary.attentionTasks.filter(t => t?.title).map((task, index) => (
+                            <div key={task.id || index} className="flex items-start gap-2 text-sm text-amber-800">
+                                <span>📌</span>
+                                <div className="flex flex-col">
+                                    <span className="font-medium">{task.title}</span>
+                                    {task.reason && (
+                                        <span className="text-xs text-amber-600/80">{task.reason}</span>
+                                    )}
+                                </div>
                             </div>
                         ))}
                     </div>
