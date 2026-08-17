@@ -269,7 +269,8 @@
 }
 
 .aiTypingBlock {
-    padding-left: 30px;
+    padding-left: 20px;
+    padding-bottom: 12px;
     display: flex;
     gap: 25px;
 }
